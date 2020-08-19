@@ -1,13 +1,29 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, TouchableHighlight, Navigator } from 'react-native';
+
+const routes = [
+	{title: "Home", index: 0},
+	{title: "Not Home", index: 1}
+];
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <Navigator
+		initialRoute={routes[0]}
+		initialRouteStack={routes}
+		renderScene={(route, navigator) =>
+			<TouchableHighlight onPress={() => {
+				if(route.index == 0) {
+					navigator.push(routes[1]);
+				} else {
+					navigator.pop();
+				}
+			}}>
+			<Text> Hello {route.title}! </Text>
+			</TouchableHighlight>
+			}
+		style={styles.container}/>
   );
 }
 
