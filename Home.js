@@ -1,6 +1,8 @@
 import { StyleSheet, Text, View } from 'react-native';
-import { createStackNavigator, createDrawerNavigator } from '@react-navigation/stack';
+import { createDrawerNavigator } from '@react-navigation/drawer';
 import React from "react"
+
+import NotHome from "./NotHome";
 
 const Drawer = createDrawerNavigator();
 
@@ -9,8 +11,7 @@ export default function Home() {
 		<View>
 			<Text> Hello! </Text>
 			<Drawer.Navigator>
-				<Drawer.Screen name="Feed" component={Feed} />
-				<Drawer.Screen name="Article" component={Article} />
+				<Drawer.Screen name="NotHome" component={NotHome} />
 			</Drawer.Navigator>
 		</View>
 	);
