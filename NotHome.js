@@ -1,20 +1,12 @@
 import { StyleSheet, Text, View } from 'react-native';
 import React from "react"
 
-export default function NotHome() {
-	return(
-		<View>
-			<Text> Hello! </Text>
-		</View>
-	);
-}
-
-/*export default class NotHome extends React.Fragment {
+export default class NotHome extends React.Component {
 	render() {
 		return(
 			<View>
-				<Text> Hello! </Text>
+				<Text> Hello from the other side! </Text>
 			</View>
 		);
 	}
-}*/
+}
