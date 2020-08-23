@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View } from 'react-native';
-import { createStackNavigator } from '@react-navigation/stack';
+import { createStackNavigator, createDrawerNavigator } from '@react-navigation/stack';
 import React from "react"
 
 const Drawer = createDrawerNavigator();
