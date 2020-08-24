@@ -1,65 +1,50 @@
-import { StyleSheet, Platform, StatusBar } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createDrawerNavigator } from '@react-navigation/drawer';
+import { StyleSheet, Platform, StatusBar, View, Text, ScrollView } from 'react-native';
+import { DrawerItems, createDrawerNavigator } from 'react-navigation-drawer';
+import { createStackNavigator, createAppContainer } from 'react-navigation';
+// import { NavigationContainer } from '@react-navigation/native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import React from "react"
 
 import Home from "./Home.js";
 import NotHome from "./NotHome.js";
 
-const Drawer = createDrawerNavigator();
+const Drawer = createAppContainer(createDrawerNavigator({
+	Home: {screen: Home},
+	NotHome: {screen: NotHome},
+}, {
+	contentComponent: (props) => (
+		<SafeAreaView style={styles.container}>
+			<View style={{height: 100,alignItems: 'center', justifyContent: 'center'}}>
 
-export default function App() {
-	console.log(StatusBar.currentHeight)
-	return(
-		<NavigationContainer
-			style={styles.container}>
-			<Drawer.Navigator
-				style={{
-					paddingTop: Platform.OS === 'ios' ? 0 : StatusBar.currentHeight,
-				}}>
-				<Drawer.Screen name="Home" component={Home} />
-				<Drawer.Screen name="NotHome" component={NotHome} />
-			</Drawer.Navigator>
-		</NavigationContainer>
-	);
+				<Text style={{fontSize: 32}}>LOGO</Text>
+			</View>
+			<ScrollView>
+				<DrawerItems {...props} />
+			</ScrollView>
+		</SafeAreaView>
+	)
+}));
+
+export default class App extends React.Component {
+	render() {
+		return(
+			<View style={styles.masterContainer}>
+				<StatusBar style="light" />
+				{/*<NavigationContainer>*/}
+					<Drawer/>
+				{/*</NavigationContainer>*/}
+			</View>
+		);
+	}
 }
-/*import { StyleSheet, Text, View, TouchableHighlight, Navigator } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import { StatusBar } from 'expo-status-bar';
-import 'react-native-gesture-handler';
-import * as React from 'react';
-
-import Home from "./Home";
-import NotHome from "./NotHome";
-
-const Stack = createStackNavigator();
-
-export default function App() {
-	return (
-		<NavigationContainer style={styles.container}>
-			<Stack.Navigator>
-				<Stack.Screen
-					name="Home"
-					component={Home}
-					options={{ title: 'Welcome' }}
-				/>
-				<Stack.Screen
-					name="NotHome"
-					component={NotHome}
-					options={{ title: 'Welcome II' }}
-				/>
-			</Stack.Navigator>
-		</NavigationContainer>
-	);
-}*/
 
 const styles = StyleSheet.create({
-	container: {
-		backgroundColor: '#F00',
-		paddingTop: Platform.OS === 'ios' ? 0 : StatusBar.currentHeight,
+	masterContainer: {
+		// marginTop: Platform.OS === 'ios' ? 0 : StatusBar.currentHeight, //Requires
 		flex: 1,
-		alignItems: 'center',
-		justifyContent: 'center',
 	},
+	drawerHeading: {
+		width: "100%",
+		backgroundColor: "#FF0000",
+	}
 });

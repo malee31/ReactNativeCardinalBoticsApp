@@ -16,6 +16,7 @@
     "@react-navigation/native": "^5.7.3",
     "@react-navigation/stack": "^5.9.0",
     "expo": "^38.0.9",
+    "expo-constants": "~9.1.1",
     "expo-status-bar": "^1.0.2",
     "install": "^0.13.0",
     "navigation": "^5.3.1",
@@ -30,7 +31,9 @@
     "react-native-screens": "~2.9.0",
     "react-native-tab-view": "^2.15.1",
     "react-native-web": "~0.11.7",
-    "react-navigation-drawer": "^2.5.0"
+    "react-navigation": "^4.4.0",
+    "react-navigation-drawer": "^2.5.0",
+    "react-navigation-stack": "^2.8.2"
   },
   "devDependencies": {
     "@babel/plugin-proposal-class-properties": "^7.2.3",

@@ -5,7 +5,7 @@ export default class Home extends React.Component {
 	render() {
 		return(
 			<View>
-				<Text> Hello! </Text>
+				<Text style={{backgroundColor:"#FFFFFF"}}> Hello! </Text>
 			</View>
 		);
 	}
