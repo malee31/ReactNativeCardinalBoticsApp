@@ -1,4 +1,4 @@
-import { StyleSheet, StatusBar, View, Text, ScrollView } from 'react-native';
+import { StyleSheet, StatusBar, View, Text, ScrollView, Image } from 'react-native';
 import { DrawerItems, createDrawerNavigator } from 'react-navigation-drawer';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 // import { NavigationContainer } from '@react-navigation/native';
@@ -10,12 +10,15 @@ import NotHome from "./NotHome.js";
 
 const Drawer = createAppContainer(createDrawerNavigator({
 	Home: {screen: Home},
-	NotHome: {screen: NotHome},
+	Other: {screen: NotHome},
 }, {
 	contentComponent: (props) => (
-		<SafeAreaView style={styles.container}>
-			<View style={{height: 100,alignItems: 'center', justifyContent: 'center'}}>
-				<Text style={{fontSize: 32}}>LOGO</Text>
+		<SafeAreaView style={styles.masterContainer}>
+			<View style={styles.drawerHeading}>
+				<Image source={require("./assets/cardinalbotics_logo_white_clear.png")}
+					resizeMode="contain"
+					style={styles.drawerLogo}/>
+				<Text style={styles.drawerText}>Welcome</Text>
 			</View>
 			<ScrollView>
 				<DrawerItems {...props} />
@@ -44,6 +47,20 @@ const styles = StyleSheet.create({
 	},
 	drawerHeading: {
 		width: "100%",
-		backgroundColor: "#FF0000",
+		height: "25%",
+		alignItems: 'center',
+		justifyContent: 'flex-start'
+	},
+	drawerLogo: {
+		width: "60%",
+		height: "70%",
+		maxHeight: "70%",
+	},
+	drawerText: {
+		width: "100%",
+		height: "30%",
+		fontSize: 18,
+		color: "#EEEEEE",
+		textAlign: "center",
 	}
 });
