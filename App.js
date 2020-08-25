@@ -1,4 +1,4 @@
-import { StyleSheet, Platform, StatusBar, View, Text, ScrollView } from 'react-native';
+import { StyleSheet, StatusBar, View, Text, ScrollView } from 'react-native';
 import { DrawerItems, createDrawerNavigator } from 'react-navigation-drawer';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 // import { NavigationContainer } from '@react-navigation/native';
@@ -15,7 +15,6 @@ const Drawer = createAppContainer(createDrawerNavigator({
 	contentComponent: (props) => (
 		<SafeAreaView style={styles.container}>
 			<View style={{height: 100,alignItems: 'center', justifyContent: 'center'}}>
-
 				<Text style={{fontSize: 32}}>LOGO</Text>
 			</View>
 			<ScrollView>
@@ -40,7 +39,7 @@ export default class App extends React.Component {
 
 const styles = StyleSheet.create({
 	masterContainer: {
-		// marginTop: Platform.OS === 'ios' ? 0 : StatusBar.currentHeight, //Requires
+		// marginTop: Platform.OS === 'ios' ? 0 : StatusBar.currentHeight,
 		flex: 1,
 	},
 	drawerHeading: {
