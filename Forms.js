@@ -2,6 +2,7 @@ import {FlatList, StyleSheet, Text, View} from 'react-native';
 import LinkButton from "./LinkButton.js";
 import config from "./config.json";
 import React from "react";
+import Icon from "./images/form.svg";
 
 export default class Forms extends React.Component {
     constructor(props) {
@@ -10,6 +11,17 @@ export default class Forms extends React.Component {
             linkPairs: [],
             isLoading: false
         };
+    }
+
+    static navigationOptions = {
+        drawerLabel: 'Forms',
+        drawerIcon: () => (
+            <Icon
+                width={30}
+                height={30}
+                fill={config.colors.secondary}
+            />
+        )
     }
 
     componentDidMount() {

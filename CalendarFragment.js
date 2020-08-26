@@ -3,6 +3,7 @@ import {FlatList, Image, StyleSheet, Text, TouchableHighlight, View} from 'react
 import LinkButton from "./LinkButton.js";
 import config from "./config.json";
 import React from "react";
+import Icon from "./images/calendar.svg";
 
 class CalendarFragment extends React.Component {
     constructor(props) {
@@ -11,6 +12,17 @@ class CalendarFragment extends React.Component {
             marked: {},
             isLoading: false
         };
+    }
+
+    static navigationOptions = {
+        drawerLabel: 'CalendarFragment',
+        drawerIcon: () => (
+            <Icon
+                width={30}
+                height={30}
+                fill={config.colors.secondary}
+            />
+        )
     }
 
     componentDidMount() {

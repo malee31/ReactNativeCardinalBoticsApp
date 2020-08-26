@@ -1,7 +1,7 @@
 import {Image, StyleSheet, Text, TouchableHighlight, View} from 'react-native';
 import React from "react";
 import {TextInput} from 'react-native-paper';
-import Icon from "./images/book.svg";
+import Icon from "./images/home.svg";
 import config from "./config.json";
 
 class Home extends React.Component {

@@ -2,6 +2,7 @@ import {FlatList, Text, View} from 'react-native';
 import LinkButton from "./LinkButton.js";
 import config from "./config.json";
 import React from "react";
+import Icon from "./images/list.svg";
 
 export default class NotHome extends React.Component {
     constructor(props) {
@@ -10,6 +11,16 @@ export default class NotHome extends React.Component {
             linkPairs: [],
             isLoading: false
         };
+    }
+    static navigationOptions = {
+        drawerLabel: 'Resources',
+        drawerIcon: () => (
+            <Icon
+                width={30}
+                height={30}
+                fill={config.colors.secondary}
+            />
+        )
     }
 
     componentDidMount() {
