@@ -1,13 +1,44 @@
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { StyleSheet, Text, View, FlatList } from 'react-native';
 import LinkButton from "./LinkButton.js";
-import React from "react"
+import config from "./config.json";
+import React from "react";
 
 export default class NotHome extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			linkPairs: [],
+			isLoading: false
+		};
+	}
+
+	componentDidMount() {
+		fetch(config.urls.resources)
+			.then((response) => response.json())
+			.then((json) => {
+				this.setState({ data: json.values });
+			})
+			.catch((error) => console.error(error))
+			.finally(() => {
+				this.setState({ isLoading: false });
+			});
+	}
+
 	render() {
 		return(
 			<View>
-				<LinkButton title="Click Me" url="https://google.com" />
-				<LinkButton title="Click Me 2" url="https://youtube.com" />
+				{this.state.isLoading ? <Text> Loading </Text> : (
+					<FlatList
+						data={this.state.data}
+						keyExtractor={(item, index) => item[0] + ": " + item[1]}
+						renderItem={(entry) => {
+							entry = entry.item;
+							return (
+								<LinkButton title={entry[0]} url={entry[1]}/>
+							);
+						}}
+					/>
+				)}
 			</View>
 		);
 	}
