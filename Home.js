@@ -68,7 +68,8 @@ const styles = StyleSheet.create({
         height: "100%",
         flex: 1,
         paddingHorizontal: 30,
-        backgroundColor: "#eaeaea"
+        backgroundColor: "#eaeaea",
+        justifyContent: "space-around"
     },
     largeLogoImage: {
         width: "100%",
@@ -79,7 +80,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         backgroundColor: "#7D1120",
-        height: 50
+        height: 50,
     },
     signInText: {
         fontSize: 30
