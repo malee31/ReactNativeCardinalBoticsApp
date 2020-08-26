@@ -8,11 +8,13 @@ import React from "react"
 import Home from "./Home.js";
 import NotHome from "./NotHome.js";
 import Forms from "./Forms.js";
+import Calendar from "./CalendarFragment.js";
 
 const Drawer = createAppContainer(createDrawerNavigator({
     Home: {screen: Home},
     Other: {screen: NotHome},
     Forms: {screen: Forms},
+    Calendar: {screen: Calendar},
 }, {
     contentComponent: (props) => (
         <SafeAreaView style={styles.masterContainer}>

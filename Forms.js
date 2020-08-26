@@ -1,4 +1,4 @@
-import {FlatList, Text, View} from 'react-native';
+import {FlatList, StyleSheet, Text, View} from 'react-native';
 import LinkButton from "./LinkButton.js";
 import config from "./config.json";
 import React from "react";
@@ -26,15 +26,16 @@ export default class Forms extends React.Component {
 
     render() {
         return (
-            <View>
+            <View style={styles.formButton}>
                 {this.state.isLoading ? <Text> Loading </Text> : (
                     <FlatList
                         data={this.state.data}
-                        keyExtractor={(item, index) => item[0] + ": " + item[1]}
+                        keyExtractor={(item, index) => item[1] + ": " + item[2]}
                         renderItem={(entry) => {
                             entry = entry.item;
                             return (
-                                <LinkButton title={entry[0]} url={entry[1]}/>
+                                <LinkButton
+                                    title={entry[1]} url={entry[2]}/>
                             );
                         }}
                     />
@@ -43,3 +44,12 @@ export default class Forms extends React.Component {
         );
     }
 }
+const styles = StyleSheet.create({
+    formButton: {
+        width: "100%",
+        height: "100%",
+        flex: 1,
+        paddingHorizontal: 30,
+        color: "#7D1120"
+    },
+});
