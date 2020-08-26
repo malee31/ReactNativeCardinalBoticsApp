@@ -1,7 +1,8 @@
 import {Image, StyleSheet, Text, TouchableHighlight, View} from 'react-native';
-import React from "react"
+import React from "react";
 import {TextInput} from 'react-native-paper';
 import Icon from "./images/book.svg";
+import config from "./config.json";
 
 class Home extends React.Component {
     constructor(props) {
@@ -16,8 +17,9 @@ class Home extends React.Component {
         drawerLabel: 'Home',
         drawerIcon: () => (
             <Icon
-                source={require("./images/book.svg")}
-                style={{width: 30, height: 30, borderRadius: 15}}
+                width={30}
+                height={30}
+                fill={config.colors.secondary}
             />
         )
     }
