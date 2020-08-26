@@ -1,14 +1,25 @@
 import {Image, ScrollView, StatusBar, StyleSheet, Text, View} from 'react-native';
+import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
 import {createDrawerNavigator, DrawerItems} from 'react-navigation-drawer';
-import {createAppContainer} from 'react-navigation';
-// import { NavigationContainer } from '@react-navigation/native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import React from "react"
+import {createAppContainer} from 'react-navigation';
+import React from "react";
+import config from "./config.json";
 
 import Home from "./Home.js";
 import NotHome from "./NotHome.js";
 import Forms from "./Forms.js";
 import Calendar from "./CalendarFragment.js";
+
+const theme = {
+    ...DefaultTheme,
+    roundness: 2,
+    colors: {
+        ...DefaultTheme.colors,
+        primary: config.colors.primary,
+        accent: config.colors.secondary
+    },
+};
 
 const Drawer = createAppContainer(createDrawerNavigator({
     Home: {screen: Home},
@@ -34,12 +45,12 @@ const Drawer = createAppContainer(createDrawerNavigator({
 export default class App extends React.Component {
     render() {
         return (
-            <View style={styles.masterContainer}>
+            <PaperProvider theme={theme} style={styles.masterContainer}>
                 <StatusBar style="light"/>
                 {/*<NavigationContainer>*/}
                 <Drawer/>
                 {/*</NavigationContainer>*/}
-            </View>
+            </PaperProvider>
         );
     }
 }

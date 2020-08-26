@@ -2,18 +2,39 @@
   "expo": {
     "name": "ReactNative-CardinalBoticsApp",
     "slug": "ReactNative-CardinalBoticsApp",
-    "version": "1.0.0",
-    "description": "An app for Team4159 Cardinalbotics while social distancing",
-    "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "privacy": "hidden",
-    "backgroundColor": "#EAEAEA",
+    "version": "1.0.0",
+    "privacy": "unlisted",
+    "orientation": "portrait",
+    "description": "An app for Team4159 Cardinalbotics while social distancing",
     "primaryColor": "#7D1120",
+    "backgroundColor": "#EAEAEA",
+    "splash": {
+      "image": "./assets/favicon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#7D1120",
+      "userInterfaceStyle": "automatic"
+    },
     "notification": {
       "icon": "./assets/icon.png",
       "color" : "#FEFEFE",
       "iosDisplayInForeground": false,
       "androidCollapsedTitle": "collapse"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
+    "android": {
+      "package": "com.team4159.cardinalboticsapp",
+      "versionCode": 1
     },
     "androidStatusBar": {
       "barStyle": "light-content",
@@ -24,27 +45,6 @@
     "androidNavigationBar": {
       "visible": "immersive",
       "barStyle": "light-content"
-    },
-    "platforms": [
-      "ios",
-      "android",
-      "web"
-    ],
-    "splash": {
-      "image": "./assets/favicon.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#7D1120",
-      "userInterfaceStyle": "automatic"
-    },
-    "updates": {
-      "fallbackToCacheTimeout": 0
-    },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
-    "android": {
-      "package": "com.team4159.cardinalboticsapp",
-      "versionCode": 1
     },
     "ios": {
       "bundleIdentifier": "com.team4159.cardinalboticsapp",
