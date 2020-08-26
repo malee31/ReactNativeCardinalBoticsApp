@@ -3,12 +3,38 @@
     "name": "ReactNative-CardinalBoticsApp",
     "slug": "ReactNative-CardinalBoticsApp",
     "version": "1.0.0",
+    "description": "An app for Team4159 Cardinalbotics while social distancing",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
+    "privacy": "hidden",
+    "backgroundColor": "#EAEAEA",
+    "primaryColor": "#7D1120",
+    "notification": {
+      "icon": "./assets/icon.png",
+      "color" : "#FEFEFE",
+      "iosDisplayInForeground": false,
+      "androidCollapsedTitle": "collapse"
+    },
+    "androidStatusBar": {
+      "barStyle": "light-content",
+      "backgroundColor": "#7D1120",
+      "hidden": true,
+      "translucent": false
+    },
+    "androidNavigationBar": {
+      "visible": "immersive",
+      "barStyle": "light-content"
+    },
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/favicon.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#7D1120",
+      "userInterfaceStyle": "automatic"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -16,8 +42,14 @@
     "assetBundlePatterns": [
       "**/*"
     ],
+    "android": {
+      "package": "com.team4159.cardinalboticsapp",
+      "versionCode": 1
+    },
     "ios": {
-      "supportsTablet": true
+      "bundleIdentifier": "com.team4159.cardinalboticsapp",
+      "supportsTablet": true,
+      "buildNumber": "1.0.0"
     },
     "web": {
       "favicon": "./assets/favicon.png"
