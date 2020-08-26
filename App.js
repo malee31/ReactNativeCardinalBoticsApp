@@ -1,5 +1,5 @@
 import {Image, ScrollView, StatusBar, StyleSheet, Text, View} from 'react-native';
-import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
+import {DefaultTheme, Provider as PaperProvider} from 'react-native-paper';
 import {createDrawerNavigator, DrawerItems} from 'react-navigation-drawer';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {createAppContainer} from 'react-navigation';
@@ -31,8 +31,8 @@ const Drawer = createAppContainer(createDrawerNavigator({
         <SafeAreaView style={styles.masterContainer}>
             <View style={styles.drawerHeading}>
                 <Image source={require("./assets/cardinalbotics_logo_white_clear.png")}
-                       resizeMode="contain"
-                       style={styles.drawerLogo}/>
+                    resizeMode="contain"
+                    style={styles.drawerLogo}/>
                 <Text style={styles.drawerText}>Welcome</Text>
             </View>
             <ScrollView>
@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
         width: "100%",
         height: "30%",
         fontSize: 18,
-        color: "#EEEEEE",
+        color: "#EEE",
         textAlign: "center",
     }
 });

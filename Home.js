@@ -5,14 +5,6 @@ import Icon from "./images/home.svg";
 import config from "./config.json";
 
 class Home extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            signedIn: false
-        };
-        this.signInToggle = this.signInToggle.bind(this);
-    }
-
     static navigationOptions = {
         drawerLabel: 'Home',
         drawerIcon: () => (
@@ -22,6 +14,14 @@ class Home extends React.Component {
                 fill={config.colors.secondary}
             />
         )
+    }
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            signedIn: false
+        };
+        this.signInToggle = this.signInToggle.bind(this);
     }
 
     signInToggle() {
@@ -34,8 +34,8 @@ class Home extends React.Component {
         return (
             <View style={styles.screen}>
                 <Image source={require("./assets/cardinalbotics_logo_white_clear.png")}
-                       resizeMode="contain"
-                       style={styles.largeLogoImage}/>
+                    resizeMode="contain"
+                    style={styles.largeLogoImage}/>
                 <TouchableHighlight onPress={this.signInToggle}>
                     <View style={styles.signInButton}>
                         <Text style={styles.signInText}>{this.state.signedIn ? "Sign Out" : "Sign In"}</Text>
@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
         height: "100%",
         flex: 1,
         paddingHorizontal: 30,
-        backgroundColor: "#eaeaea",
+        backgroundColor: "#EAEAEA",
         justifyContent: "space-around"
     },
     largeLogoImage: {

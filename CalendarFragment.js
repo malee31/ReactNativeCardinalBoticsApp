@@ -1,19 +1,10 @@
-import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
-import {FlatList, Image, StyleSheet, Text, TouchableHighlight, View} from 'react-native';
-import LinkButton from "./LinkButton.js";
+import {Calendar} from 'react-native-calendars';
+import {View} from 'react-native';
 import config from "./config.json";
 import React from "react";
 import Icon from "./images/calendar.svg";
 
 class CalendarFragment extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            marked: {},
-            isLoading: false
-        };
-    }
-
     static navigationOptions = {
         drawerLabel: 'CalendarFragment',
         drawerIcon: () => (
@@ -25,11 +16,19 @@ class CalendarFragment extends React.Component {
         )
     }
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            marked: {},
+            isLoading: false
+        };
+    }
+
     componentDidMount() {
         fetch(config.urls.calendar)
             .then((response) => response.json())
             .then((json) => {
-                json=json.items;
+                json = json.items;
                 this.setState({
                     data: json.values,
                     marked: {
@@ -52,16 +51,19 @@ class CalendarFragment extends React.Component {
 
     render() {
         return (
-            <View >
+            <View>
                 <Calendar
                     markingType={'period'}
                     markedDates={
-                     this.state.marked
+                        this.state.marked
                     }
-                    onDayPress={(day)=>{console.warn(JSON.stringify(day))}}
+                    onDayPress={(day) => {
+                        console.warn(JSON.stringify(day))
+                    }}
                 />
             </View>
         );
     };
 }
+
 export default CalendarFragment;

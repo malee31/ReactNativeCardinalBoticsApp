@@ -5,13 +5,6 @@ import React from "react";
 import Icon from "./images/list.svg";
 
 export default class NotHome extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            linkPairs: [],
-            isLoading: false
-        };
-    }
     static navigationOptions = {
         drawerLabel: 'Resources',
         drawerIcon: () => (
@@ -21,6 +14,14 @@ export default class NotHome extends React.Component {
                 fill={config.colors.secondary}
             />
         )
+    }
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            linkPairs: [],
+            isLoading: false
+        };
     }
 
     componentDidMount() {

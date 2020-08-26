@@ -5,14 +5,6 @@ import React from "react";
 import Icon from "./images/form.svg";
 
 export default class Forms extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            linkPairs: [],
-            isLoading: false
-        };
-    }
-
     static navigationOptions = {
         drawerLabel: 'Forms',
         drawerIcon: () => (
@@ -22,6 +14,14 @@ export default class Forms extends React.Component {
                 fill={config.colors.secondary}
             />
         )
+    }
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            linkPairs: [],
+            isLoading: false
+        };
     }
 
     componentDidMount() {

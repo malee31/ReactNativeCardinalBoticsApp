@@ -17,7 +17,7 @@
     },
     "notification": {
       "icon": "./assets/icon.png",
-      "color" : "#FEFEFE",
+      "color": "#FEFEFE",
       "iosDisplayInForeground": false,
       "androidCollapsedTitle": "collapse"
     },
