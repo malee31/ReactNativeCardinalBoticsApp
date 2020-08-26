@@ -1,7 +1,8 @@
-import {Image, StyleSheet, Text, View, Dimensions, Button} from 'react-native';
+import {Image, StyleSheet, TouchableHighlight, Text, View, Dimensions, Button} from 'react-native';
 import React from "react"
+import { TextInput } from 'react-native-paper';
 
-export default class Home extends React.Component {
+class Home extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -9,31 +10,48 @@ export default class Home extends React.Component {
 		};
 		this.signInToggle = this.signInToggle.bind(this);
 	}
-
 	signInToggle() {
 		this.setState({
 			signedIn: !this.state.signedIn
 		});
 	}
-
+	
 	render() {
 		return(
-			<View style={{height: "100%", width: "100%"}}>
+			<View style={styles.screen}>
 				<Image source={require("./assets/cardinalbotics_logo_white_clear.png")}
 					resizeMode="contain"
 					style={styles.largeLogoImage}/>
-				<Button onPress={this.signInToggle}
-					title={this.state.signedIn ? "Sign Out" : "Sign In"}
-					style={styles.signInButton}/>
+					<TouchableHighlight onPress={this.signInToggle}>
+				        <View style={styles.signInButton}>
+				          <Text style = {styles.signInText}>{this.state.signedIn ? "Sign Out" : "Sign In"}</Text>
+				        </View>
+				     </TouchableHighlight>
+				     <MyComponent/>
 			</View>
 		);
-	}
+	};
 }
+const MyComponent = () => {
+  const [text, setText] = React.useState('');
 
+  return (
+  	<View style={styles.whatchuDoing}>
+	    <TextInput
+	      label="What did you do while signed in?"
+	      value={text}
+	      onChangeText={text => setText(text)}
+	    />
+    </View>
+  );
+};
+export default Home;
 const styles = StyleSheet.create({
 	screen: {
 		width: "100%",
 		height: "100%",
+		flex: 1,
+    	paddingHorizontal: 30,
 		backgroundColor: "#eaeaea"
 	},
 	largeLogoImage: {
@@ -42,7 +60,14 @@ const styles = StyleSheet.create({
 		marginVertical: 30
 	},
 	signInButton: {
-		width: "80%",
-		marginHorizontal: "10"
+		alignItems: "center",
+		backgroundColor: "#DDDDDD",
+		height:50
+	},
+	signInText: {
+		fontSize:30
+	},
+	whatchuDoing: {
+		color: "#7D1120",
 	}
 });
