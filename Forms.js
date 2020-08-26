@@ -3,7 +3,7 @@ import LinkButton from "./LinkButton.js";
 import config from "./config.json";
 import React from "react";
 
-export default class NotHome extends React.Component {
+export default class Forms extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -13,7 +13,7 @@ export default class NotHome extends React.Component {
     }
 
     componentDidMount() {
-        fetch(config.urls.resources)
+        fetch(config.urls.sheet)
             .then((response) => response.json())
             .then((json) => {
                 this.setState({data: json.values});
