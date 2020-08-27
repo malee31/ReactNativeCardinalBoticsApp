@@ -1,7 +1,7 @@
-import {Button} from 'react-native';
 import * as WebBrowser from 'expo-web-browser';
 import React from "react"
 import config from "../../config.json";
+import { Button } from 'react-native-paper';
 
 export default class LinkButton extends React.Component {
     constructor(props) {
@@ -9,7 +9,8 @@ export default class LinkButton extends React.Component {
         this.redirector = this.redirector.bind(this);
         this.state = {
             url: props.url,
-            title: props.title
+            title: props.title,
+            icon: props.icon,
         }
     }
 
@@ -19,7 +20,13 @@ export default class LinkButton extends React.Component {
 
     render() {
         return (
-            <Button color={config.colors.secondary} title={this.state.title} onPress={this.redirector}/>
+            <Button
+                icon={this.state.icon}
+                mode="contained"
+                color={config.colors.secondary}
+                onPress={this.redirector}>
+                {this.state.title}
+            </Button>
         );
     }
 }
