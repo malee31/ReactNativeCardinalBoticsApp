@@ -19,15 +19,14 @@ class Login extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            text: "",
             signedIn: false
         };
-        this.signInToggle = this.signInToggle.bind(this);
+        this.login = this.login.bind(this);
     }
 
-    signInToggle() {
-        this.setState({
-            signedIn: !this.state.signedIn
-        });
+    login() {
+        console.warn(this.state.text);
     }
 
     render() {
@@ -36,8 +35,12 @@ class Login extends React.Component {
                 <Image source={require("../assets/cardinalbotics_logo_white_clear.png")}
                     resizeMode="contain"
                     style={styles.largeLogoImage}/>
-                <MyComponent/>
-                <TouchableHighlight onPress={this.signInToggle}
+                <TextInput
+                    label="Login"
+                    value={this.state.text}
+                    style={styles.whatchuDoing}
+                    onChange={ newText => this.setState({text: newText.nativeEvent.text})} />
+                <TouchableHighlight onPress={this.login}
                     activeOpacity={0.7}
                     underlayColor={config.colors.darkGray}
                     style={styles.signInButton}>
@@ -49,19 +52,6 @@ class Login extends React.Component {
         );
     };
 }
-
-const MyComponent = () => {
-    const [text, setText] = React.useState('');
-
-    return (
-        <TextInput
-            label="Login"
-            value={text}
-            style={styles.whatchuDoing}
-            onChangeText={text => setText(text)}
-        />
-    )
-};
 
 export default Login;
 const styles = StyleSheet.create({
