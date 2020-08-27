@@ -1,6 +1,7 @@
 import {Button} from 'react-native';
 import * as WebBrowser from 'expo-web-browser';
 import React from "react"
+import config from "../../config.json";
 
 export default class LinkButton extends React.Component {
     constructor(props) {
@@ -18,7 +19,7 @@ export default class LinkButton extends React.Component {
 
     render() {
         return (
-            <Button title={this.state.title} onPress={this.redirector}/>
+            <Button color={config.colors.secondary} title={this.state.title} onPress={this.redirector}/>
         );
     }
 }

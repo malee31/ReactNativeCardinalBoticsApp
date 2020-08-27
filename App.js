@@ -10,6 +10,7 @@ import Home from "./components/Home.js";
 import Resources from "./components/Resources.js";
 import Forms from "./components/Forms.js";
 import Calendar from "./components/CalendarFragment.js";
+import Login from "./components/Login.js";
 
 const drawerTheme = {
 	...DefaultTheme,
@@ -23,9 +24,10 @@ const drawerTheme = {
 
 const Drawer = createAppContainer(createDrawerNavigator({
 	Home: {screen: Home},
+	Login: {screen: Login},
+	Calendar: {screen: Calendar},
 	Resources: {screen: Resources},
 	Forms: {screen: Forms},
-	Calendar: {screen: Calendar},
 }, {
 	contentComponent: (props) => (
 		<SafeAreaView style={styles.masterContainer}>

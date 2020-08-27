@@ -1,12 +1,12 @@
 import {Image, StyleSheet, Text, TouchableHighlight, View} from 'react-native';
 import React from "react";
 import {TextInput} from 'react-native-paper';
-import Icon from "../images/home.svg";
+import Icon from "../images/login.svg";
 import config from "../config.json";
 
-class Home extends React.Component {
+class Login extends React.Component {
     static navigationOptions = {
-        drawerLabel: 'Home',
+        drawerLabel: 'Login',
         drawerIcon: () => (
             <Icon
                 width={30}
@@ -36,15 +36,15 @@ class Home extends React.Component {
                 <Image source={require("../assets/cardinalbotics_logo_white_clear.png")}
                     resizeMode="contain"
                     style={styles.largeLogoImage}/>
+                <MyComponent/>
                 <TouchableHighlight onPress={this.signInToggle}
                     activeOpacity={0.7}
                     underlayColor={config.colors.darkGray}
                     style={styles.signInButton}>
                     <View>
-                        <Text style={styles.signInText}>{this.state.signedIn ? "Sign Out" : "Sign In"}</Text>
+                        <Text>Submit</Text>
                     </View>
                 </TouchableHighlight>
-                <MyComponent/>
             </View>
         );
     };
@@ -55,7 +55,7 @@ const MyComponent = () => {
 
     return (
         <TextInput
-            label="What did you do while signed in?"
+            label="Login"
             value={text}
             style={styles.whatchuDoing}
             onChangeText={text => setText(text)}
@@ -63,7 +63,7 @@ const MyComponent = () => {
     )
 };
 
-export default Home;
+export default Login;
 const styles = StyleSheet.create({
     screen: {
         width: "100%",

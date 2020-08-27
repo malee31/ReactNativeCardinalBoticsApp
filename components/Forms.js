@@ -38,7 +38,7 @@ export default class Forms extends React.Component {
 
     render() {
         return (
-            <View style={styles.formButton}>
+            <View >
                 {this.state.isLoading ? <Text> Loading </Text> : (
                     <FlatList
                         data={this.state.data}
@@ -46,8 +46,10 @@ export default class Forms extends React.Component {
                         renderItem={(entry) => {
                             entry = entry.item;
                             return (
-                                <LinkButton
-                                    title={entry[1]} url={entry[2]}/>
+                                <View style={styles.formButton}>
+                                    <LinkButton
+                                        title={entry[1]} url={entry[2]}/>
+                                </View>
                             );
                         }}
                     />
@@ -59,9 +61,9 @@ export default class Forms extends React.Component {
 const styles = StyleSheet.create({
     formButton: {
         width: "100%",
-        height: "100%",
+        height: 40,
         flex: 1,
         paddingHorizontal: 30,
-        color: "#7D1120"
+        marginVertical:10
     },
 });

@@ -1,4 +1,4 @@
-import {FlatList, Text, View} from 'react-native';
+import {FlatList, StyleSheet, Text, View} from 'react-native';
 import LinkButton from "./parts/LinkButton.js";
 import config from "../config.json";
 import React from "react";
@@ -46,7 +46,9 @@ export default class Resources extends React.Component {
                         renderItem={(entry) => {
                             entry = entry.item;
                             return (
-                                <LinkButton title={entry[0]} url={entry[1]}/>
+                                <View style={styles.resourceButton}>
+                                    <LinkButton title={entry[0]} url={entry[1]}/>
+                                </View>
                             );
                         }}
                     />
@@ -55,3 +57,13 @@ export default class Resources extends React.Component {
         );
     }
 }
+
+const styles = StyleSheet.create({
+    resourceButton: {
+        width: "100%",
+        height: 40,
+        flex: 1,
+        paddingHorizontal: 30,
+        marginVertical:10
+    },
+});
