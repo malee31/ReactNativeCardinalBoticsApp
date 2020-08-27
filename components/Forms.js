@@ -1,8 +1,8 @@
 import {FlatList, StyleSheet, Text, View} from 'react-native';
-import LinkButton from "./LinkButton.js";
-import config from "./config.json";
+import LinkButton from "./parts/LinkButton.js";
+import config from "../config.json";
 import React from "react";
-import Icon from "./images/form.svg";
+import Icon from "../images/form.svg";
 
 export default class Forms extends React.Component {
     static navigationOptions = {

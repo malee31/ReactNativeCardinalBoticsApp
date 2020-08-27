@@ -1,12 +1,12 @@
 import {Calendar} from 'react-native-calendars';
 import {View} from 'react-native';
-import config from "./config.json";
+import config from "../config.json";
 import React from "react";
-import Icon from "./images/calendar.svg";
+import Icon from "../images/calendar.svg";
 
 class CalendarFragment extends React.Component {
     static navigationOptions = {
-        drawerLabel: 'CalendarFragment',
+        drawerLabel: 'Calendar',
         drawerIcon: () => (
             <Icon
                 width={30}

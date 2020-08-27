@@ -8,6 +8,9 @@
   "colors": {
     "primary": "#7D1120",
     "secondary": "#9C3131",
-    "cardinalWhite": "#FEFEFE"
+    "cardinalWhite": "#FEFEFE",
+    "background": "#FFFFFF",
+    "gray": "#DDDDDD",
+    "darkGray": "#CECECE"
   }
 }
