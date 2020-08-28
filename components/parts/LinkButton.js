@@ -11,7 +11,7 @@ export default class LinkButton extends React.Component {
 
 		let icon;
 		//Images from https://materialdesignicons.com/
-		switch (props.icon.trim()) {
+		switch (props.icon.toLowerCase().replaceAll(/[^a-z]/, "")) {
 			case "googledrive":
 				icon = "google-drive";
 				break;

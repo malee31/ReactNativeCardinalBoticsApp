@@ -1,8 +1,46 @@
 import {Calendar} from 'react-native-calendars';
-import {View} from 'react-native';
+import {View, ScrollView, Text} from 'react-native';
 import config from "../config.json";
 import React from "react";
 import Icon from "../images/calendar.svg";
+import moment from 'moment';
+import {LocaleConfig} from 'react-native-calendars';
+
+LocaleConfig.locales['en'] = {
+	formatAccessibilityLabel: 'dddd d \'of\' MMMM \'of\' yyyy',
+	monthNames: [
+		'January',
+		'February',
+		'March',
+		'April',
+		'May',
+		'June',
+		'July',
+		'August',
+		'September',
+		'October',
+		'November',
+		'December'
+	],
+	monthNamesShort: [
+		'Jan',
+		'Feb',
+		'Mar',
+		'Apr',
+		'May',
+		'Jun',
+		'Jul',
+		'Aug',
+		'Sep',
+		'Oct',
+		'Nov',
+		'Dec'
+	],
+	dayNames: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+	dayNamesShort: ['S', 'M', 'T', 'W', 'T', 'F', 'S']
+};
+
+LocaleConfig.defaultLocale = 'en';
 
 class CalendarFragment extends React.Component {
 	static navigationOptions = {
@@ -19,6 +57,7 @@ class CalendarFragment extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			selectedEvent: "Click on an Event",
 			marked: {},
 			isLoading: false
 		};
@@ -29,6 +68,11 @@ class CalendarFragment extends React.Component {
 			.then((response) => response.json())
 			.then((json) => {
 				json = json.items;
+				let mark = {}
+				for(let item = 0; item < json.length; item++) {
+					let event = {marked: true}
+					let time = moment()
+				}
 				this.setState({
 					data: json.values,
 					marked: {
@@ -52,18 +96,47 @@ class CalendarFragment extends React.Component {
 	render() {
 		return (
 			<View>
-				<Calendar
-					markingType={'period'}
-					markedDates={
-						this.state.marked
-					}
-					onDayPress={(day) => {
-						console.warn(JSON.stringify(day))
-					}}
-				/>
+				<View style={styles.calendarView}>
+					<Calendar
+						markingType={'period'}
+						markedDates={
+							this.state.marked
+						}
+						onDayPress={ day => {
+							this.setState({
+								selectedEvent: JSON.stringify(day)
+							});
+						}}
+						theme={{
+							calendarBackground: config.colors.darkGray
+						}}
+					/>
+				</View>
+				<ScrollView style={styles.scroll}>
+					<Text style={styles.text}>
+						{this.state.selectedEvent}
+					</Text>
+				</ScrollView>
 			</View>
 		);
 	};
+}
+
+const styles = {
+	calendarView: {
+		height: "50%",
+		backgroundColor: config.colors.darkGray
+	},
+	scroll: {
+		height: "50%",
+		padding: 15,
+		backgroundColor: config.colors.gray
+	},
+	text: {
+		width: "100%",
+		flex: 1,
+		alignSelf: "flex-start"
+	}
 }
 
 export default CalendarFragment;
