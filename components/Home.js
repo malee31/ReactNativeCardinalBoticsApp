@@ -19,12 +19,21 @@ class Home extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            signedIn: false
+            signedIn: false,
+            whatDid: ""
         };
         this.signInToggle = this.signInToggle.bind(this);
     }
 
     signInToggle() {
+        if(this.state.signedIn) {
+            if(this.state.whatDid.trim().length == 0) {
+                console.log("Gotta make a no blank message warning here");
+                return;
+            }
+            console.log("What was done: " + this.state.whatDid);
+        }
+
         this.setState({
             signedIn: !this.state.signedIn
         });
@@ -44,24 +53,16 @@ class Home extends React.Component {
                         <Text style={styles.signInText}>{this.state.signedIn ? "Sign Out" : "Sign In"}</Text>
                     </View>
                 </TouchableHighlight>
-                <MyComponent/>
+                <TextInput
+                    label="What did you do while signed in?"
+                    value={this.state.whatDid}
+                    style={styles.whatchuDoing}
+                    onChange={newText => this.setState({whatDid: newText.nativeEvent.text})}
+                />
             </View>
         );
     };
 }
-
-const MyComponent = () => {
-    const [text, setText] = React.useState('');
-
-    return (
-        <TextInput
-            label="What did you do while signed in?"
-            value={text}
-            style={styles.whatchuDoing}
-            onChangeText={text => setText(text)}
-        />
-    )
-};
 
 export default Home;
 const styles = StyleSheet.create({
