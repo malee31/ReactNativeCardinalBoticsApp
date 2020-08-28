@@ -1,8 +1,9 @@
-import {Image, ScrollView, StatusBar, StyleSheet, Text, View} from 'react-native';
 import {DefaultTheme, Provider as PaperProvider} from 'react-native-paper';
 import {createDrawerNavigator, DrawerItems} from 'react-navigation-drawer';
+import {Image, ScrollView, StyleSheet, Text, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {createAppContainer} from 'react-navigation';
+import { StatusBar } from 'expo-status-bar';
 import React from "react";
 import config from "./config.json";
 
@@ -48,7 +49,7 @@ export default class App extends React.Component {
 	render() {
 		return (
 			<PaperProvider theme={drawerTheme} style={styles.masterContainer}>
-				<StatusBar style="light"/>
+				<StatusBar hidden animated backgroundColor="#7D1120"/>
 				{/*<NavigationContainer>*/}
 				<Drawer/>
 				{/*</NavigationContainer>*/}
