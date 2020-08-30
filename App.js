@@ -4,7 +4,7 @@ import {Image, ScrollView, StyleSheet, Text, View} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {createAppContainer} from 'react-navigation';
-import { StatusBar } from 'expo-status-bar';
+import {StatusBar} from 'expo-status-bar';
 import React from "react";
 
 import config from "./config.json";
@@ -21,13 +21,13 @@ import ResourcesIcon from "./images/list.svg";
 import FormsIcon from "./images/form.svg";
 
 const drawerTheme = {
-	...DefaultTheme,
-	roundness: 2,
-	colors: {
-		...DefaultTheme.colors,
-		primary: config.colors.primary,
-		accent: config.colors.cardinalWhite
-	},
+    ...DefaultTheme,
+    roundness: 2,
+    colors: {
+        ...DefaultTheme.colors,
+        primary: config.colors.primary,
+        accent: config.colors.cardinalWhite
+    },
 };
 
 const Drawer = createAppContainer(createDrawerNavigator({
@@ -173,26 +173,26 @@ export default class App extends React.Component {
 }
 
 const styles = StyleSheet.create({
-	masterContainer: {
-		// marginTop: Platform.OS === 'ios' ? 0 : StatusBar.currentHeight,
-		flex: 1,
-	},
-	drawerHeading: {
-		width: "100%",
-		height: "25%",
-		alignItems: 'center',
-		justifyContent: 'flex-start'
-	},
-	drawerLogo: {
-		width: "60%",
-		height: "70%",
-		maxHeight: "70%",
-	},
-	drawerText: {
-		width: "100%",
-		height: "30%",
-		fontSize: 18,
-		color: "#EEE",
-		textAlign: "center",
-	}
+    masterContainer: {
+        // marginTop: Platform.OS === 'ios' ? 0 : StatusBar.currentHeight,
+        flex: 1,
+    },
+    drawerHeading: {
+        width: "100%",
+        height: "25%",
+        alignItems: 'center',
+        justifyContent: 'flex-start'
+    },
+    drawerLogo: {
+        width: "60%",
+        height: "70%",
+        maxHeight: "70%",
+    },
+    drawerText: {
+        width: "100%",
+        height: "30%",
+        fontSize: 18,
+        color: "#EEE",
+        textAlign: "center",
+    }
 });

@@ -5,10 +5,9 @@ import {Button} from 'react-native-paper';
 import {Text} from "react-native";
 
 export default class LinkButton extends React.Component {
-	constructor(props) {
-		super(props);
-		this.openURL = this.openURL.bind(this);
-
+    constructor(props) {
+        super(props);
+        this.openURL = this.openURL.bind(this);
 		let icon;
 		//Images from https://materialdesignicons.com/
 		switch (props.icon?.toLowerCase().trim()) {
@@ -47,27 +46,27 @@ export default class LinkButton extends React.Component {
 				icon = "cogs";
 		}
 
-		this.state = {
-			url: props.url,
-			title: props.title || "Resource",
-			icon: icon
-		};
-	}
+        this.state = {
+            url: props.url,
+            title: props.title || "Resource",
+            icon: icon
+        };
+    }
 
-	openURL = async () => {
-		await WebBrowser.openBrowserAsync(this.state.url);
-	}
+    openURL = async () => {
+        await WebBrowser.openBrowserAsync(this.state.url);
+    }
 
-	render() {
-		return (
-			<Button
-				icon={this.state.icon}
-				mode="contained"
-				color={config.colors.secondary}
-				onPress={this.openURL}
-				key={this.state.title + ": " + this.state.url + "<" + this.state.icon + ">"}>
-				<Text style={{textAlign: "left"}}>{this.state.title}</Text>
-			</Button>
-		);
-	}
+    render() {
+        return (
+            <Button
+                icon={this.state.icon}
+                mode="contained"
+                color={config.colors.secondary}
+                onPress={this.openURL}
+                key={this.state.title + ": " + this.state.url + "<" + this.state.icon + ">"}>
+                <Text style={{textAlign: "left"}}>{this.state.title}</Text>
+            </Button>
+        );
+    }
 }
