@@ -6,28 +6,6 @@ import config from "../config.json";
 import Modal from "react-native-paper/src/components/Modal";
 
 class Home extends React.Component {
-<<<<<<< HEAD
-    // noinspection JSUnusedGlobalSymbols
-    static navigationOptions = {
-        drawerLabel: 'Home',
-        drawerIcon: () => (
-            <Icon
-                width={30}
-                height={30}
-                fill={config.colors.secondary}
-            />
-        )
-    }
-
-    constructor(props) {
-        super(props);
-        this.state = {
-            signedIn: false,
-            whatDid: ""
-        };
-        this.signInToggle = this.signInToggle.bind(this);
-    }
-=======
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -36,7 +14,6 @@ class Home extends React.Component {
 		};
 		this.signInToggle = this.signInToggle.bind(this);
 	}
->>>>>>> b3e5966108e0bb1732bd0298af4dd12de0f2d8fb
 
     signInToggle() {
         if (this.state.signedIn) {
