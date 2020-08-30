@@ -5,18 +5,6 @@ import Icon from "../images/home.svg";
 import config from "../config.json";
 
 class Home extends React.Component {
-	// noinspection JSUnusedGlobalSymbols
-	static navigationOptions = {
-		drawerLabel: 'Home',
-		drawerIcon: () => (
-			<Icon
-				width={30}
-				height={30}
-				fill={config.colors.secondary}
-			/>
-		)
-	}
-
 	constructor(props) {
 		super(props);
 		this.state = {

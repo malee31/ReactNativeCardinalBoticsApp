@@ -43,17 +43,6 @@ LocaleConfig.locales['en'] = {
 LocaleConfig.defaultLocale = 'en';
 
 class CalendarFragment extends React.Component {
-	static navigationOptions = {
-		drawerLabel: 'Calendar',
-		drawerIcon: () => (
-			<Icon
-				width={30}
-				height={30}
-				fill={config.colors.secondary}
-			/>
-		)
-	}
-
 	constructor(props) {
 		super(props);
 		this.state = {

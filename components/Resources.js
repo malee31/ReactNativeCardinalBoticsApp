@@ -5,17 +5,6 @@ import React from "react";
 import Icon from "../images/list.svg";
 
 export default class Resources extends React.Component {
-	static navigationOptions = {
-		drawerLabel: 'Resources',
-		drawerIcon: () => (
-			<Icon
-				width={30}
-				height={30}
-				fill={config.colors.secondary}
-			/>
-		)
-	}
-
 	constructor(props) {
 		super(props);
 		this.state = {

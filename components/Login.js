@@ -5,17 +5,6 @@ import Icon from "../images/login.svg";
 import config from "../config.json";
 
 class Login extends React.Component {
-	static navigationOptions = {
-		drawerLabel: 'Login',
-		drawerIcon: () => (
-			<Icon
-				width={30}
-				height={30}
-				fill={config.colors.secondary}
-			/>
-		)
-	}
-
 	constructor(props) {
 		super(props);
 		this.state = {
