@@ -32,7 +32,7 @@ const drawerTheme = {
 
 const Drawer = createAppContainer(createDrawerNavigator({
 	Home: {
-		screen: Home,
+		screen: props => (<Home login={props.screenProps.login} logout={props.screenProps.logout}/>),
 		navigationOptions: {
 			drawerLabel: 'Home',
 			drawerIcon: () => (
@@ -120,6 +120,8 @@ export default class App extends React.Component {
 		}
 		this.setData = this.setData.bind(this);
 		this.getData = this.getData.bind(this);
+		this.login = this.login.bind(this);
+		this.logout = this.logout.bind(this);
 
 		this.getData("password", value => {
 			this.setState({password: value});
@@ -168,6 +170,14 @@ export default class App extends React.Component {
 		AsyncStorage.getItem(key).then(onSuccess).catch(onFail);
 	}
 
+	login(onSuccess, onFail) {
+		console.warn("Login");
+	}
+
+	logout(whatDid, onSuccess, onFail) {
+		console.warn("Logout");
+	}
+
 	render() {
 		return (
 			<PaperProvider theme={drawerTheme} style={styles.masterContainer}>
@@ -177,6 +187,8 @@ export default class App extends React.Component {
 					displayText: this.state.password,
 					getData: this.getData,
 					setData: this.setData,
+					login: this.login,
+					logout: this.logout,
 					testText: "Testing complete?"
 				}}/>
 				{/*</NavigationContainer>*/}

@@ -11,6 +11,8 @@ class Home extends React.Component {
 			signedIn: false,
 			whatDid: "",
 			error: false,
+			login: props.login,
+			logout: props.logout
 		};
 		this.signInToggle = this.signInToggle.bind(this);
 	}
@@ -25,6 +27,9 @@ class Home extends React.Component {
 				return;
 			}
 			console.log("What was done: " + this.state.whatDid);
+			this.state.logout(this.state.whatDid.trim());
+		} else {
+			this.state.login();
 		}
 
 		this.setState({
