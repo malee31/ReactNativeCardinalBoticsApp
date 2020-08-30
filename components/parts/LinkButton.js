@@ -9,6 +9,7 @@ export default class LinkButton extends React.Component {
         super(props);
         this.openURL = this.openURL.bind(this);
 
+<<<<<<< HEAD
         let icon;
         //Images from https://materialdesignicons.com/
         switch (props.icon.toLowerCase().trim()) {
@@ -46,6 +47,45 @@ export default class LinkButton extends React.Component {
             default:
                 icon = "cogs";
         }
+=======
+		let icon;
+		//Images from https://materialdesignicons.com/
+		switch (props.icon?.toLowerCase().trim()) {
+			case "googledrive":
+				icon = "google-drive";
+				break;
+			case "roster":
+				icon = "clipboard-account";
+				break;
+			case "calendar":
+				icon = "calendar";
+				break;
+			case "forms":
+				icon = "format-list-bulleted-square";
+				break;
+			case "website":
+				icon = "web";
+				break;
+			case "photo":
+				icon = "google-photos";
+				break;
+			case "youtube":
+				icon = "youtube-tv";
+				break;
+			case "training":
+				icon = "teach";
+				break;
+			case "grant":
+			case "money":
+				icon = "currency-usd";
+				break;
+			case "irc":
+			case "handbook":
+				icon = "book";
+			default:
+				icon = "cogs";
+		}
+>>>>>>> b3e5966108e0bb1732bd0298af4dd12de0f2d8fb
 
         this.state = {
             url: props.url,

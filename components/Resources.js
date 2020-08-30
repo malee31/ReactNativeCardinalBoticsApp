@@ -5,6 +5,7 @@ import React from "react";
 import Icon from "../images/list.svg";
 
 export default class Resources extends React.Component {
+<<<<<<< HEAD
     static navigationOptions = {
         drawerLabel: 'Resources',
         drawerIcon: () => (
@@ -23,6 +24,15 @@ export default class Resources extends React.Component {
             isLoading: false
         };
     }
+=======
+	constructor(props) {
+		super(props);
+		this.state = {
+			linkPairs: [],
+			isLoading: false
+		};
+	}
+>>>>>>> b3e5966108e0bb1732bd0298af4dd12de0f2d8fb
 
     componentDidMount() {
         fetch(config.urls.resources)

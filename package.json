@@ -28,7 +28,10 @@
     "react-native": "https://github.com/expo/react-native/archive/sdk-38.0.2.tar.gz",
     "react-native-calendars": "^1.315.0",
     "react-native-gesture-handler": "~1.6.0",
+<<<<<<< HEAD
     "react-native-modal": "^11.5.6",
+=======
+>>>>>>> b3e5966108e0bb1732bd0298af4dd12de0f2d8fb
     "react-native-paper": "^4.0.1",
     "react-native-reanimated": "~1.9.0",
     "react-native-safe-area-context": "~3.0.7",
@@ -39,7 +42,12 @@
     "react-native-web": "~0.11.7",
     "react-navigation": "^4.4.0",
     "react-navigation-drawer": "^2.5.0",
+<<<<<<< HEAD
     "react-navigation-stack": "^2.8.2"
+=======
+    "react-navigation-stack": "^2.8.2",
+    "@react-native-community/async-storage": "~1.11.0"
+>>>>>>> b3e5966108e0bb1732bd0298af4dd12de0f2d8fb
   },
   "devDependencies": {
     "@babel/plugin-proposal-class-properties": "^7.2.3",
