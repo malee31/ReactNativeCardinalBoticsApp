@@ -3,6 +3,7 @@ import React from "react";
 import {TextInput} from 'react-native-paper';
 import Icon from "../images/home.svg";
 import config from "../config.json";
+import Modal from "react-native-paper/src/components/Modal";
 
 class Home extends React.Component {
     // noinspection JSUnusedGlobalSymbols
@@ -61,6 +62,11 @@ class Home extends React.Component {
                     style={styles.whatchuDoing}
                     onChange={newText => this.setState({whatDid: newText.nativeEvent.text})}
                 />
+                <Modal isVisible={true}>
+                    <View style={{ flex: 1 }}>
+                        <Text>I am the modal content!</Text>
+                    </View>
+                </Modal>
             </View>
         );
     };

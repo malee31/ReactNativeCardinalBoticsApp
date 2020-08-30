@@ -20,7 +20,6 @@ class Login extends React.Component {
         super(props);
         this.state = {
             signedIn: false,
-
         };
         this.login = this.login.bind(this);
     }
