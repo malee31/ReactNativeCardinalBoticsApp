@@ -15,7 +15,7 @@ class Login extends React.Component {
 	}
 
 	login() {
-		this.state.setData("password", this.state.ID);
+		this.state.setData("password", this.state.ID.trim());
 		this.setState({
 			ID: "",
 		});

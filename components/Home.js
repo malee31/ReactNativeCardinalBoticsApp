@@ -18,8 +18,10 @@ class Home extends React.Component {
 	signInToggle() {
 		if (this.state.signedIn) {
 			if (this.state.whatDid.trim().length === 0) {
-				error: true,
-					console.log("Gotta make a no blank message warning here");
+				this.setState({
+					error: true
+				});
+				console.log("Gotta make a no blank message warning here");
 				return;
 			}
 			console.log("What was done: " + this.state.whatDid);
