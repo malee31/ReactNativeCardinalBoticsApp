@@ -10,7 +10,8 @@ class Home extends React.Component {
 		super(props);
 		this.state = {
 			signedIn: false,
-			whatDid: ""
+			whatDid: "",
+            error: false,
 		};
 		this.signInToggle = this.signInToggle.bind(this);
 	}
@@ -18,6 +19,7 @@ class Home extends React.Component {
     signInToggle() {
         if (this.state.signedIn) {
             if (this.state.whatDid.trim().length === 0) {
+                error: true,
                 console.log("Gotta make a no blank message warning here");
                 return;
             }
@@ -50,7 +52,7 @@ class Home extends React.Component {
                     style={styles.whatchuDoing}
                     onChange={newText => this.setState({whatDid: newText.nativeEvent.text})}
                 />
-                <Modal isVisible={true}>
+                <Modal isVisible={this.state.error}>
                     <View style={{ flex: 1 }}>
                         <Text>I am the modal content!</Text>
                     </View>
