@@ -31,40 +31,6 @@ const drawerTheme = {
 };
 
 const Drawer = createAppContainer(createDrawerNavigator({
-<<<<<<< HEAD
-    Home: {screen: Home},
-    Login: {screen: Login},
-    Calendar: {screen: Calendar},
-    Resources: {screen: Resources},
-    Forms: {screen: Forms},
-}, {
-    contentComponent: (props) => (
-        <SafeAreaView style={styles.masterContainer}>
-            <View style={styles.drawerHeading}>
-                <Image source={require("./assets/cardinalbotics_logo_white_clear.png")}
-                       resizeMode="contain"
-                       style={styles.drawerLogo}/>
-                <Text style={styles.drawerText}>Welcome</Text>
-            </View>
-            <ScrollView>
-                <DrawerItems {...props} />
-            </ScrollView>
-        </SafeAreaView>
-    )
-}));
-
-export default class App extends React.Component {
-    render() {
-        return (
-            <PaperProvider theme={drawerTheme} style={styles.masterContainer}>
-                <StatusBar hidden animated backgroundColor="#7D1120"/>
-                {/*<NavigationContainer>*/}
-                <Drawer/>
-                {/*</NavigationContainer>*/}
-            </PaperProvider>
-        );
-    }
-=======
 	Home: {screen: Home,
 		navigationOptions: {
 			drawerLabel: 'Home',
@@ -193,7 +159,6 @@ export default class App extends React.Component {
 			</PaperProvider>
 		);
 	}
->>>>>>> b3e5966108e0bb1732bd0298af4dd12de0f2d8fb
 }
 
 const styles = StyleSheet.create({

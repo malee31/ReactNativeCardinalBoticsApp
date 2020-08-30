@@ -5,35 +5,14 @@ import Icon from "../images/login.svg";
 import config from "../config.json";
 
 class Login extends React.Component {
-<<<<<<< HEAD
-    static navigationOptions = {
-        drawerLabel: 'Login',
-        drawerIcon: () => (
-            <Icon
-                width={30}
-                height={30}
-                fill={config.colors.secondary}
-            />
-        )
-    }
-
-    constructor(props) {
-        super(props);
-        this.state = {
-            signedIn: false,
-        };
-        this.login = this.login.bind(this);
-    }
-=======
 	constructor(props) {
 		super(props);
 		this.state = {
-			text: "",
+            ID: "",
 			signedIn: false
 		};
 		this.login = this.login.bind(this);
 	}
->>>>>>> b3e5966108e0bb1732bd0298af4dd12de0f2d8fb
 
     login() {
         console.warn(this.state.text);
