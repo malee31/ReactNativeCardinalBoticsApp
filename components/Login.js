@@ -1,7 +1,6 @@
 import {Image, StyleSheet, Text, TouchableHighlight, View} from 'react-native';
-import React from "react";
 import {TextInput} from 'react-native-paper';
-import Icon from "../images/login.svg";
+import React from "react";
 import config from "../config.json";
 
 class Login extends React.Component {
@@ -9,13 +8,15 @@ class Login extends React.Component {
 		super(props);
 		this.state = {
 			text: "",
-			signedIn: false
+			signedIn: false,
+			setData: props.setData
 		};
 		this.login = this.login.bind(this);
 	}
 
 	login() {
-		console.warn(this.state.text);
+		// console.warn(this.state.text);
+		this.state.setData("password", this.state.text);
 	}
 
 	render() {

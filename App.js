@@ -43,7 +43,7 @@ const Drawer = createAppContainer(createDrawerNavigator({
 			)
 		}
 	},
-	Login: {screen: Login,
+	Login: {screen: props => (<Login setData={props.screenProps.setData}/>),
 		navigationOptions: {
 			drawerLabel: 'Login',
 			drawerIcon: () => (
@@ -98,7 +98,7 @@ const Drawer = createAppContainer(createDrawerNavigator({
 				<Image source={require("./assets/cardinalbotics_logo_white_clear.png")}
 					resizeMode="contain"
 					style={styles.drawerLogo}/>
-				<Text style={styles.drawerText}>Logged in as {props.screenProps.displayText}</Text>
+				<Text style={styles.drawerText}>{props.screenProps.displayText ? `Logged in as ${props.screenProps.displayText}` : "Not Logged In"}</Text>
 			</View>
 			<ScrollView>
 				<DrawerItems {...props} />
@@ -113,17 +113,18 @@ export default class App extends React.Component {
 		this.state = {
 			password: ""
 		}
-		this.storeData = this.storeData.bind(this);
+		this.setData = this.setData.bind(this);
 		this.getData = this.getData.bind(this);
 
 		this.getData("password", value => {
 			this.setState({password: value});
 		}, err => {
 			console.warn("No password found in memory.");
-		})
+			console.log(err)
+		});
 	}
 
-	storeData(key, value, onSuccess, onFail) {
+	setData(key, value, onSuccess, onFail) {
 		if(!key || !value) {
 			console.warn("Uh oh. Invalid key or value to save");
 			return;
@@ -131,7 +132,16 @@ export default class App extends React.Component {
 		onSuccess = typeof onSuccess == "function" ? onSuccess : () => {console.log(`SUCCESSFULLY SAVED ${value} as ${key}`)};
 		onFail = typeof onFail == "function" ? onFail : () => {console.log(`Failed to save ${value} as ${key} :(`)};
 
-		AsyncStorage.setItem(key, JSON.stringify(value)).then(onSuccess).catch(onFail);
+		let onSuccessAndReset = value => {
+			onSuccess(value);
+			this.getData("password", value => {
+				this.setState({password: value});
+			}, err => {
+				console.warn("No password found in memory.");
+				console.log(err)
+			});
+		};
+		AsyncStorage.setItem(key, JSON.stringify(value)).then(onSuccessAndReset).catch(onFail);
 	}
 
 	getData(key, onSuccess, onFail) {
@@ -153,7 +163,8 @@ export default class App extends React.Component {
 				<Drawer screenProps={{
 					displayText: this.state.password,
 					getData: this.getData,
-					storeData: this.storeData
+					setData: this.setData,
+					testText: "Testing complete?"
 				}}/>
 				{/*</NavigationContainer>*/}
 			</PaperProvider>
