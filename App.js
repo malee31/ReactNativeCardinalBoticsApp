@@ -21,17 +21,18 @@ import ResourcesIcon from "./images/list.svg";
 import FormsIcon from "./images/form.svg";
 
 const drawerTheme = {
-    ...DefaultTheme,
-    roundness: 2,
-    colors: {
-        ...DefaultTheme.colors,
-        primary: config.colors.primary,
-        accent: config.colors.cardinalWhite
-    },
+	...DefaultTheme,
+	roundness: 2,
+	colors: {
+		...DefaultTheme.colors,
+		primary: config.colors.primary,
+		accent: config.colors.cardinalWhite
+	},
 };
 
 const Drawer = createAppContainer(createDrawerNavigator({
-	Home: {screen: Home,
+	Home: {
+		screen: Home,
 		navigationOptions: {
 			drawerLabel: 'Home',
 			drawerIcon: () => (
@@ -43,7 +44,8 @@ const Drawer = createAppContainer(createDrawerNavigator({
 			)
 		}
 	},
-	Login: {screen: props => (<Login setData={props.screenProps.setData}/>),
+	Login: {
+		screen: props => (<Login setData={props.screenProps.setData}/>),
 		navigationOptions: {
 			drawerLabel: 'Login',
 			drawerIcon: () => (
@@ -55,7 +57,8 @@ const Drawer = createAppContainer(createDrawerNavigator({
 			)
 		}
 	},
-	Calendar: {screen: Calendar,
+	Calendar: {
+		screen: Calendar,
 		navigationOptions: {
 			drawerLabel: 'Calendar',
 			drawerIcon: () => (
@@ -67,7 +70,8 @@ const Drawer = createAppContainer(createDrawerNavigator({
 			)
 		}
 	},
-	Resources: {screen: Resources,
+	Resources: {
+		screen: Resources,
 		navigationOptions: {
 			drawerLabel: 'Resources',
 			drawerIcon: () => (
@@ -79,7 +83,8 @@ const Drawer = createAppContainer(createDrawerNavigator({
 			)
 		}
 	},
-	Forms: {screen: Forms,
+	Forms: {
+		screen: Forms,
 		navigationOptions: {
 			drawerLabel: 'Forms',
 			drawerIcon: () => (
@@ -125,12 +130,16 @@ export default class App extends React.Component {
 	}
 
 	setData(key, value, onSuccess, onFail) {
-		if(!key || !value) {
+		if (!key || !value) {
 			console.warn("Uh oh. Invalid key or value to save");
 			return;
 		}
-		onSuccess = typeof onSuccess == "function" ? onSuccess : () => {console.log(`SUCCESSFULLY SAVED ${value} as ${key}`)};
-		onFail = typeof onFail == "function" ? onFail : () => {console.log(`Failed to save ${value} as ${key} :(`)};
+		onSuccess = typeof onSuccess == "function" ? onSuccess : () => {
+			console.log(`SUCCESSFULLY SAVED ${value} as ${key}`)
+		};
+		onFail = typeof onFail == "function" ? onFail : () => {
+			console.log(`Failed to save ${value} as ${key} :(`)
+		};
 
 		let onSuccessAndReset = value => {
 			onSuccess(value);
@@ -145,12 +154,16 @@ export default class App extends React.Component {
 	}
 
 	getData(key, onSuccess, onFail) {
-		if(typeof key !== "string") {
+		if (typeof key !== "string") {
 			console.warn("Uh oh. Invalid key or value to save");
 			return;
 		}
-		onSuccess = typeof onSuccess == "function" ? onSuccess : value => {console.log(`SUCCESSFULLY GOT ${value} from ${key}... and did nothing with it`)};
-		onFail = typeof onFail == "function" ? onFail : () => {console.log(`Failed to get ${key} :(`)};
+		onSuccess = typeof onSuccess == "function" ? onSuccess : value => {
+			console.log(`SUCCESSFULLY GOT ${value} from ${key}... and did nothing with it`)
+		};
+		onFail = typeof onFail == "function" ? onFail : () => {
+			console.log(`Failed to get ${key} :(`)
+		};
 
 		AsyncStorage.getItem(key).then(onSuccess).catch(onFail);
 	}
@@ -173,26 +186,26 @@ export default class App extends React.Component {
 }
 
 const styles = StyleSheet.create({
-    masterContainer: {
-        // marginTop: Platform.OS === 'ios' ? 0 : StatusBar.currentHeight,
-        flex: 1,
-    },
-    drawerHeading: {
-        width: "100%",
-        height: "25%",
-        alignItems: 'center',
-        justifyContent: 'flex-start'
-    },
-    drawerLogo: {
-        width: "60%",
-        height: "70%",
-        maxHeight: "70%",
-    },
-    drawerText: {
-        width: "100%",
-        height: "30%",
-        fontSize: 18,
-        color: "#EEE",
-        textAlign: "center",
-    }
+	masterContainer: {
+		// marginTop: Platform.OS === 'ios' ? 0 : StatusBar.currentHeight,
+		flex: 1,
+	},
+	drawerHeading: {
+		width: "100%",
+		height: "25%",
+		alignItems: 'center',
+		justifyContent: 'flex-start'
+	},
+	drawerLogo: {
+		width: "60%",
+		height: "70%",
+		maxHeight: "70%",
+	},
+	drawerText: {
+		width: "100%",
+		height: "30%",
+		fontSize: 18,
+		color: "#EEE",
+		textAlign: "center",
+	}
 });
