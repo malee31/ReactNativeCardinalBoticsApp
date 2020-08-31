@@ -195,7 +195,7 @@ export default class App extends React.Component {
 	render() {
 		return (
 			<PaperProvider theme={drawerTheme} style={styles.masterContainer}>
-				<StatusBar hidden animated backgroundColor="#7D1120"/>
+				<StatusBar animated backgroundColor="#7D1120" style="dark"/>
 				{/*<NavigationContainer>*/}
 				<Drawer screenProps={{
 					displayText: this.state.password,

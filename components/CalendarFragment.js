@@ -57,8 +57,23 @@ class CalendarFragment extends React.Component {
 				json = json.items;
 				let mark = {}
 				for (let item = 0; item < json.length; item++) {
-					let event = {marked: true}
-					let time = moment()
+					let eventStatus = {marked: true}
+					let eventItem = json[item];
+					let start = eventItem.start;
+					let end = eventItem.end;
+					//VVV Just this line won't work properly... VVV
+					if (typeof start.date == "string") {
+						start = start.date;
+
+					} else {
+						start = start.dateTime
+
+						// console.log("\n" + start);
+						let time = moment(start).unix();
+						let formatted = moment.unix(time).format('YYYY-MM-DDTHH:mm:ss');
+						// console.log(time);
+						// console.log(formatted);
+					}
 				}
 				this.setState({
 					data: json.values,
@@ -111,13 +126,13 @@ class CalendarFragment extends React.Component {
 
 const styles = {
 	calendarView: {
-		height: "50%",
+		height: "40%",
 		backgroundColor: config.colors.darkGray
 	},
 	scroll: {
-		height: "50%",
+		height: "60%",
 		padding: 15,
-		backgroundColor: config.colors.gray
+		backgroundColor: config.colors.darkGray
 	},
 	text: {
 		width: "100%",
