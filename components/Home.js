@@ -29,7 +29,6 @@ class Home extends React.Component {
 			console.log("What was done: " + this.state.whatDid);
 			this.state.logout(this.state.whatDid.trim(), res => {
 				//What to do if logout succeeds
-				console.log(res.toString());
 			}, failRes => {
 				//What to do on fail
 				console.warn("FAILED LOGOUT " + JSON.stringify(failRes));
@@ -42,7 +41,6 @@ class Home extends React.Component {
 					//Do something here
 					return;
 				}
-				console.log(res);
 			}, failRes => {
 				//What to do on fail
 				console.warn("FAILED LOGIN " + JSON.stringify(failRes));

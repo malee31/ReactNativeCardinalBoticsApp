@@ -124,7 +124,6 @@ export default class App extends React.Component {
 		this.logout = this.logout.bind(this);
 
 		this.getData("password", value => {
-			console.log(value)
 			this.setState({password: value});
 		}, err => {
 			console.warn("No password found in memory.");
@@ -179,7 +178,6 @@ export default class App extends React.Component {
 		onFail = typeof onFail == "function" ? onFail : () => {
 			console.log(`Failed to log in as ${this.state.password} :(`)
 		};
-		console.log(url);
 		fetch(url).then(onSuccess).catch(onFail);
 	}
 
@@ -233,7 +231,7 @@ const styles = StyleSheet.create({
 		width: "100%",
 		height: "30%",
 		fontSize: 18,
-		color: "#EEE",
+		color: "#888",
 		textAlign: "center",
 	}
 });
