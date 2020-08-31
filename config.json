@@ -8,8 +8,8 @@
 	"serverEndpointBaseURLs": {
 		"getData": "http://18.221.165.138/src/endpoints/getdata.php",
 		"getUserData": "http://18.221.165.138/src/endpoints/getuserdata.php",
-		"login": "http://18.221.165.138/src/endpoints/login.php",
-		"logout": "http://18.221.165.138/src/endpoints/logout.php"
+		"login": "http://18.221.165.138/src/endpoints/signin.php",
+		"logout": "http://18.221.165.138/src/endpoints/signout.php"
 	},
 	"colors": {
 		"primary": "#7D1120",

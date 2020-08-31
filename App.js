@@ -124,6 +124,7 @@ export default class App extends React.Component {
 		this.logout = this.logout.bind(this);
 
 		this.getData("password", value => {
+			console.log(value)
 			this.setState({password: value});
 		}, err => {
 			console.warn("No password found in memory.");
@@ -152,7 +153,7 @@ export default class App extends React.Component {
 				console.log(err)
 			});
 		};
-		AsyncStorage.setItem(key, JSON.stringify(value)).then(onSuccessAndReset).catch(onFail);
+		AsyncStorage.setItem(key, typeof value == "string" ? value : JSON.stringify(value)).then(onSuccessAndReset).catch(onFail);
 	}
 
 	getData(key, onSuccess, onFail) {
@@ -171,11 +172,26 @@ export default class App extends React.Component {
 	}
 
 	login(onSuccess, onFail) {
-		console.warn("Login");
+		let url = `${config.serverEndpointBaseURLs.login}?password=${encodeURI(this.state.password)}`;
+		onSuccess = typeof onSuccess == "function" ? onSuccess : () => {
+			console.log(`SUCCESSFULLY LOGGED IN AS ${this.state.password}`)
+		};
+		onFail = typeof onFail == "function" ? onFail : () => {
+			console.log(`Failed to log in as ${this.state.password} :(`)
+		};
+		console.log(url);
+		fetch(url).then(onSuccess).catch(onFail);
 	}
 
 	logout(whatDid, onSuccess, onFail) {
-		console.warn("Logout");
+		let url = `${config.serverEndpointBaseURLs.logout}?password=${encodeURI(this.state.password)}&did=${encodeURI(whatDid)}`;
+		onSuccess = typeof onSuccess == "function" ? onSuccess : () => {
+			console.log(`SUCCESSFUL LOGOUT WITH ${this.state.password} WITH DETAILS: ${whatDid}`);
+		};
+		onFail = typeof onFail == "function" ? onFail : () => {
+			console.log(`Failed to logout with ${this.state.password} and details: ${whatDid} :(`);
+		};
+		fetch(url).then(onSuccess).catch(onFail);
 	}
 
 	render() {

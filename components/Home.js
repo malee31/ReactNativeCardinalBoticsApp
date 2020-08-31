@@ -27,9 +27,26 @@ class Home extends React.Component {
 				return;
 			}
 			console.log("What was done: " + this.state.whatDid);
-			this.state.logout(this.state.whatDid.trim());
+			this.state.logout(this.state.whatDid.trim(), res => {
+				//What to do if logout succeeds
+				console.log(res.toString());
+			}, failRes => {
+				//What to do on fail
+				console.warn("FAILED LOGOUT " + JSON.stringify(failRes));
+			});
 		} else {
-			this.state.login();
+			this.state.login(res => {
+				//What to do if login succeeds
+				if (res.status !== 200) {
+					//Something went wrong. Maybe invalid password or url
+					//Do something here
+					return;
+				}
+				console.log(res);
+			}, failRes => {
+				//What to do on fail
+				console.warn("FAILED LOGIN " + JSON.stringify(failRes));
+			});
 		}
 
 		this.setState({
