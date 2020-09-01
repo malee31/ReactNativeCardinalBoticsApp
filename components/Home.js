@@ -3,6 +3,7 @@ import React from "react";
 import {TextInput} from 'react-native-paper';
 import config from "../config.json";
 import Modal from "react-native-paper/src/components/Modal";
+import Modal from 'react-native-modal';
 
 class Home extends React.Component {
 	constructor(props) {
