@@ -102,8 +102,8 @@ class Home extends React.Component {
                     style={styles.whatchuDoing}
                     onChange={newText => this.setState({whatDid: newText.nativeEvent.text})}
                 />
-                <ModalPopUp show={() => {return this.state.error}} text="Hello!" onPress={() => {
-                    this.setState({error: false})
+                <ModalPopUp show={() => {return this.state.error}} text="Hello!"
+                    onPress={() => {this.setState({error: false})
                 }}/>
                 {this.state.isLoading ? <Text> Loading </Text> : (
                     <FlatList

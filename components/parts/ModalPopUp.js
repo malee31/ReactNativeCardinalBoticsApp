@@ -8,7 +8,8 @@ class ModalPopUp extends React.Component {
 		this.state = {
 			onPress: props.onPress,
 			show: props.show,
-			text: props.text
+			text: props.text,
+			buttonText: props.buttonText
 		};
 	}
 
@@ -18,9 +19,9 @@ class ModalPopUp extends React.Component {
 				onBackdropPress={this.close}>
 				<View style={styles.content}>
 					<Text styles={styles.contentTitle}>
-						Please write what you did today!
+						{this.state.text || "Oh, the programmers forgot to leave a message here"}
 					</Text>
-					<Button testID="close-button" onPress={this.state.onPress} title="Sign Out"/>
+					<Button testID="close-button" onPress={this.state.onPress} title={this.state.buttonText || "Close"}/>
 				</View>
 			</Modal>
 		);
