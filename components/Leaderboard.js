@@ -1,80 +1,63 @@
-import {Image, StyleSheet, Text, TouchableHighlight, View} from 'react-native';
-import {TextInput} from 'react-native-paper';
-import React from "react";
+import {FlatList, StyleSheet, Text, View} from 'react-native';
+import LinkButton from "./parts/LinkButton.js";
 import config from "../config.json";
+import React from "react";
 
-class Leaderboard extends React.Component {
+export default class Leaderboard extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            ID: "",
-            signedIn: false,
-            setData: props.setData
+            linkPairs: [],
+            isLoading: false,
+            title: props.title || "Resource",
         };
-        this.login = this.login.bind(this);
     }
 
-    login() {
-        this.state.setData("password", this.state.ID.trim());
-        this.setState({
-            ID: "",
-        });
+    componentDidMount() {
+        fetch(config.urls.resources)
+            .then((response) => response.json())
+            .then((json) => {
+                this.setState({data: json.values});
+            })
+            .catch((error) => console.error(error))
+            .finally(() => {
+                this.setState({isLoading: false});
+            });
     }
 
     render() {
         return (
             <View style={styles.screen}>
-                <Image source={require("../assets/cardinalbotics_logo_white_clear.png")}
-                       resizeMode="contain"
-                       style={styles.largeLogoImage}/>
-                <TextInput
-                    label="Login"
-                    value={this.state.ID}
-                    style={styles.whatchuDoing}
-                    onChange={newText => this.setState({ID: newText.nativeEvent.text})}/>
-                <TouchableHighlight onPress={this.login}
-                                    activeOpacity={0.7}
-                                    underlayColor={config.colors.darkGray}
-                                    style={styles.signInButton}>
-                    <View>
-                        <Text>Submit</Text>
-                    </View>
-                </TouchableHighlight>
+                {this.state.isLoading ? <Text> Loading </Text> : (
+                    <FlatList
+                        data={this.state.data}
+                        keyExtractor={(item, index) => item[0] + ": " + item[1]}
+                        renderItem={(entry) => {
+                            entry = entry.item;
+                            return (
+                                <View style={styles.resourceButton}>
+                                    <Text
+                                        title={entry[0]}
+                                    />
+                                </View>
+                            );
+                        }}
+                    />
+                )}
             </View>
         );
-    };
+    }
 }
 
-export default Leaderboard;
 const styles = StyleSheet.create({
     screen: {
+        paddingVertical: '10%',
+    },
+    resourceButton: {
         width: "100%",
-        height: "100%",
+        height: 40,
         flex: 1,
         paddingHorizontal: 30,
-        paddingVertical: 50,
-        backgroundColor: config.colors.background,
-
+        marginVertical: 10
     },
-    largeLogoImage: {
-        width: "100%",
-        maxHeight: "25%",
-        marginVertical: 30
-    },
-    signInButton: {
-        alignItems: "center",
-        justifyContent: "center",
-        alignSelf: "center",
-        backgroundColor: config.colors.gray,
-        width: "70%",
-        padding: "5%",
-        marginVertical: 50,
-    },
-    signInText: {
-        fontSize: 30
-    },
-    whatchuDoing: {
-        color: "#7D1120",
-        marginTop: 20,
-    }
 });
