@@ -13,12 +13,14 @@ import Resources from "./components/Resources.js";
 import Forms from "./components/Forms.js";
 import Calendar from "./components/CalendarFragment.js";
 import Login from "./components/Login.js";
+import Leaderboard from "./components/Leaderboard.js";
 
 import HomeIcon from "./images/home.svg";
 import LoginIcon from "./images/login.svg";
 import CalendarIcon from "./images/calendar.svg";
 import ResourcesIcon from "./images/list.svg";
 import FormsIcon from "./images/form.svg";
+import LeaderboardIcon from "./images/volunteer.svg";
 
 const drawerTheme = {
 	...DefaultTheme,
@@ -47,9 +49,22 @@ const Drawer = createAppContainer(createDrawerNavigator({
 	Login: {
 		screen: props => (<Login setData={props.screenProps.setData}/>),
 		navigationOptions: {
-			drawerLabel: 'Login',
+			drawerLabel: 'Log',
 			drawerIcon: () => (
 				<LoginIcon
+					width={30}
+					height={30}
+					fill={config.colors.secondary}
+				/>
+			)
+		}
+	},
+	Leaderboard: {
+		screen: Leaderboard,
+		navigationOptions: {
+			drawerLabel: 'Other Members',
+			drawerIcon: () => (
+				<LeaderboardIcon
 					width={30}
 					height={30}
 					fill={config.colors.secondary}
@@ -96,6 +111,7 @@ const Drawer = createAppContainer(createDrawerNavigator({
 			)
 		}
 	},
+
 }, {
 	contentComponent: (props) => (
 		<SafeAreaView style={styles.masterContainer}>

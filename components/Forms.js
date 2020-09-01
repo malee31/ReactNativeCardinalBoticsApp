@@ -26,7 +26,7 @@ export default class Forms extends React.Component {
 
 	render() {
 		return (
-			<View>
+			<View style={styles.screen}>
 				{this.state.isLoading ? <Text> Loading </Text> : (
 					<FlatList
 						data={this.state.data}
@@ -47,6 +47,9 @@ export default class Forms extends React.Component {
 	}
 }
 const styles = StyleSheet.create({
+	screen: {
+		paddingVertical: '10%'
+	},
 	formButton: {
 		width: "100%",
 		height: 40,

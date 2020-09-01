@@ -1,4 +1,4 @@
-import {Image, StyleSheet, Text, TouchableHighlight, View} from 'react-native';
+import {FlatList, Image, StyleSheet, Text, TouchableHighlight, View} from 'react-native';
 import React from "react";
 import {TextInput} from 'react-native-paper';
 import config from "../config.json";
@@ -13,11 +13,24 @@ class Home extends React.Component {
 			whatDid: "",
 			error: false,
 			login: props.login,
-			logout: props.logout
+			logout: props.logout,
+			linkPairs: [],
+			isLoading: false,
+			data:[0,1,2,3,4,5,6,6,6,6]
 		};
 		this.signInToggle = this.signInToggle.bind(this);
 	}
-
+	componentDidMount() {
+		fetch(config.urls.resources)
+			.then((response) => response.json())
+			.then((json) => {
+				this.setState({data: json.values});
+			})
+			.catch((error) => console.error(error))
+			.finally(() => {
+				this.setState({isLoading: false});
+			});
+	}
 	signInToggle() {
 		if (this.state.signedIn) {
 			if (this.state.whatDid.trim().length === 0) {
@@ -84,6 +97,20 @@ class Home extends React.Component {
 						<Text>I am the modal content!</Text>
 					</View>
 				</Modal>
+				{this.state.isLoading ? <Text> Loading </Text> : (
+					<FlatList
+						data={this.state.data}
+						keyExtractor={(item, index) => item[0] + ": " + item[1]}
+						renderItem={(entry) => {
+							entry = entry.item;
+							return (
+								<View>
+									<Text style={styles.log}>entry[0]</Text>
+								</View>
+							);
+						}}
+					/>
+				)}
 			</View>
 		);
 	};
@@ -97,13 +124,17 @@ const styles = StyleSheet.create({
 		height: "100%",
 		flex: 1,
 		paddingHorizontal: 30,
+		marginVertical: 40,
 		backgroundColor: config.colors.background,
+	},
+	log: {
+		alignContent: "center",
+		fontSize: 30
 
 	},
 	largeLogoImage: {
 		width: "100%",
 		maxHeight: "25%",
-		marginVertical: 30
 	},
 	signInButton: {
 		alignItems: "center",

@@ -1,16 +1,15 @@
-import {FlatList, Image, StyleSheet, Text, TouchableHighlight, View} from 'react-native';
+import {Image, StyleSheet, Text, TouchableHighlight, View} from 'react-native';
 import {TextInput} from 'react-native-paper';
 import React from "react";
 import config from "../config.json";
-import LinkButton from "./parts/LinkButton";
 
-class Login extends React.Component {
+class Leaderboard extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			ID: "",
 			signedIn: false,
-			setData: props.setData,
+			setData: props.setData
 		};
 		this.login = this.login.bind(this);
 	}
@@ -41,13 +40,12 @@ class Login extends React.Component {
 						<Text>Submit</Text>
 					</View>
 				</TouchableHighlight>
-
 			</View>
 		);
 	};
 }
 
-export default Login;
+export default Leaderboard;
 const styles = StyleSheet.create({
 	screen: {
 		width: "100%",

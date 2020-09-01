@@ -26,7 +26,7 @@ export default class Resources extends React.Component {
 
 	render() {
 		return (
-			<View>
+			<View style={styles.screen}>
 				{this.state.isLoading ? <Text> Loading </Text> : (
 					<FlatList
 						data={this.state.data}
@@ -51,6 +51,9 @@ export default class Resources extends React.Component {
 }
 
 const styles = StyleSheet.create({
+	screen: {
+		paddingVertical:'10%',
+	},
 	resourceButton: {
 		width: "100%",
 		height: 40,

@@ -113,7 +113,7 @@ class CalendarFragment extends React.Component {
 
 	render() {
 		return (
-			<View>
+			<View style={styles.screen}>
 				<View style={styles.calendarView}>
 					<Calendar
 						markingType={'period'}
@@ -141,6 +141,9 @@ class CalendarFragment extends React.Component {
 }
 
 const styles = {
+	screen: {
+		paddingVertical: '10%'
+	},
 	calendarView: {
 		height: "40%",
 		backgroundColor: config.colors.darkGray
