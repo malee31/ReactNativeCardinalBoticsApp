@@ -48,6 +48,7 @@ class CalendarFragment extends React.Component {
 			marked: {},
 			isLoading: false
 		};
+		this.handleCalendarClick = this.handleCalendarClick.bind(this);
 	}
 
 	componentDidMount() {
@@ -55,37 +56,44 @@ class CalendarFragment extends React.Component {
 			.then((response) => response.json())
 			.then((json) => {
 				json = json.items;
-				let mark = {}
+				let mark = {};
+				/*{
+					'2020-05-15': {marked: true, dotColor: '#50CEBB'},
+					'2020-05-16': {marked: true, dotColor: '#50CEBB'},
+					'2020-05-21': {startingDay: true, color: '#50CEBB', textColor: 'white'},
+					'2020-05-22': {color: '#70D7C7', textColor: 'white'},
+					'2020-05-23': {color: '#70D7C7', textColor: 'white', marked: true, dotColor: 'white'},
+					'2020-05-24': {color: '#70D7C7', textColor: 'white'},
+					'2020-05-25': {endingDay: true, color: '#50CEBB', textColor: 'white'}
+				};*/
 				for (let item = 0; item < json.length; item++) {
-					let eventStatus = {marked: true}
 					let eventItem = json[item];
 					let start = eventItem.start;
 					let end = eventItem.end;
-					//VVV Just this line won't work properly... VVV
+					let details = eventItem.summary;
 					if (typeof start.date == "string") {
-						start = start.date;
-
+						start = start.date.split("-");
+						end = end.date.split("-");
 					} else {
-						start = start.dateTime
+						let time = moment(start.dateTime).unix() + 1;
+						start = moment.unix(time).format('YYYY-MM-DD-HH-mm-ss').split("-");
 
-						// console.log("\n" + start);
-						let time = moment(start).unix();
-						let formatted = moment.unix(time).format('YYYY-MM-DDTHH:mm:ss');
-						// console.log(time);
-						// console.log(formatted);
+						time = moment(end.dateTime).unix() + 1;
+						end = moment.unix(time).format('YYYY-MM-DD-HH-mm-ss').split("-");
+
+						console.log("\n" + start);
+					}
+					//start and end are now [year, month, day, hour(24hr), minutes, seconds, milliseconds + 1]
+					const pad = num => num.length < 2 ? "0" + num : num;
+					let startKey = `${start[0]}-${pad(start[1])}-${pad(start[2])}`;
+					let endKey = `${end[0]}-${pad(end[1])}-${pad(end[2])}`;
+					if(startKey === endKey) {
+						mark[startKey] = {marked: true, dotColor: '#50CEBB'};
 					}
 				}
 				this.setState({
 					data: json.values,
-					marked: {
-						'2020-05-15': {marked: true, dotColor: '#50CEBB'},
-						'2020-05-16': {marked: true, dotColor: '#50CEBB'},
-						'2020-05-21': {startingDay: true, color: '#50CEBB', textColor: 'white'},
-						'2020-05-22': {color: '#70D7C7', textColor: 'white'},
-						'2020-05-23': {color: '#70D7C7', textColor: 'white', marked: true, dotColor: 'white'},
-						'2020-05-24': {color: '#70D7C7', textColor: 'white'},
-						'2020-05-25': {endingDay: true, color: '#50CEBB', textColor: 'white'}
-					}
+					marked: mark
 				});
 
 			})
@@ -93,6 +101,14 @@ class CalendarFragment extends React.Component {
 			.finally(() => {
 				this.setState({isLoading: false});
 			});
+	}
+
+	handleCalendarClick() {
+		let selected = this.state.marked[this.state.selectedEvent.dateString];
+		if(selected) {
+			return selected.dotColor;
+		}
+		return "No events on this date"
 	}
 
 	render() {
@@ -106,7 +122,7 @@ class CalendarFragment extends React.Component {
 						}
 						onDayPress={day => {
 							this.setState({
-								selectedEvent: JSON.stringify(day)
+								selectedEvent: day
 							});
 						}}
 						theme={{
@@ -116,7 +132,7 @@ class CalendarFragment extends React.Component {
 				</View>
 				<ScrollView style={styles.scroll}>
 					<Text style={styles.text}>
-						{this.state.selectedEvent}
+						{this.handleCalendarClick()}
 					</Text>
 				</ScrollView>
 			</View>
