@@ -2,8 +2,8 @@ import {Image, StyleSheet, Text, TouchableHighlight, View} from 'react-native';
 import React from "react";
 import {TextInput} from 'react-native-paper';
 import config from "../config.json";
-import Modal from "react-native-paper/src/components/Modal";
 import Modal from 'react-native-modal';
+import DefaultModalContent from './parts/DefaultModalContent.js';
 
 class Home extends React.Component {
 	constructor(props) {
@@ -44,6 +44,9 @@ class Home extends React.Component {
 				}
 			}, failRes => {
 				//What to do on fail
+				this.setState({
+					error: true
+				});
 				console.warn("FAILED LOGIN " + JSON.stringify(failRes));
 			});
 		}
@@ -74,7 +77,9 @@ class Home extends React.Component {
 					style={styles.whatchuDoing}
 					onChange={newText => this.setState({whatDid: newText.nativeEvent.text})}
 				/>
-				<Modal isVisible={this.state.error}>
+				<Modal isVisible={this.state.error}
+					   onBackdropPress={this.close}>
+				<DefaultModalContent onPress={()=>{this.setState({error:false})}}/>
 					<View style={{flex: 1}}>
 						<Text>I am the modal content!</Text>
 					</View>
@@ -85,6 +90,7 @@ class Home extends React.Component {
 }
 
 export default Home;
+
 const styles = StyleSheet.create({
 	screen: {
 		width: "100%",
