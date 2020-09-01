@@ -1,10 +1,9 @@
 import React from 'react';
-import { Button, StyleSheet, Text, View } from 'react-native';
-import {TextInput} from 'react-native-paper';
+import {Button, StyleSheet, Text, View} from 'react-native';
 
-const DefaultModalContent = props => (React.createElement(View, { style: styles.content },
-    React.createElement(Text, { style: styles.contentTitle }, "Please write what you did today \uD83D\uDC4B!"),
-    React.createElement(Button, { testID: 'close-button', onPress: props.onPress, title: "Sign Out" })));
+const DefaultModalContent = props => (React.createElement(View, {style: styles.content},
+    React.createElement(Text, {style: styles.contentTitle}, "Please write what you did today \uD83D\uDC4B!"),
+    React.createElement(Button, {testID: 'close-button', onPress: props.onPress, title: "Sign Out"})));
 const styles = StyleSheet.create({
     content: {
         backgroundColor: 'white',

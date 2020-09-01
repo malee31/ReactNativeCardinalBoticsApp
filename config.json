@@ -1,22 +1,22 @@
 {
-	"urls": {
-		"resources": "https://sheets.googleapis.com/v4/spreadsheets/1fQyQXJPiFwXKT7wJ8wmJgTolLwxxiOe2PE3xpNQR9Wc/values/Resources!A2:C?key=AIzaSyB2ynMpXWG49Fk-rS0cBZdytUH9GK96NzU",
-		"training": "https://sheets.googleapis.com/v4/spreadsheets/1fQyQXJPiFwXKT7wJ8wmJgTolLwxxiOe2PE3xpNQR9Wc/values/Training%20Links!A2:C?key=AIzaSyB2ynMpXWG49Fk-rS0cBZdytUH9GK96NzU",
-		"sheet": "https://sheets.googleapis.com/v4/spreadsheets/1po_TE36FA-I7J2Y-Biw5snWdfSm_Cx055KVi1c43G7Y/values/App%20Assembly!A1:E?key=AIzaSyB2ynMpXWG49Fk-rS0cBZdytUH9GK96NzU",
-		"calendar": "https://www.googleapis.com/calendar/v3/calendars/nicholas.do%40team4159.org/events?key=AIzaSyDRSH4Trb-AdjEdzA06J7WOFLbyhOqnq-M&timeZone=UTC&timeMin=2020-08-16T00:00:00Z&orderBy=startTime&singleEvents=True"
-	},
-	"serverEndpointBaseURLs": {
-		"getData": "http://18.221.165.138/src/endpoints/getdata.php",
-		"getUserData": "http://18.221.165.138/src/endpoints/getuserdata.php",
-		"login": "http://18.221.165.138/src/endpoints/signin.php",
-		"logout": "http://18.221.165.138/src/endpoints/signout.php"
-	},
-	"colors": {
-		"primary": "#7D1120",
-		"secondary": "#9C3131",
-		"cardinalWhite": "#FEFEFE",
-		"background": "#FFFFFF",
-		"gray": "#EDEDED",
-		"darkGray": "#FFFFFF"
-	}
+  "urls": {
+    "resources": "https://sheets.googleapis.com/v4/spreadsheets/1fQyQXJPiFwXKT7wJ8wmJgTolLwxxiOe2PE3xpNQR9Wc/values/Resources!A2:C?key=AIzaSyB2ynMpXWG49Fk-rS0cBZdytUH9GK96NzU",
+    "training": "https://sheets.googleapis.com/v4/spreadsheets/1fQyQXJPiFwXKT7wJ8wmJgTolLwxxiOe2PE3xpNQR9Wc/values/Training%20Links!A2:C?key=AIzaSyB2ynMpXWG49Fk-rS0cBZdytUH9GK96NzU",
+    "sheet": "https://sheets.googleapis.com/v4/spreadsheets/1po_TE36FA-I7J2Y-Biw5snWdfSm_Cx055KVi1c43G7Y/values/App%20Assembly!A1:E?key=AIzaSyB2ynMpXWG49Fk-rS0cBZdytUH9GK96NzU",
+    "calendar": "https://www.googleapis.com/calendar/v3/calendars/nicholas.do%40team4159.org/events?key=AIzaSyDRSH4Trb-AdjEdzA06J7WOFLbyhOqnq-M&timeZone=UTC&timeMin=2020-08-16T00:00:00Z&orderBy=startTime&singleEvents=True"
+  },
+  "serverEndpointBaseURLs": {
+    "getData": "http://18.221.165.138/src/endpoints/getdata.php",
+    "getUserData": "http://18.221.165.138/src/endpoints/getuserdata.php",
+    "login": "http://18.221.165.138/src/endpoints/signin.php",
+    "logout": "http://18.221.165.138/src/endpoints/signout.php"
+  },
+  "colors": {
+    "primary": "#7D1120",
+    "secondary": "#9C3131",
+    "cardinalWhite": "#FEFEFE",
+    "background": "#FFFFFF",
+    "gray": "#EDEDED",
+    "darkGray": "#FFFFFF"
+  }
 }
