@@ -2,22 +2,23 @@ import {Button, StyleSheet, Text, View} from 'react-native';
 import Modal from 'react-native-modal';
 import React from 'react';
 
-class DefaultModalContent extends React.Component {
+class ModalPopUp extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			onPress: props.onPress,
-			show: props.show
+			show: props.show,
+			text: props.text
 		};
 	}
 
 	render() {
 		return (
-			<Modal isVisible={this.state.show}
-				onBackdropPress={this.state.onPress}>
+			<Modal isVisible={this.state.show()}
+				onBackdropPress={this.close}>
 				<View style={styles.content}>
 					<Text styles={styles.contentTitle}>
-						Please write what you did today \uD83D\uDC4B!
+						Please write what you did today!
 					</Text>
 					<Button testID="close-button" onPress={this.state.onPress} title="Sign Out"/>
 				</View>
@@ -41,4 +42,4 @@ const styles = StyleSheet.create({
 	},
 });
 
-export default DefaultModalContent;
+export default ModalPopUp;
