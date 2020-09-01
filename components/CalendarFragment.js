@@ -116,6 +116,7 @@ class CalendarFragment extends React.Component {
                 <View style={styles.calendarView}>
                     <Calendar
                         key={`CalendarReload: ${this.state.loadNum}`}
+                        enableSwipeMonths={true}
                         markingType={'period'}
                         markedDates={
                             this.state.marked
