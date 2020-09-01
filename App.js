@@ -34,7 +34,7 @@ const drawerTheme = {
 
 const Drawer = createAppContainer(createDrawerNavigator({
     Home: {
-        screen: props => (<Home login={props.screenProps.login} logout={props.screenProps.logout}/>),
+        screen: props => (<Home login={props.screenProps.login} logout={props.screenProps.logout} getData={props.screenProps.getData}/>),
         navigationOptions: {
             drawerLabel: 'Home',
             drawerIcon: () => (

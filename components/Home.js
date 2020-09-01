@@ -1,9 +1,9 @@
 import {FlatList, Image, StyleSheet, Text, TouchableHighlight, View} from 'react-native';
-import React from "react";
 import {TextInput} from 'react-native-paper';
+import React from "react";
+
+import ModalPopUp from './parts/ModalPopUp.js';
 import config from "../config.json";
-import Modal from 'react-native-modal';
-import DefaultModalContent from './parts/DefaultModalContent.js';
 
 class Home extends React.Component {
     constructor(props) {
@@ -14,23 +14,33 @@ class Home extends React.Component {
             error: false,
             login: props.login,
             logout: props.logout,
+            getData: props.getData,
             linkPairs: [],
             isLoading: false,
-            data: [0, 1, 2, 3, 4, 5, 6, 6, 6, 6]
+            data: []
         };
         this.signInToggle = this.signInToggle.bind(this);
     }
 
     componentDidMount() {
-        fetch(config.urls.resources)
-            .then((response) => response.json())
-            .then((json) => {
-                this.setState({data: json.values});
-            })
-            .catch((error) => console.error(error))
-            .finally(() => {
-                this.setState({isLoading: false});
-            });
+        this.state.getData("password", value => {
+            fetch(config.serverEndpointBaseURLs.getUserData + encodeURI(`?password=${value}`))
+                .then((response) => response.json())
+                .then((json) => {
+                    console.log(JSON.stringify(json))
+                    this.setState({
+                        signedIn: json.signedIn,
+                        data: json.sessions
+                    });
+                    console.log(json.sessions)
+                })
+                .catch((error) => console.error(error))
+                .finally(() => {
+                    this.setState({isLoading: false});
+                });
+        }, err => {
+            //Failed to get password
+        })
     }
 
     signInToggle() {
@@ -92,24 +102,18 @@ class Home extends React.Component {
                     style={styles.whatchuDoing}
                     onChange={newText => this.setState({whatDid: newText.nativeEvent.text})}
                 />
-                <Modal isVisible={this.state.error}
-                       onBackdropPress={this.close}>
-                    <DefaultModalContent onPress={() => {
-                        this.setState({error: false})
-                    }}/>
-                    <View style={{flex: 1}}>
-                        <Text>I am the modal content!</Text>
-                    </View>
-                </Modal>
+                <ModalPopUp show={() => {return this.state.error}} text="Hello!" onPress={() => {
+                    this.setState({error: false})
+                }}/>
                 {this.state.isLoading ? <Text> Loading </Text> : (
                     <FlatList
                         data={this.state.data}
-                        keyExtractor={(item, index) => item[0] + ": " + item[1]}
+                        keyExtractor={(item) => item.date + ": " + item.did}
                         renderItem={(entry) => {
                             entry = entry.item;
                             return (
                                 <View>
-                                    <Text style={styles.log}>entry[0]</Text>
+                                    <Text style={styles.log}>{`${entry.day} + ${entry.time}s: ${entry.did}`}</Text>
                                 </View>
                             );
                         }}
