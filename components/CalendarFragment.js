@@ -44,7 +44,7 @@ class CalendarFragment extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            selectedEvent: "Click on an Event",
+            selectedEvent: "Loading...",
             marked: {},
             loadNum: 0
         };
@@ -94,7 +94,8 @@ class CalendarFragment extends React.Component {
                 this.setState({
                     data: json.values,
                     marked: mark,
-                    loadNum: 1
+                    loadNum: 1,
+                    selectedText: "Loaded. Click on an Event for more details"
                 });
 
             })
@@ -146,13 +147,14 @@ const styles = {
         backgroundColor: config.colors.darkGray
     },
     calendarView: {
-        height: "40%"
+        minHeight: "45%"
     },
     scroll: {
-        height: "60%",
+        maxHeight: "55%",
         padding: 15
     },
     text: {
+        padding: 10,
         width: "100%",
         flex: 1,
         alignSelf: "flex-start"
