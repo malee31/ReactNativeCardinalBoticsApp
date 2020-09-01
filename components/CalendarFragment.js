@@ -46,7 +46,7 @@ class CalendarFragment extends React.Component {
         this.state = {
             selectedEvent: "Click on an Event",
             marked: {},
-            isLoading: false
+            loadNum: 0
         };
         this.handleCalendarClick = this.handleCalendarClick.bind(this);
     }
@@ -93,14 +93,12 @@ class CalendarFragment extends React.Component {
                 }
                 this.setState({
                     data: json.values,
-                    marked: mark
+                    marked: mark,
+                    loadNum: 1
                 });
 
             })
             .catch((error) => console.error(error))
-            .finally(() => {
-                this.setState({isLoading: false});
-            });
     }
 
     handleCalendarClick() {
@@ -116,6 +114,7 @@ class CalendarFragment extends React.Component {
             <View style={styles.screen}>
                 <View style={styles.calendarView}>
                     <Calendar
+                        key={`CalendarReload: ${this.state.loadNum}`}
                         markingType={'period'}
                         markedDates={
                             this.state.marked
@@ -142,16 +141,16 @@ class CalendarFragment extends React.Component {
 
 const styles = {
     screen: {
-        paddingVertical: '10%'
+        paddingVertical: '10%',
+        height: "100%",
+        backgroundColor: config.colors.darkGray
     },
     calendarView: {
-        height: "40%",
-        backgroundColor: config.colors.darkGray
+        height: "40%"
     },
     scroll: {
         height: "60%",
-        padding: 15,
-        backgroundColor: config.colors.darkGray
+        padding: 15
     },
     text: {
         width: "100%",

@@ -132,7 +132,7 @@ const styles = StyleSheet.create({
         height: "100%",
         flex: 1,
         paddingHorizontal: 30,
-        marginVertical: 40,
+        paddingVertical: 40,
         backgroundColor: config.colors.background,
     },
     log: {
