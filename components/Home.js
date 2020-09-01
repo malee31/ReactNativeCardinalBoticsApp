@@ -12,6 +12,8 @@ class Home extends React.Component {
 			signedIn: false,
 			whatDid: "",
 			error: false,
+			login: props.login,
+			logout: props.logout
 		};
 		this.signInToggle = this.signInToggle.bind(this);
 	}
@@ -19,11 +21,31 @@ class Home extends React.Component {
 	signInToggle() {
 		if (this.state.signedIn) {
 			if (this.state.whatDid.trim().length === 0) {
-				error: true,
-					console.log("Gotta make a no blank message warning here");
+				this.setState({
+					error: true
+				});
+				console.log("Gotta make a no blank message warning here");
 				return;
 			}
 			console.log("What was done: " + this.state.whatDid);
+			this.state.logout(this.state.whatDid.trim(), res => {
+				//What to do if logout succeeds
+			}, failRes => {
+				//What to do on fail
+				console.warn("FAILED LOGOUT " + JSON.stringify(failRes));
+			});
+		} else {
+			this.state.login(res => {
+				//What to do if login succeeds
+				if (res.status !== 200) {
+					//Something went wrong. Maybe invalid password or url
+					//Do something here
+					return;
+				}
+			}, failRes => {
+				//What to do on fail
+				console.warn("FAILED LOGIN " + JSON.stringify(failRes));
+			});
 		}
 
 		this.setState({

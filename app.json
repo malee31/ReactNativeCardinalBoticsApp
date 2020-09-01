@@ -59,7 +59,7 @@
 			"translucent": false
 		},
 		"androidNavigationBar": {
-			"visible": "immersive",
+			"visible": "leanback",
 			"barStyle": "dark-content"
 		},
 		"ios": {

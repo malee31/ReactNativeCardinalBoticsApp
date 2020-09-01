@@ -32,7 +32,7 @@ const drawerTheme = {
 
 const Drawer = createAppContainer(createDrawerNavigator({
 	Home: {
-		screen: Home,
+		screen: props => (<Home login={props.screenProps.login} logout={props.screenProps.logout}/>),
 		navigationOptions: {
 			drawerLabel: 'Home',
 			drawerIcon: () => (
@@ -120,6 +120,8 @@ export default class App extends React.Component {
 		}
 		this.setData = this.setData.bind(this);
 		this.getData = this.getData.bind(this);
+		this.login = this.login.bind(this);
+		this.logout = this.logout.bind(this);
 
 		this.getData("password", value => {
 			this.setState({password: value});
@@ -150,7 +152,7 @@ export default class App extends React.Component {
 				console.log(err)
 			});
 		};
-		AsyncStorage.setItem(key, JSON.stringify(value)).then(onSuccessAndReset).catch(onFail);
+		AsyncStorage.setItem(key, typeof value == "string" ? value : JSON.stringify(value)).then(onSuccessAndReset).catch(onFail);
 	}
 
 	getData(key, onSuccess, onFail) {
@@ -168,15 +170,39 @@ export default class App extends React.Component {
 		AsyncStorage.getItem(key).then(onSuccess).catch(onFail);
 	}
 
+	login(onSuccess, onFail) {
+		let url = `${config.serverEndpointBaseURLs.login}?password=${encodeURI(this.state.password)}`;
+		onSuccess = typeof onSuccess == "function" ? onSuccess : () => {
+			console.log(`SUCCESSFULLY LOGGED IN AS ${this.state.password}`)
+		};
+		onFail = typeof onFail == "function" ? onFail : () => {
+			console.log(`Failed to log in as ${this.state.password} :(`)
+		};
+		fetch(url).then(onSuccess).catch(onFail);
+	}
+
+	logout(whatDid, onSuccess, onFail) {
+		let url = `${config.serverEndpointBaseURLs.logout}?password=${encodeURI(this.state.password)}&did=${encodeURI(whatDid)}`;
+		onSuccess = typeof onSuccess == "function" ? onSuccess : () => {
+			console.log(`SUCCESSFUL LOGOUT WITH ${this.state.password} WITH DETAILS: ${whatDid}`);
+		};
+		onFail = typeof onFail == "function" ? onFail : () => {
+			console.log(`Failed to logout with ${this.state.password} and details: ${whatDid} :(`);
+		};
+		fetch(url).then(onSuccess).catch(onFail);
+	}
+
 	render() {
 		return (
 			<PaperProvider theme={drawerTheme} style={styles.masterContainer}>
-				<StatusBar hidden animated backgroundColor="#7D1120"/>
+				<StatusBar animated backgroundColor="#7D1120" style="dark"/>
 				{/*<NavigationContainer>*/}
 				<Drawer screenProps={{
 					displayText: this.state.password,
 					getData: this.getData,
 					setData: this.setData,
+					login: this.login,
+					logout: this.logout,
 					testText: "Testing complete?"
 				}}/>
 				{/*</NavigationContainer>*/}
@@ -205,7 +231,7 @@ const styles = StyleSheet.create({
 		width: "100%",
 		height: "30%",
 		fontSize: 18,
-		color: "#EEE",
+		color: "#888",
 		textAlign: "center",
 	}
 });
