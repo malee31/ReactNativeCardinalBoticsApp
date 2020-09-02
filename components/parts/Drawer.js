@@ -83,19 +83,19 @@ const Drawer = createAppContainer(createDrawerNavigator({
 			)
 		}
 	},
-	Calendar: {
-		screen: Calendar,
-		navigationOptions: {
-			drawerLabel: 'Calendar',
-			drawerIcon: () => (
-				<CalendarIcon
-					width={30}
-					height={30}
-					fill={config.colors.secondary}
-				/>
-			)
-		}
-	},
+	// Calendar: {
+	// 	screen: Calendar,
+	// 	navigationOptions: {
+	// 		drawerLabel: 'Calendar',
+	// 		drawerIcon: () => (
+	// 			<CalendarIcon
+	// 				width={30}
+	// 				height={30}
+	// 				fill={config.colors.secondary}
+	// 			/>
+	// 		)
+	// 	}
+	// },
 	Resources: {
 		screen: Resources,
 		navigationOptions: {
