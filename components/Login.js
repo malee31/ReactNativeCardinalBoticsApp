@@ -19,7 +19,7 @@ class Login extends React.Component {
 
 	login() {
 		let newPass = this.state.ID.trim();
-		if(newPass.length == 0) {
+		if(newPass.length === 0) {
 			this.setState({
 				ID: "",
 				error: true,

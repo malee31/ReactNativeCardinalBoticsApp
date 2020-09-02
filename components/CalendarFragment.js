@@ -46,6 +46,7 @@ class CalendarFragment extends React.Component {
 		this.state = {
 			selectedEvent: "Loading...",
 			marked: {},
+			allData: [],
 			loadNum: 0
 		};
 		this.handleCalendarClick = this.handleCalendarClick.bind(this);
@@ -56,6 +57,9 @@ class CalendarFragment extends React.Component {
 			.then((response) => response.json())
 			.then((json) => {
 				json = json.items;
+				this.setState({
+					allData: json
+				});
 				let mark = {};
 				/*{
 					'2020-05-15': {marked: true, dotColor: '#50CEBB'},
@@ -83,12 +87,23 @@ class CalendarFragment extends React.Component {
 
 						console.log("\n" + start);
 					}
+
+					//2020-08-17T16:30:00Z
+					//["2020", "08", "17", "16", "30", "00"]
+					//mark["2020-08-17"] = {marked: true, dotColor: '#50CEBB'}
+
 					//start and end are now [year, month, day, hour(24hr), minutes, seconds, milliseconds + 1]
+					//Relevant Variables: "details", start[""], end[""], pad(number), startkey"", endkey""
 					const pad = num => num.length < 2 ? "0" + num : num;
+
 					let startKey = `${start[0]}-${pad(start[1])}-${pad(start[2])}`;
 					let endKey = `${end[0]}-${pad(end[1])}-${pad(end[2])}`;
+
 					if (startKey === endKey) {
 						mark[startKey] = {marked: true, dotColor: '#50CEBB'};
+					} else {
+						mark[startKey] = {startingDay: true, color: '#F0F', textColor: 'white'};
+						mark[endKey] = {endingDay: true, color: '#F0F', textColor: 'white'};
 					}
 				}
 				this.setState({
