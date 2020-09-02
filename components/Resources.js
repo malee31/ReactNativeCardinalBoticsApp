@@ -53,6 +53,7 @@ export default class Resources extends React.Component {
 const styles = StyleSheet.create({
 	screen: {
 		paddingVertical: '10%',
+		backgroundColor: config.colors.background,
 	},
 	resourceButton: {
 		width: "100%",

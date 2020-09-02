@@ -159,7 +159,7 @@ const styles = {
 		paddingVertical: '10%',
 		marginTop: 40,
 		height: "100%",
-		backgroundColor: config.colors.darkGray
+		backgroundColor: config.colors.background,
 	},
 	calendarView: {
 		minHeight: "45%"

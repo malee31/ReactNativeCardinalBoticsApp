@@ -78,7 +78,7 @@ export default class Leaderboard extends React.Component {
 									<Text style={{
 										color: entry.signedIn ? "green" : "black",
 										fontSize: 16
-									}}>{`${entry.username} is Signed ${entry.signedIn ? "In" : "Out"}: ${timeClocked}`}</Text>
+									}}>{`${entry.username} : ${timeClocked}`}</Text>
 								</View>
 							);
 						}}
@@ -91,7 +91,8 @@ export default class Leaderboard extends React.Component {
 
 const styles = StyleSheet.create({
 	screen: {
-		paddingVertical: '18%',
+		paddingVertical: '10%',
+		backgroundColor: config.colors.background,
 	},
 	memberEntry: {
 		width: "100%",
