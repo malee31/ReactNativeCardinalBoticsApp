@@ -1,4 +1,3 @@
-import {DefaultTheme} from "react-native-paper";
 import config from "../../config.json";
 import {createAppContainer} from "react-navigation";
 import {createDrawerNavigator, DrawerItems} from "react-navigation-drawer";
@@ -45,7 +44,8 @@ const styles = StyleSheet.create({
 
 const Drawer = createAppContainer(createDrawerNavigator({
 	Home: {
-		screen: props => (<Home login={props.screenProps.login} logout={props.screenProps.logout} getPassword={props.screenProps.getPassword}/>),
+		screen: props => (
+			<Home login={props.screenProps.login} logout={props.screenProps.logout} getPassword={props.screenProps.getPassword}/>),
 		navigationOptions: {
 			drawerLabel: 'Home',
 			drawerIcon: () => (

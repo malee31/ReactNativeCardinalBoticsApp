@@ -3,58 +3,64 @@ import config from "../config.json";
 import React from "react";
 
 export default class Leaderboard extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            linkPairs: [],
-            isLoading: false,
-            title: props.title || "Resource",
-        };
-    }
+	constructor(props) {
+		super(props);
+		this.state = {
+			userData: [],
+			loadCount: 0
+		};
+		this.updateData = this.updateData.bind(this);
+	}
 
-    componentDidMount() {
-        fetch(config.urls.resources)
-            .then((response) => response.json())
-            .then((json) => {
-                this.setState({data: json.values});
-            })
-            .catch((error) => console.error(error))
-            .finally(() => {
-                this.setState({isLoading: false});
-            });
-    }
+	componentDidMount() {
+		this.updateData();
+	}
 
-    render() {
-        return (
-            <View style={styles.screen}>
-                {this.state.isLoading ? <Text> Loading </Text> : (
-                    <FlatList
-                        data={this.state.data}
-                        keyExtractor={(item) => item.date + ": " + item.did}
-                        renderItem={(entry) => {
-                            entry = entry.item;
-                            return (
-                                <View style={styles.resourceButton}>
-                                    <Text title={entry[0]}>ghostbusters</Text>
-                                </View>
-                            );
-                        }}
-                    />
-                )}
-            </View>
-        );
-    }
+	updateData() {
+		fetch(config.serverEndpointBaseURLs.getData)
+			.then((response) => response.json())
+			.then((json) => {
+				this.setState({userData: json});
+			})
+			.catch((error) => console.error(error))
+			.finally(() => {
+				this.setState({loadCount: this.state.loadCount + 1});
+			});
+	}
+
+	render() {
+		return (
+			<View style={styles.screen}>
+				{this.state.loadCount == 0 ? <Text> Loading </Text> : (
+					<FlatList
+						data={this.state.userData}
+						key={"Leaderboard: " + this.state.loadCount}
+						keyExtractor={item => item.username}
+						renderItem={(entry) => {
+							entry = entry.item;
+							console.log(entry);
+							return (
+								<View style={styles.resourceButton}>
+									<Text>{entry.username + " is Signed " + (entry.signedIn ? "In" : "Out")}</Text>
+								</View>
+							);
+						}}
+					/>
+				)}
+			</View>
+		);
+	}
 }
 
 const styles = StyleSheet.create({
-    screen: {
-        paddingVertical: '10%',
-    },
-    resourceButton: {
-        width: "100%",
-        height: 40,
-        flex: 1,
-        paddingHorizontal: 30,
-        marginVertical: 10
-    },
+	screen: {
+		paddingVertical: '10%',
+	},
+	resourceButton: {
+		width: "100%",
+		height: 40,
+		flex: 1,
+		paddingHorizontal: 30,
+		paddingVertical: 5
+	},
 });
