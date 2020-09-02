@@ -1,5 +1,4 @@
 import {FlatList, StyleSheet, Text, View} from 'react-native';
-import LinkButton from "./parts/LinkButton.js";
 import config from "../config.json";
 import React from "react";
 
@@ -31,14 +30,12 @@ export default class Leaderboard extends React.Component {
                 {this.state.isLoading ? <Text> Loading </Text> : (
                     <FlatList
                         data={this.state.data}
-                        keyExtractor={(item) => item[0] + ": " + item[1]}
+                        keyExtractor={(item) => item.date + ": " + item.did}
                         renderItem={(entry) => {
                             entry = entry.item;
                             return (
                                 <View style={styles.resourceButton}>
-                                    <Text
-                                        title={entry[0]}
-                                    />
+                                    <Text title={entry[0]}>ghostbusters</Text>
                                 </View>
                             );
                         }}

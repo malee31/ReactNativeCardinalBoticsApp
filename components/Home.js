@@ -100,7 +100,10 @@ class Home extends React.Component {
                                     underlayColor={config.colors.darkGray}
                                     style={styles.signInButton}>
                     <View>
-                        <Text style={styles.signInText}>{this.state.signedIn ? "Sign Out" : "Sign In"}</Text>
+                        <Text style={{
+                            color: this.state.signedIn ? "red" : "green",
+                            fontSize: 30
+                        }}>{this.state.signedIn ? "Sign Out" : "Sign In"}</Text>
                     </View>
                 </TouchableHighlight>
                 <TextInput
@@ -109,9 +112,14 @@ class Home extends React.Component {
                     style={styles.whatchuDoing}
                     onChange={newText => this.setState({whatDid: newText.nativeEvent.text})}
                 />
-                <ModalPopUp show={() => {return this.state.error}} text={() => {return this.state.errorMessage}}
-                    onPress={() => {this.setState({error: false})
-                }}/>
+                <ModalPopUp show={() => {
+                    return this.state.error
+                }} text={() => {
+                    return this.state.errorMessage
+                }}
+                            onPress={() => {
+                                this.setState({error: false})
+                            }}/>
                 {this.state.isLoading ? <Text> Loading </Text> : (
                     <FlatList
                         data={this.state.data}
@@ -120,7 +128,7 @@ class Home extends React.Component {
                             entry = entry.item;
                             return (
                                 <View>
-                                    <Text style={styles.log}>{`${entry.day} + ${entry.time}s: ${entry.did}`}</Text>
+                                    <Text style={styles.log}>{`${entry.day} for ${entry.time}s ${entry.did}`}</Text>
                                 </View>
                             );
                         }}
@@ -144,7 +152,7 @@ const styles = StyleSheet.create({
     },
     log: {
         alignContent: "center",
-        fontSize: 30
+        fontSize: 15
 
     },
     largeLogoImage: {
@@ -158,13 +166,13 @@ const styles = StyleSheet.create({
         backgroundColor: config.colors.gray,
         width: "70%",
         padding: "5%",
-        marginVertical: 50,
+        marginVertical: 20,
     },
     signInText: {
-        fontSize: 30
+        fontSize: 40,
     },
     whatchuDoing: {
         color: "#7D1120",
-        marginTop: 20,
+        marginBottom: 20
     }
 });

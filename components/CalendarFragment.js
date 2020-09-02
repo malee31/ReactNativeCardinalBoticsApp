@@ -144,6 +144,7 @@ class CalendarFragment extends React.Component {
 const styles = {
     screen: {
         paddingVertical: '10%',
+        marginTop: 40,
         height: "100%",
         backgroundColor: config.colors.darkGray
     },
@@ -156,9 +157,11 @@ const styles = {
     },
     text: {
         padding: 10,
+        fontSize: 20,
         width: "100%",
         flex: 1,
-        alignSelf: "flex-start"
+        textAlign: 'center',
+        alignSelf: "center"
     }
 }
 
