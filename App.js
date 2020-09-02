@@ -1,5 +1,4 @@
 import {DefaultTheme, Provider as PaperProvider} from 'react-native-paper';
-import {StyleSheet} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import {StatusBar} from 'expo-status-bar';
 import React from "react";
@@ -8,23 +7,15 @@ import ModalPopUp from "./components/parts/ModalPopUp.js";
 import Drawer from "./components/parts/Drawer.js";
 import config from "./config.json";
 
-const drawerTheme = {
-	...DefaultTheme,
-	roundness: 2,
-	colors: {
-		...DefaultTheme.colors,
-		primary: config.colors.primary,
-		accent: config.colors.cardinalWhite
-	},
-};
-
 export default class App extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			password: "",
 			user: "",
-			timeIn: "WIP",
+			password: "",
+			signedIn: false,
+			timeIn: 0,
+			timer: null,
 			error: false,
 			errorText: ""
 		}
@@ -48,7 +39,7 @@ export default class App extends React.Component {
 						errorMessage: `Error: Looks like either you don't exist or the server behaved unexpectedly\n\n${JSON.stringify(err)}`
 					});
 				});
-		}, err => {
+		}, () => {
 			this.setState({
 				error: true,
 				errorMessage: "No password found in memory. Go to the Login page to log in!"
@@ -79,6 +70,14 @@ export default class App extends React.Component {
 
 	//Pretty much only for Login.js
 	setPassword(value, onSuccess, onFail, user) {
+		if(this.state.signedIn) {
+			this.setState({
+				error: true,
+				errorMessage: "Can't log into another account while signed in!"
+			});
+			return;
+		}
+
 		this.setData("password", value, () => {
 			if (typeof onSuccess == "function") onSuccess();
 			this.getPassword(value => {
@@ -95,7 +94,7 @@ export default class App extends React.Component {
 			}, err => {
 				this.setState({
 					error: true,
-					errorMessage: "Failed to update password"
+					errorMessage: `Failed to update password\n${JSON.stringify(err)}`
 				});
 			});
 		}, onFail);
@@ -111,6 +110,13 @@ export default class App extends React.Component {
 	}
 
 	login(onSuccess, onFail) {
+		if(this.state.password === "") {
+			this.setState({
+				error: true,
+				errorMessage: "You're not logged in!"
+			})
+			return;
+		}
 		let url = `${config.serverEndpointBaseURLs.login}?password=${encodeURI(this.state.password)}`;
 		fetch(url).then(onSuccess).catch(onFail);
 	}
@@ -122,12 +128,20 @@ export default class App extends React.Component {
 
 	render() {
 		return (
-			<PaperProvider theme={drawerTheme} style={styles.masterContainer}>
+			<PaperProvider theme={{
+					...DefaultTheme,
+					roundness: 2,
+					colors: {
+						...DefaultTheme.colors,
+						primary: config.colors.primary,
+						accent: config.colors.cardinalWhite
+					},
+				}} style={{flex: 1}}>
 				<StatusBar animated backgroundColor="#7D1120" style="dark"/>
-				{/*<NavigationContainer>*/}
 				<Drawer screenProps={{
 					userText: this.state.user,
 					timeIn: this.state.timeIn,
+					signedIn: this.state.signedIn,
 					getData: this.getData,
 					setData: this.setData,
 					getPassword: this.getPassword,
@@ -135,41 +149,10 @@ export default class App extends React.Component {
 					login: this.login,
 					logout: this.logout
 				}}/>
-				<ModalPopUp show={() => {
-					return this.state.error
-				}} text={() => {
-					return this.state.errorMessage
-				}}
-					onPress={() => {
-						this.setState({error: false})
-					}}/>
-				{/*</NavigationContainer>*/}
+				<ModalPopUp show={() => {return this.state.error}}
+					text={() => {return this.state.errorMessage}}
+					onPress={() => {this.setState({error: false})}}/>
 			</PaperProvider>
 		);
 	}
 }
-
-const styles = StyleSheet.create({
-	masterContainer: {
-		// marginTop: Platform.OS === 'ios' ? 0 : StatusBar.currentHeight,
-		flex: 1,
-	},
-	drawerHeading: {
-		width: "100%",
-		height: "25%",
-		alignItems: 'center',
-		justifyContent: 'flex-start'
-	},
-	drawerLogo: {
-		width: "60%",
-		height: "70%",
-		maxHeight: "70%",
-	},
-	drawerText: {
-		width: "100%",
-		height: "30%",
-		fontSize: 18,
-		color: "#888",
-		textAlign: "center",
-	}
-});

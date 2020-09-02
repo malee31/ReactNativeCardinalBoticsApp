@@ -64,7 +64,7 @@ const Drawer = createAppContainer(createDrawerNavigator({
 		}
 	},
 	Login: {
-		screen: props => (<Login setPassword={props.screenProps.setPassword}/>),
+		screen: props => (<Login setPassword={props.screenProps.setPassword} signedIn={props.screenProps.signedIn}/>),
 		navigationOptions: {
 			drawerLabel: 'Login',
 			drawerIcon: () => (
@@ -145,7 +145,7 @@ const Drawer = createAppContainer(createDrawerNavigator({
 						{props.screenProps.userText ? `Logged in as ${props.screenProps.userText}` : "Not Logged In"}
 					</Text>
 					<Text style={styles.drawerTimeIn}>
-						Session Time: {typeof props.screenProps.timeIn === "string" ? props.screenProps.timeIn : "No Session"}
+						Session Time: {props.screenProps.timeIn ? props.screenProps.timeIn : "No Session"}
 					</Text>
 				</View>
 			</LinearGradient>

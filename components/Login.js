@@ -9,12 +9,13 @@ class Login extends React.Component {
 		super(props);
 		this.state = {
 			ID: "",
-			signedIn: false,
+			signedIn: props.signedIn,
 			error: false,
 			errorMessage: "Something went wrong",
 			setPassword: props.setPassword
 		};
 		this.login = this.login.bind(this);
+		console.log(this.state.signedIn);
 	}
 
 	login() {
@@ -27,6 +28,15 @@ class Login extends React.Component {
 			});
 			return;
 		}
+		if(this.state.signedIn) {
+			console.log("ABORT! SIGNED IN!")
+			this.setState({
+				error: true,
+				errorMessage: "You can't switch users while signed in!"
+			});
+			return;
+		}
+
 		this.setState({
 			ID: "",
 			error: true,
