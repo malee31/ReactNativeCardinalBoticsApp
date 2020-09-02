@@ -72,7 +72,7 @@ export default class Leaderboard extends React.Component {
 							if(Math.floor(entry.totalTime / 3600) !== 1) {
 								timeClocked += "s";
 							}
-							timeClocked += ` and ${Math.floor((entry.totalTime % 3600) / 60)} minutes`;
+							timeClocked += ` and ${Math.floor((entry.totalTime % 3600) / 60)} minute${Math.floor((entry.totalTime % 3600) / 60) !== 1 ? "s" : ""}`;
 							return (
 								<View style={styles.memberEntry}>
 									<Text style={{

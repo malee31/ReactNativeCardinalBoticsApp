@@ -128,9 +128,17 @@ class Home extends React.Component {
 						keyExtractor={(item) => item.date + ": " + item.did}
 						renderItem={(entry) => {
 							entry = entry.item;
+							let timeClocked = `${Math.floor(entry.time / 3600)} hour`;
+							if(Math.floor(entry.time / 3600) !== 1) {
+								timeClocked += "s";
+							}
+							timeClocked += ` and ${Math.floor((entry.time % 3600) / 60)} minute${Math.floor((entry.time % 3600) / 60) !== 1 ? "s" : ""}`;
+
+							if(entry.time < 60) timeClocked = `${entry.time} second${entry.time !== 1 ? "s" : ""}`;
+
 							return (
 								<View>
-									<Text style={styles.log}>{`${entry.day} for ${entry.time}s ${entry.did}`}</Text>
+									<Text style={styles.log}>{`${entry.day} for ${timeClocked}\n\t|\t${entry.did}`}</Text>
 								</View>
 							);
 						}}
