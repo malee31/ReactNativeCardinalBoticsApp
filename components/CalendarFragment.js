@@ -84,8 +84,6 @@ class CalendarFragment extends React.Component {
 
 						time = moment(end.dateTime).unix() + 1;
 						end = moment.unix(time).format('YYYY-MM-DD-HH-mm-ss').split("-");
-
-						console.log("\n" + start);
 					}
 
 					//2020-08-17T16:30:00Z

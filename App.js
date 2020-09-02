@@ -31,9 +31,22 @@ export default class App extends React.Component {
 		this.getPassword = this.getPassword.bind(this);
 		this.login = this.login.bind(this);
 		this.logout = this.logout.bind(this);
+	}
 
+	componentDidMount() {
 		this.getPassword(value => {
 			this.setState({password: value});
+			let url = config.serverEndpointBaseURLs.getUserData + encodeURI(`?password=${value}`);
+			fetch(url)
+				.then(res => res.json())
+				.then((json) => {
+					this.setState({user: json.username});
+				}).catch(err => {
+					this.setState({
+						error: true,
+						errorMessage: `Error: Looks like either you don't exist or the server behaved unexpectedly\n\n${JSON.stringify(err)}`
+					});
+				});
 		}, err => {
 			this.setState({
 				error: true,
@@ -66,7 +79,7 @@ export default class App extends React.Component {
 	//Pretty much only for Login.js
 	setPassword(value, onSuccess, onFail, user) {
 		this.setData("password", value, () => {
-			onSuccess();
+			if (typeof onSuccess == "function") onSuccess();
 			this.getPassword(value => {
 				if (user) {
 					this.setState({

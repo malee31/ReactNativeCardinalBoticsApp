@@ -33,7 +33,6 @@ class Home extends React.Component {
 			fetch(config.serverEndpointBaseURLs.getUserData + encodeURI(`?password=${value}`))
 				.then((response) => response.json())
 				.then((json) => {
-					console.log(JSON.stringify(json))
 					this.setState({
 						signedIn: json.signedIn,
 						data: json["sessions"].reverse()
@@ -57,7 +56,6 @@ class Home extends React.Component {
 				});
 				return;
 			}
-			console.log("What was done: " + this.state.whatDid);
 			this.state.logout(this.state.whatDid.trim(), res => {
 				//What to do if logout succeeds
 				this.updateSessions();

@@ -34,7 +34,6 @@ class Login extends React.Component {
 		});
 
 		let url = config.serverEndpointBaseURLs.getUserData + encodeURI(`?password=${newPass}`);
-		console.log(url)
 		fetch(url)
 			.then(res => res.json())
 			.then((json) => {
@@ -45,10 +44,8 @@ class Login extends React.Component {
 						errorMessage: `Success. You're now logged in as ${user} using ${newPass}`,
 						error: true
 					});
-					console.log("State set");
 				}, null, user);
 			}).catch(err => {
-				console.log("Login Fetch Failed: ", err);
 				this.setState({
 					error: true,
 					errorMessage: `Error: Looks like either you don't exist or the server behaved unexpectedly\n\n${JSON.stringify(err)}`
