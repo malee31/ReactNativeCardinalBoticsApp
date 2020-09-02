@@ -20,6 +20,9 @@ export default class Leaderboard extends React.Component {
 		fetch(config.serverEndpointBaseURLs.getData)
 			.then((response) => response.json())
 			.then((json) => {
+				json.sort((a, b) => {
+					return b.totalTime- a.totalTime;
+				});
 				this.setState({userData: json});
 			})
 			.catch((error) => console.error(error))
@@ -40,7 +43,10 @@ export default class Leaderboard extends React.Component {
 							entry = entry.item;
 							return (
 								<View style={styles.resourceButton}>
-									<Text>{entry.username + " is Signed " + (entry.signedIn ? "In" : "Out")}</Text>
+									<Text style={{
+										color: entry.signedIn ? "green" : "black",
+										fontSize: 16
+									}}>{entry.username + " is Signed " + (entry.signedIn ? "In" : "Out") + " : " + Math.round(entry.totalTime/3600) + "hours"}</Text>
 								</View>
 							);
 						}}
@@ -53,13 +59,12 @@ export default class Leaderboard extends React.Component {
 
 const styles = StyleSheet.create({
 	screen: {
-		paddingVertical: '10%',
+		paddingVertical: '18%',
 	},
 	resourceButton: {
 		width: "100%",
 		height: 40,
 		flex: 1,
 		paddingHorizontal: 30,
-		paddingVertical: 5
 	},
 });

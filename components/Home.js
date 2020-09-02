@@ -36,7 +36,7 @@ class Home extends React.Component {
 					console.log(JSON.stringify(json))
 					this.setState({
 						signedIn: json.signedIn,
-						data: json["sessions"]
+						data: json["sessions"].reverse()
 					});
 				})
 				.catch((error) => console.error(error))

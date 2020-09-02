@@ -99,7 +99,7 @@ class CalendarFragment extends React.Component {
 					let startKey = `${start[0]}-${pad(start[1])}-${pad(start[2])}`;
 					let endKey = `${end[0]}-${pad(end[1])}-${pad(end[2])}`;
 
-					if (startKey === endKey) {
+					if (startKey == endKey) {
 						mark[startKey] = {marked: true, dotColor: '#50CEBB'};
 					} else {
 						mark[startKey] = {startingDay: true, color: '#F0F', textColor: 'white'};
