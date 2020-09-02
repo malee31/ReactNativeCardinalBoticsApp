@@ -24,6 +24,7 @@ export default class App extends React.Component {
 		this.state = {
 			password: "",
 			user: "",
+			timeIn: "WIP",
 			error: false,
 			errorText: ""
 		}
@@ -126,13 +127,13 @@ export default class App extends React.Component {
 				{/*<NavigationContainer>*/}
 				<Drawer screenProps={{
 					userText: this.state.user,
+					timeIn: this.state.timeIn,
 					getData: this.getData,
 					setData: this.setData,
 					getPassword: this.getPassword,
 					setPassword: this.setPassword,
 					login: this.login,
-					logout: this.logout,
-					testText: "Testing complete?"
+					logout: this.logout
 				}}/>
 				<ModalPopUp show={() => {
 					return this.state.error

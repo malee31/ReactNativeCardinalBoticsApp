@@ -1,14 +1,15 @@
 import config from "../../config.json";
 import {createAppContainer} from "react-navigation";
 import {createDrawerNavigator, DrawerItems} from "react-navigation-drawer";
+import { LinearGradient } from 'expo-linear-gradient';
 import Home from "../Home";
 import HomeIcon from "../../images/home.svg";
 import Login from "../Login";
 import LoginIcon from "../../images/login.svg";
 import Leaderboard from "../Leaderboard";
 import LeaderboardIcon from "../../images/volunteer.svg";
-import Calendar from "../CalendarFragment";
-import CalendarIcon from "../../images/calendar.svg";
+// import Calendar from "../CalendarFragment";
+// import CalendarIcon from "../../images/calendar.svg";
 import Resources from "../Resources";
 import ResourcesIcon from "../../images/list.svg";
 import Forms from "../Forms";
@@ -19,26 +20,31 @@ import React from "react";
 
 const styles = StyleSheet.create({
 	masterContainer: {
-		// marginTop: Platform.OS === 'ios' ? 0 : StatusBar.currentHeight,
-		flex: 1,
+		flex: 1
 	},
 	drawerHeading: {
 		width: "100%",
-		height: "25%",
-		alignItems: 'center',
-		justifyContent: 'flex-start'
+		height: "20%",
+		alignItems: 'flex-start',
+		justifyContent: 'space-around'
 	},
 	drawerLogo: {
-		width: "60%",
-		height: "70%",
-		maxHeight: "70%",
+		width: "40%",
+		height: "50%",
+		maxHeight: "50%",
+		borderRadius: 15
 	},
 	drawerText: {
-		width: "100%",
-		height: "30%",
 		fontSize: 18,
-		color: "#888",
-		textAlign: "center",
+		color: "#FFF",
+		textAlign: "left",
+		marginHorizontal: 15
+	},
+	drawerTimeIn: {
+		fontSize: 16,
+		color: "#FFF",
+		textAlign: "left",
+		marginHorizontal: 15
 	}
 });
 
@@ -126,13 +132,23 @@ const Drawer = createAppContainer(createDrawerNavigator({
 }, {
 	contentComponent: (props) => (
 		<SafeAreaView style={styles.masterContainer}>
-			<View style={styles.drawerHeading}>
-				<Image source={require("../../assets/cardinalbotics_logo_white_clear.png")}
+			<LinearGradient
+				colors={["#7D1120", "#A6242F", "#FF4D4D"]}
+				start={[0, 0]}
+				end={[1, 1]}
+				style={styles.drawerHeading}>
+				<Image source={require("../../assets/favicon.png")}
 					resizeMode="contain"
 					style={styles.drawerLogo}/>
-				<Text
-					style={styles.drawerText}>{props.screenProps.userText ? `Logged in as ${props.screenProps.userText}` : "Not Logged In"}</Text>
-			</View>
+				<View>
+					<Text style={styles.drawerText}>
+						{props.screenProps.userText ? `Logged in as ${props.screenProps.userText}` : "Not Logged In"}
+					</Text>
+					<Text style={styles.drawerTimeIn}>
+						Session Time: {typeof props.screenProps.timeIn === "string" ? props.screenProps.timeIn : "No Session"}
+					</Text>
+				</View>
+			</LinearGradient>
 			<ScrollView>
 				<DrawerItems {...props} />
 			</ScrollView>

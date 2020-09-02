@@ -24,7 +24,7 @@ export default class Leaderboard extends React.Component {
 			this.setState({
 				interval: setInterval(this.updateData, 5000)
 			});
-			console.log("UPDATED TIMER FOR LEADERBOARD. If this runs twice... Oh no.")
+			// console.log("UPDATED TIMER FOR LEADERBOARD. If this runs twice... Oh no.")
 		}
 	}
 
@@ -45,12 +45,10 @@ export default class Leaderboard extends React.Component {
 	}
 
 	updateScroll() {
-		// console.log("scroll to: " + this.scrollY);
 		if(this.flatListRef) this.flatListRef.scrollToOffset({ animated: false, offset: this.scrollY });
 	}
 
 	handleScroll(event) {
-		console.log(event.nativeEvent.contentOffset.y);
 		this.scrollY = event.nativeEvent.contentOffset.y;
 	}
 
@@ -78,7 +76,7 @@ export default class Leaderboard extends React.Component {
 									<Text style={{
 										color: entry.signedIn ? "green" : "black",
 										fontSize: 16
-									}}>{`${entry.username} is Signed ${entry.signedIn ? "In" : "Out"}: ${timeClocked}`}</Text>
+									}}>{`${entry.username}: ${timeClocked}`}</Text>
 								</View>
 							);
 						}}
@@ -92,6 +90,7 @@ export default class Leaderboard extends React.Component {
 const styles = StyleSheet.create({
 	screen: {
 		paddingVertical: '18%',
+		backgroundColor: "#FFFFFF"
 	},
 	memberEntry: {
 		width: "100%",

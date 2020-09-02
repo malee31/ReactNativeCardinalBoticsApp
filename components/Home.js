@@ -125,7 +125,7 @@ class Home extends React.Component {
 				{this.state.isLoading ? <Text> Loading </Text> : (
 					<FlatList
 						data={this.state.data}
-						keyExtractor={(item) => item.date + ": " + item.did}
+						keyExtractor={(item) => `${item.date}: ${item.did}`}
 						renderItem={(entry) => {
 							entry = entry.item;
 							let timeClocked = `${Math.floor(entry.time / 3600)} hour`;
