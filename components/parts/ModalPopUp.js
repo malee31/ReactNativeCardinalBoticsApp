@@ -19,9 +19,9 @@ class ModalPopUp extends React.Component {
 				onBackdropPress={this.close}>
 				<View style={styles.content}>
 					<Text styles={styles.contentTitle}>
-						{this.state.text || "Oh, the programmers forgot to leave a message here"}
+						{typeof this.state.text == "function" ? this.state.text() : this.state.text || "Oh, the programmers forgot to leave a message here"}
 					</Text>
-					<Button testID="close-button" onPress={this.state.onPress} title={this.state.buttonText || "Close"}/>
+					<Button onPress={this.state.onPress} title={this.state.buttonText || "Close"}/>
 				</View>
 			</Modal>
 		);

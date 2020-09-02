@@ -31,7 +31,7 @@ export default class Leaderboard extends React.Component {
                 {this.state.isLoading ? <Text> Loading </Text> : (
                     <FlatList
                         data={this.state.data}
-                        keyExtractor={(item, index) => item[0] + ": " + item[1]}
+                        keyExtractor={(item) => item[0] + ": " + item[1]}
                         renderItem={(entry) => {
                             entry = entry.item;
                             return (

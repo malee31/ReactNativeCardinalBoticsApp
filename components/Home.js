@@ -12,27 +12,32 @@ class Home extends React.Component {
             signedIn: false,
             whatDid: "",
             error: false,
+            errorMessage: "Welp, something went wrong.",
             login: props.login,
             logout: props.logout,
-            getData: props.getData,
+            getPassword: props.getPassword,
             linkPairs: [],
             isLoading: false,
             data: []
         };
         this.signInToggle = this.signInToggle.bind(this);
+        this.updateSessions = this.updateSessions.bind(this);
     }
 
     componentDidMount() {
-        this.state.getData("password", value => {
+        this.updateSessions();
+    }
+
+    updateSessions() {
+        this.state.getPassword(value => {
             fetch(config.serverEndpointBaseURLs.getUserData + encodeURI(`?password=${value}`))
                 .then((response) => response.json())
                 .then((json) => {
                     console.log(JSON.stringify(json))
                     this.setState({
                         signedIn: json.signedIn,
-                        data: json.sessions
+                        data: json["sessions"]
                     });
-                    console.log(json.sessions)
                 })
                 .catch((error) => console.error(error))
                 .finally(() => {
@@ -47,14 +52,15 @@ class Home extends React.Component {
         if (this.state.signedIn) {
             if (this.state.whatDid.trim().length === 0) {
                 this.setState({
-                    error: true
+                    error: true,
+                    errorMessage: "Can't Logout with a Blank Message"
                 });
-                console.log("Gotta make a no blank message warning here");
                 return;
             }
             console.log("What was done: " + this.state.whatDid);
             this.state.logout(this.state.whatDid.trim(), res => {
                 //What to do if logout succeeds
+                this.updateSessions();
             }, failRes => {
                 //What to do on fail
                 console.warn("FAILED LOGOUT " + JSON.stringify(failRes));
@@ -70,7 +76,8 @@ class Home extends React.Component {
             }, failRes => {
                 //What to do on fail
                 this.setState({
-                    error: true
+                    error: true,
+                    errorMessage: "Straight up failed to work"
                 });
                 console.warn("FAILED LOGIN " + JSON.stringify(failRes));
             });
@@ -102,7 +109,7 @@ class Home extends React.Component {
                     style={styles.whatchuDoing}
                     onChange={newText => this.setState({whatDid: newText.nativeEvent.text})}
                 />
-                <ModalPopUp show={() => {return this.state.error}} text="Hello!"
+                <ModalPopUp show={() => {return this.state.error}} text={() => {return this.state.errorMessage}}
                     onPress={() => {this.setState({error: false})
                 }}/>
                 {this.state.isLoading ? <Text> Loading </Text> : (

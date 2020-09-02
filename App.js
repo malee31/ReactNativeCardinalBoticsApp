@@ -34,7 +34,7 @@ const drawerTheme = {
 
 const Drawer = createAppContainer(createDrawerNavigator({
     Home: {
-        screen: props => (<Home login={props.screenProps.login} logout={props.screenProps.logout} getData={props.screenProps.getData}/>),
+        screen: props => (<Home login={props.screenProps.login} logout={props.screenProps.logout} getPassword={props.screenProps.getPassword}/>),
         navigationOptions: {
             drawerLabel: 'Home',
             drawerIcon: () => (
@@ -47,7 +47,7 @@ const Drawer = createAppContainer(createDrawerNavigator({
         }
     },
     Login: {
-        screen: props => (<Login setData={props.screenProps.setData}/>),
+        screen: props => (<Login setPassword={props.screenProps.setPassword}/>),
         navigationOptions: {
             drawerLabel: 'Log',
             drawerIcon: () => (
@@ -135,12 +135,12 @@ export default class App extends React.Component {
         this.state = {
             password: ""
         }
-        this.setData = this.setData.bind(this);
-        this.getData = this.getData.bind(this);
+        this.setPassword = this.setPassword.bind(this);
+        this.getPassword = this.getPassword.bind(this);
         this.login = this.login.bind(this);
         this.logout = this.logout.bind(this);
 
-        this.getData("password", value => {
+        this.getPassword(value => {
             this.setState({password: value});
         }, err => {
             console.warn("No password found in memory.");
@@ -162,7 +162,7 @@ export default class App extends React.Component {
 
         let onSuccessAndReset = value => {
             onSuccess(value);
-            this.getData("password", value => {
+            this.getPassword(value => {
                 this.setState({password: value});
             }, err => {
                 console.warn("No password found in memory.");
@@ -185,6 +185,14 @@ export default class App extends React.Component {
         };
 
         AsyncStorage.getItem(key).then(onSuccess).catch(onFail);
+    }
+
+    setPassword(value, onSuccess, onFail) {
+        this.setData("password", value, onSuccess, onFail);
+    }
+
+    getPassword(onSuccess, onFail) {
+        this.getData("password", onSuccess, onFail);
     }
 
     login(onSuccess, onFail) {
@@ -218,6 +226,8 @@ export default class App extends React.Component {
                     displayText: this.state.password,
                     getData: this.getData,
                     setData: this.setData,
+                    getPassword: this.getPassword,
+                    setPassword: this.setPassword,
                     login: this.login,
                     logout: this.logout,
                     testText: "Testing complete?"
