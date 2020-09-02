@@ -60,7 +60,7 @@ const Drawer = createAppContainer(createDrawerNavigator({
 	Login: {
 		screen: props => (<Login setPassword={props.screenProps.setPassword}/>),
 		navigationOptions: {
-			drawerLabel: 'Log',
+			drawerLabel: 'Login',
 			drawerIcon: () => (
 				<LoginIcon
 					width={30}

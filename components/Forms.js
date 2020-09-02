@@ -7,7 +7,7 @@ export default class Forms extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			linkPairs: [],
+			data: [],
 			isLoading: false
 		};
 	}

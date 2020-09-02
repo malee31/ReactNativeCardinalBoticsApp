@@ -16,7 +16,6 @@ class Home extends React.Component {
 			login: props.login,
 			logout: props.logout,
 			getPassword: props.getPassword,
-			linkPairs: [],
 			isLoading: false,
 			data: []
 		};
@@ -43,7 +42,10 @@ class Home extends React.Component {
 					this.setState({isLoading: false});
 				});
 		}, err => {
-			//Failed to get password
+			this.setState({
+				error: true,
+				errorMessage: `Failed to get past sessions with password: ${JSON.stringify(err)}`
+			});
 		})
 	}
 
@@ -57,8 +59,7 @@ class Home extends React.Component {
 				return;
 			}
 
-			this.state.logout(this.state.whatDid.trim(), res => {
-				//What to do if logout succeeds
+			this.state.logout(this.state.whatDid.trim(), () => {
 				this.setState({
 					signedIn: false,
 					whatDid: ""
