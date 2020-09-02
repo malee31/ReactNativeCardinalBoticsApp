@@ -2,6 +2,7 @@ import {Image, StyleSheet, Text, TouchableHighlight, View} from 'react-native';
 import {TextInput} from 'react-native-paper';
 import React from "react";
 import config from "../config.json";
+import ModalPopUp from "./parts/ModalPopUp";
 
 class Login extends React.Component {
 	constructor(props) {
@@ -18,27 +19,40 @@ class Login extends React.Component {
 
 	login() {
 		let newPass = this.state.ID.trim();
+		if(newPass.length == 0) {
+			this.setState({
+				ID: "",
+				error: true,
+				errorMessage: "HEY! No empty passwords!"
+			});
+			return;
+		}
 		this.setState({
 			ID: "",
 			error: true,
-			errorMessage: "Verifying that you exist"
+			errorMessage: "Verifying that you exist."
 		});
-		fetch(config.serverEndpointBaseURLs.getUserData + encodeURI(`?password=${newPass}`))
+
+		let url = config.serverEndpointBaseURLs.getUserData + encodeURI(`?password=${newPass}`);
+		console.log(url)
+		fetch(url)
+			.then(res => res.json())
 			.then((json) => {
-				json = json.json();
 				let user = json.username;
 
 				this.state.setPassword(newPass, () => {
 					this.setState({
-						errorMessage: `Success. You're now logged in as ${user} with ${newPass}`,
+						errorMessage: `Success. You're now logged in as ${user} using ${newPass}`,
 						error: true
 					});
+					console.log("State set");
 				}, null, user);
 			}).catch(err => {
-			this.setState({
-				error: true,
-				errorMessage: "Either you don't exist or something went wrong"
-			});
+				console.log("Login Fetch Failed: ", err);
+				this.setState({
+					error: true,
+					errorMessage: `Error: Looks like either you don't exist or the server behaved unexpectedly\n\n${JSON.stringify(err)}`
+				});
 		});
 	}
 
@@ -61,6 +75,14 @@ class Login extends React.Component {
 						<Text>Submit</Text>
 					</View>
 				</TouchableHighlight>
+				<ModalPopUp show={() => {
+					return this.state.error
+				}} text={() => {
+					return this.state.errorMessage
+				}}
+				onPress={() => {
+					this.setState({error: false})
+				}}/>
 			</View>
 		);
 	};

@@ -38,7 +38,6 @@ export default class Leaderboard extends React.Component {
 						keyExtractor={item => item.username}
 						renderItem={(entry) => {
 							entry = entry.item;
-							console.log(entry);
 							return (
 								<View style={styles.resourceButton}>
 									<Text>{entry.username + " is Signed " + (entry.signedIn ? "In" : "Out")}</Text>
