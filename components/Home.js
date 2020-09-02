@@ -56,35 +56,38 @@ class Home extends React.Component {
 				});
 				return;
 			}
+
 			this.state.logout(this.state.whatDid.trim(), res => {
 				//What to do if logout succeeds
+				this.setState({
+					signedIn: false,
+					whatDid: ""
+				});
 				this.updateSessions();
 			}, failRes => {
-				//What to do on fail
-				console.warn("FAILED LOGOUT " + JSON.stringify(failRes));
-			});
-		} else {
-			this.state.login(res => {
-				//What to do if login succeeds
-				if (res.status !== 200) {
-					//Something went wrong. Maybe invalid password or url
-					//Do something here
-					return;
-				}
-			}, failRes => {
-				//What to do on fail
 				this.setState({
 					error: true,
-					errorMessage: "Straight up failed to work"
+					errorMessage: `FAILED LOGOUT ${JSON.stringify(failRes)}`
 				});
-				console.warn("FAILED LOGIN " + JSON.stringify(failRes));
+			});
+
+		} else {
+			this.state.login(res => {
+				if (res.status !== 200) {
+					throw `Server responded with a ${res.status}`;
+				}
+
+				this.setState({
+					signedIn: true,
+					whatDid: ""
+				});
+			}, failRes => {
+				this.setState({
+					error: true,
+					errorMessage: `Straight up failed to log in: ${JSON.stringify(failRes)}`
+				});
 			});
 		}
-
-		this.setState({
-			signedIn: !this.state.signedIn,
-			whatDid: ""
-		});
 	}
 
 	render() {
@@ -104,12 +107,12 @@ class Home extends React.Component {
 						}}>{this.state.signedIn ? "Sign Out" : "Sign In"}</Text>
 					</View>
 				</TouchableHighlight>
-				<TextInput
+				{this.state.signedIn ? <TextInput
 					label="What did you do while signed in?"
 					value={this.state.whatDid}
 					style={styles.whatchuDoing}
 					onChange={newText => this.setState({whatDid: newText.nativeEvent.text})}
-				/>
+				/> : <View/>}
 				<ModalPopUp show={() => {
 					return this.state.error
 				}} text={() => {
