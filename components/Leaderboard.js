@@ -89,13 +89,8 @@ export default class Leaderboard extends React.Component {
 
 const styles = StyleSheet.create({
 	screen: {
-<<<<<<< HEAD
 		paddingVertical: '18%',
 		backgroundColor: "#FFFFFF"
-=======
-		paddingVertical: '10%',
-		backgroundColor: config.colors.background,
->>>>>>> f641d305a656d1da8988fa29a2402b4d173f8b69
 	},
 	memberEntry: {
 		width: "100%",
