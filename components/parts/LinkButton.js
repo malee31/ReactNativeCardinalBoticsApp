@@ -49,7 +49,8 @@ export default class LinkButton extends React.Component {
 		this.state = {
 			url: props.url,
 			title: props.title || "Resource",
-			icon: icon
+			icon: icon,
+			style: props.style || {}
 		};
 	}
 
@@ -64,7 +65,8 @@ export default class LinkButton extends React.Component {
 				mode="contained"
 				color={config.colors.secondary}
 				onPress={this.openURL}
-				key={this.state.title + ": " + this.state.url + "<" + this.state.icon + ">"}>
+				key={this.state.title + ": " + this.state.url + "<" + this.state.icon + ">"}
+				style={this.state.style}>
 				<Text style={{textAlign: "left"}}>{this.state.title}</Text>
 			</Button>
 		);
