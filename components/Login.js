@@ -9,16 +9,37 @@ class Login extends React.Component {
         this.state = {
             ID: "",
             signedIn: false,
-            setPassword: props.setPassword,
+            error: false,
+            errorMessage: "Something went wrong",
+            setPassword: props.setPassword
         };
         this.login = this.login.bind(this);
     }
 
     login() {
-        this.state.setPassword(this.state.ID.trim());
+        let newPass = this.state.ID.trim();
         this.setState({
             ID: "",
+            error: true,
+            errorMessage: "Verifying that you exist"
         });
+        fetch(config.serverEndpointBaseURLs.getUserData + encodeURI(`?password=${newPass}`))
+            .then((json) => {
+                json = json.json();
+                let user = json.username;
+
+                this.state.setPassword(newPass, () => {
+                    this.setState({
+                        errorMessage: `Success. You're now logged in as ${user} with ${newPass}`,
+                        error: true
+                    });
+                }, null, user);
+            }).catch(err => {
+                this.setState({
+                    error: true,
+                    errorMessage: "Either you don't exist or something went wrong"
+                });
+            });
     }
 
     render() {

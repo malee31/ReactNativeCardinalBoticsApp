@@ -1,26 +1,12 @@
 import {DefaultTheme, Provider as PaperProvider} from 'react-native-paper';
-import {createDrawerNavigator, DrawerItems} from 'react-navigation-drawer';
-import {Image, ScrollView, StyleSheet, Text, View} from 'react-native';
+import {StyleSheet} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {createAppContainer} from 'react-navigation';
 import {StatusBar} from 'expo-status-bar';
 import React from "react";
 
+import ModalPopUp from "./components/parts/ModalPopUp";
+import Drawer from "./components/parts/Drawer";
 import config from "./config.json";
-import Home from "./components/Home.js";
-import Resources from "./components/Resources.js";
-import Forms from "./components/Forms.js";
-import Calendar from "./components/CalendarFragment.js";
-import Login from "./components/Login.js";
-import Leaderboard from "./components/Leaderboard.js";
-
-import HomeIcon from "./images/home.svg";
-import LoginIcon from "./images/login.svg";
-import CalendarIcon from "./images/calendar.svg";
-import ResourcesIcon from "./images/list.svg";
-import FormsIcon from "./images/form.svg";
-import LeaderboardIcon from "./images/volunteer.svg";
 
 const drawerTheme = {
     ...DefaultTheme,
@@ -32,108 +18,14 @@ const drawerTheme = {
     },
 };
 
-const Drawer = createAppContainer(createDrawerNavigator({
-    Home: {
-        screen: props => (<Home login={props.screenProps.login} logout={props.screenProps.logout} getPassword={props.screenProps.getPassword}/>),
-        navigationOptions: {
-            drawerLabel: 'Home',
-            drawerIcon: () => (
-                <HomeIcon
-                    width={30}
-                    height={30}
-                    fill={config.colors.secondary}
-                />
-            )
-        }
-    },
-    Login: {
-        screen: props => (<Login setPassword={props.screenProps.setPassword}/>),
-        navigationOptions: {
-            drawerLabel: 'Log',
-            drawerIcon: () => (
-                <LoginIcon
-                    width={30}
-                    height={30}
-                    fill={config.colors.secondary}
-                />
-            )
-        }
-    },
-    Leaderboard: {
-        screen: Leaderboard,
-        navigationOptions: {
-            drawerLabel: 'Other Members',
-            drawerIcon: () => (
-                <LeaderboardIcon
-                    width={30}
-                    height={30}
-                    fill={config.colors.secondary}
-                />
-            )
-        }
-    },
-    Calendar: {
-        screen: Calendar,
-        navigationOptions: {
-            drawerLabel: 'Calendar',
-            drawerIcon: () => (
-                <CalendarIcon
-                    width={30}
-                    height={30}
-                    fill={config.colors.secondary}
-                />
-            )
-        }
-    },
-    Resources: {
-        screen: Resources,
-        navigationOptions: {
-            drawerLabel: 'Resources',
-            drawerIcon: () => (
-                <ResourcesIcon
-                    width={30}
-                    height={30}
-                    fill={config.colors.secondary}
-                />
-            )
-        }
-    },
-    Forms: {
-        screen: Forms,
-        navigationOptions: {
-            drawerLabel: 'Forms',
-            drawerIcon: () => (
-                <FormsIcon
-                    width={30}
-                    height={30}
-                    fill={config.colors.secondary}
-                />
-            )
-        }
-    },
-
-}, {
-    contentComponent: (props) => (
-        <SafeAreaView style={styles.masterContainer}>
-            <View style={styles.drawerHeading}>
-                <Image source={require("./assets/cardinalbotics_logo_white_clear.png")}
-                       resizeMode="contain"
-                       style={styles.drawerLogo}/>
-                <Text
-                    style={styles.drawerText}>{props.screenProps.displayText ? `Logged in as ${props.screenProps.displayText}` : "Not Logged In"}</Text>
-            </View>
-            <ScrollView>
-                <DrawerItems {...props} />
-            </ScrollView>
-        </SafeAreaView>
-    )
-}));
-
 export default class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            password: ""
+            password: "",
+            user: "",
+            error: false,
+            errorText: ""
         }
         this.setPassword = this.setPassword.bind(this);
         this.getPassword = this.getPassword.bind(this);
@@ -143,33 +35,23 @@ export default class App extends React.Component {
         this.getPassword(value => {
             this.setState({password: value});
         }, err => {
-            console.warn("No password found in memory.");
-            console.log(err)
+            this.setState({
+                error: true,
+                errorMessage: "No password found in memory. Go to the Login page to log in!"
+            });
         });
     }
 
     setData(key, value, onSuccess, onFail) {
         if (!key || !value) {
-            console.warn("Uh oh. Invalid key or value to save");
+            this.setState({
+                error: true,
+                errorMessage: "Uh oh. Invalid key or value to save"
+            });
             return;
         }
-        onSuccess = typeof onSuccess == "function" ? onSuccess : () => {
-            console.log(`SUCCESSFULLY SAVED ${value} as ${key}`)
-        };
-        onFail = typeof onFail == "function" ? onFail : () => {
-            console.log(`Failed to save ${value} as ${key} :(`)
-        };
 
-        let onSuccessAndReset = value => {
-            onSuccess(value);
-            this.getPassword(value => {
-                this.setState({password: value});
-            }, err => {
-                console.warn("No password found in memory.");
-                console.log(err)
-            });
-        };
-        AsyncStorage.setItem(key, typeof value == "string" ? value : JSON.stringify(value)).then(onSuccessAndReset).catch(onFail);
+        AsyncStorage.setItem(key, typeof value == "string" ? value : JSON.stringify(value)).then(onSuccess).catch(onFail);
     }
 
     getData(key, onSuccess, onFail) {
@@ -177,43 +59,49 @@ export default class App extends React.Component {
             console.warn("Uh oh. Invalid key or value to save");
             return;
         }
-        onSuccess = typeof onSuccess == "function" ? onSuccess : value => {
-            console.log(`SUCCESSFULLY GOT ${value} from ${key}... and did nothing with it`)
-        };
-        onFail = typeof onFail == "function" ? onFail : () => {
-            console.log(`Failed to get ${key} :(`)
-        };
 
         AsyncStorage.getItem(key).then(onSuccess).catch(onFail);
     }
 
-    setPassword(value, onSuccess, onFail) {
-        this.setData("password", value, onSuccess, onFail);
+    setPassword(value, onSuccess, onFail, user) {
+        this.setData("password", value, () => {
+            onSuccess();
+            this.getPassword(value => {
+                if(user) {
+                    this.setState({
+                        user: user,
+                        password: value
+                    });
+                } else {
+                    this.setState({
+                        password: value
+                    });
+                }
+            }, err => {
+                this.setState({
+                    error: true,
+                    errorMessage: "Failed to update password"
+                });
+            });
+        }, onFail);
     }
 
     getPassword(onSuccess, onFail) {
-        this.getData("password", onSuccess, onFail);
+        this.getData("password", val => {
+            onSuccess(val);
+            this.setState({
+                password: val
+            })
+        }, onFail);
     }
 
     login(onSuccess, onFail) {
         let url = `${config.serverEndpointBaseURLs.login}?password=${encodeURI(this.state.password)}`;
-        onSuccess = typeof onSuccess == "function" ? onSuccess : () => {
-            console.log(`SUCCESSFULLY LOGGED IN AS ${this.state.password}`)
-        };
-        onFail = typeof onFail == "function" ? onFail : () => {
-            console.log(`Failed to log in as ${this.state.password} :(`)
-        };
         fetch(url).then(onSuccess).catch(onFail);
     }
 
     logout(whatDid, onSuccess, onFail) {
         let url = `${config.serverEndpointBaseURLs.logout}?password=${encodeURI(this.state.password)}&did=${encodeURI(whatDid)}`;
-        onSuccess = typeof onSuccess == "function" ? onSuccess : () => {
-            console.log(`SUCCESSFUL LOGOUT WITH ${this.state.password} WITH DETAILS: ${whatDid}`);
-        };
-        onFail = typeof onFail == "function" ? onFail : () => {
-            console.log(`Failed to logout with ${this.state.password} and details: ${whatDid} :(`);
-        };
         fetch(url).then(onSuccess).catch(onFail);
     }
 
@@ -223,7 +111,7 @@ export default class App extends React.Component {
                 <StatusBar animated backgroundColor="#7D1120" style="dark"/>
                 {/*<NavigationContainer>*/}
                 <Drawer screenProps={{
-                    displayText: this.state.password,
+                    userText: this.state.user,
                     getData: this.getData,
                     setData: this.setData,
                     getPassword: this.getPassword,
@@ -231,6 +119,9 @@ export default class App extends React.Component {
                     login: this.login,
                     logout: this.logout,
                     testText: "Testing complete?"
+                }}/>
+                <ModalPopUp show={() => {return this.state.error}} text={() => {return this.state.errorMessage}}
+                    onPress={() => {this.setState({error: false})
                 }}/>
                 {/*</NavigationContainer>*/}
             </PaperProvider>
