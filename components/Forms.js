@@ -36,7 +36,9 @@ export default class Forms extends React.Component {
 							return (
 								<View style={styles.formButton}>
 									<LinkButton
+										style={styles.formBtn}
 										title={entry[1]} url={entry[2]}/>
+										<Text>pull json here</Text>
 								</View>
 							);
 						}}
@@ -48,13 +50,20 @@ export default class Forms extends React.Component {
 }
 const styles = StyleSheet.create({
 	screen: {
-		paddingVertical: '10%'
+		paddingVertical: '10%',
+		backgroundColor: config.colors.background,
+		height:'100%',
 	},
 	formButton: {
 		width: "100%",
 		height: 40,
 		flex: 1,
+		justifyContent:'space-between',
+		flexDirection: 'row',
 		paddingHorizontal: 30,
 		marginVertical: 10
+	},
+	formBtn: {
+		width:30
 	},
 });
