@@ -54,12 +54,12 @@
 		},
 		"androidStatusBar": {
 			"barStyle": "dark-content",
-			"backgroundColor": "#7D1120",
-			"hidden": false,
-			"translucent": false
+			"backgroundColor": "#F0F0F0",
+			"hidden": true,
+			"translucent": true
 		},
 		"androidNavigationBar": {
-			"visible": "leanback",
+			"visible": "sticky-immersive",
 			"barStyle": "dark-content"
 		},
 		"ios": {
