@@ -23,11 +23,14 @@ export default class App extends React.Component {
 		this.getPassword = this.getPassword.bind(this);
 		this.login = this.login.bind(this);
 		this.logout = this.logout.bind(this);
+		this.setSignInStatus = this.setSignInStatus.bind(this);
 	}
 
 	componentDidMount() {
 		this.getPassword(value => {
+			console.log(`Password: ${value}`);
 			this.setState({password: value});
+
 			let url = config.serverEndpointBaseURLs.getUserData + encodeURI(`?password=${value}`);
 			fetch(url)
 				.then(res => res.json())
@@ -44,6 +47,12 @@ export default class App extends React.Component {
 				error: true,
 				errorMessage: "No password found in memory. Go to the Login page to log in!"
 			});
+		});
+	}
+
+	setSignInStatus(status) {
+		this.setState({
+			signedIn: status
 		});
 	}
 
@@ -142,6 +151,7 @@ export default class App extends React.Component {
 					userText: this.state.user,
 					timeIn: this.state.timeIn,
 					signedIn: this.state.signedIn,
+					setSignInStatus: this.setSignInStatus,
 					getData: this.getData,
 					setData: this.setData,
 					getPassword: this.getPassword,

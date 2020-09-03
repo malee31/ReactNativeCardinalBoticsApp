@@ -1,6 +1,7 @@
-import {FlatList, StyleSheet, Text, View} from 'react-native';
+import {FlatList, Text, View} from 'react-native';
 import config from "../config.json";
 import React from "react";
+import Styles from "./parts/Styles.js";
 
 export default class Leaderboard extends React.Component {
 	constructor(props) {
@@ -54,7 +55,7 @@ export default class Leaderboard extends React.Component {
 
 	render() {
 		return (
-			<View style={styles.screen}>
+			<View style={Styles.leaderboardScreen}>
 				{this.state.loadCount === 0 ? <Text> Loading </Text> : (
 					<FlatList
 						ref={ref => { this.flatListRef = ref; }}
@@ -72,7 +73,7 @@ export default class Leaderboard extends React.Component {
 							}
 							timeClocked += ` and ${Math.floor((entry.totalTime % 3600) / 60)} minute${Math.floor((entry.totalTime % 3600) / 60) !== 1 ? "s" : ""}`;
 							return (
-								<View style={styles.memberEntry}>
+								<View style={Styles.memberEntry}>
 									<Text style={{
 										color: entry.signedIn ? "green" : "black",
 										fontSize: 16
@@ -86,16 +87,3 @@ export default class Leaderboard extends React.Component {
 		);
 	}
 }
-
-const styles = StyleSheet.create({
-	screen: {
-		paddingVertical: '18%',
-		backgroundColor: "#FFFFFF"
-	},
-	memberEntry: {
-		width: "100%",
-		height: 40,
-		flex: 1,
-		paddingHorizontal: 30,
-	},
-});

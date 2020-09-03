@@ -1,7 +1,8 @@
-import {FlatList, StyleSheet, Text, View} from 'react-native';
+import {FlatList, Text, View} from 'react-native';
 import LinkButton from "./parts/LinkButton.js";
 import config from "../config.json";
 import React from "react";
+import Styles from "./parts/Styles.js";
 
 export default class Resources extends React.Component {
 	constructor(props) {
@@ -26,7 +27,7 @@ export default class Resources extends React.Component {
 
 	render() {
 		return (
-			<View style={styles.screen}>
+			<View style={Styles.resourceScreen}>
 				{this.state.isLoading ? <Text> Loading </Text> : (
 					<FlatList
 						data={this.state.data}
@@ -34,7 +35,7 @@ export default class Resources extends React.Component {
 						renderItem={(entry) => {
 							entry = entry.item;
 							return (
-								<View style={styles.resourceButton}>
+								<View style={Styles.resourceButton}>
 									<LinkButton
 										title={entry[0]}
 										url={entry[1]}
@@ -49,17 +50,3 @@ export default class Resources extends React.Component {
 		);
 	}
 }
-
-const styles = StyleSheet.create({
-	screen: {
-		paddingVertical: '10%',
-		backgroundColor: config.colors.background,
-	},
-	resourceButton: {
-		width: "100%",
-		height: 40,
-		flex: 1,
-		paddingHorizontal: 30,
-		marginVertical: 10
-	},
-});

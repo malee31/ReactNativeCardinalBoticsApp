@@ -3,6 +3,7 @@ import {ScrollView, Text, View} from 'react-native';
 import config from "../config.json";
 import React from "react";
 import moment from 'moment';
+import Styles from "./parts/Styles.js";
 
 LocaleConfig.locales['en'] = {
 	formatAccessibilityLabel: 'dddd d \'of\' MMMM \'of\' yyyy',
@@ -125,8 +126,8 @@ class CalendarFragment extends React.Component {
 
 	render() {
 		return (
-			<View style={styles.screen}>
-				<View style={styles.calendarView}>
+			<View style={Styles.calendarScreen}>
+				<View style={Styles.calendarView}>
 					<Calendar
 						key={`CalendarReload: ${this.state.loadNum}`}
 						enableSwipeMonths={true}
@@ -144,38 +145,14 @@ class CalendarFragment extends React.Component {
 						}}
 					/>
 				</View>
-				<ScrollView style={styles.scroll}>
-					<Text style={styles.text}>
+				<ScrollView style={Styles.scroll}>
+					<Text style={Styles.text}>
 						{this.handleCalendarClick()}
 					</Text>
 				</ScrollView>
 			</View>
 		);
 	};
-}
-
-const styles = {
-	screen: {
-		paddingVertical: '10%',
-		marginTop: 40,
-		height: "100%",
-		backgroundColor: config.colors.background,
-	},
-	calendarView: {
-		minHeight: "45%"
-	},
-	scroll: {
-		maxHeight: "55%",
-		padding: 15
-	},
-	text: {
-		padding: 10,
-		fontSize: 20,
-		width: "100%",
-		flex: 1,
-		textAlign: 'center',
-		alignSelf: "center"
-	}
 }
 
 export default CalendarFragment;

@@ -1,7 +1,8 @@
-import {FlatList, StyleSheet, Text, View} from 'react-native';
+import {FlatList, Text, View} from 'react-native';
 import LinkButton from "./parts/LinkButton.js";
 import config from "../config.json";
 import React from "react";
+import Styles from "./parts/Styles.js";
 
 export default class Forms extends React.Component {
 	constructor(props) {
@@ -26,7 +27,7 @@ export default class Forms extends React.Component {
 
 	render() {
 		return (
-			<View style={styles.screen}>
+			<View style={Styles.formScreen}>
 				{this.state.isLoading ? <Text> Loading </Text> : (
 					<FlatList
 						data={this.state.data}
@@ -34,9 +35,9 @@ export default class Forms extends React.Component {
 						renderItem={(entry) => {
 							entry = entry.item;
 							return (
-								<View style={styles.formButton}>
+								<View style={Styles.formButton}>
 									<LinkButton
-										style={styles.formBtn}
+										style={Styles.formBtn}
 										title={entry[1]} url={entry[2]}/>
 										<Text>pull json here</Text>
 								</View>
@@ -48,22 +49,3 @@ export default class Forms extends React.Component {
 		);
 	}
 }
-const styles = StyleSheet.create({
-	screen: {
-		paddingVertical: '10%',
-		backgroundColor: config.colors.background,
-		height:'100%',
-	},
-	formButton: {
-		width: "100%",
-		height: 40,
-		flex: 1,
-		justifyContent:'space-between',
-		flexDirection: 'row',
-		paddingHorizontal: 30,
-		marginVertical: 10
-	},
-	formBtn: {
-		width:30
-	},
-});

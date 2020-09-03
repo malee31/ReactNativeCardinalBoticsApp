@@ -1,6 +1,7 @@
-import {Button, StyleSheet, Text, View} from 'react-native';
+import {Button, Text, View} from 'react-native';
 import Modal from 'react-native-modal';
 import React from 'react';
+import Styles from "./Styles.js";
 
 class ModalPopUp extends React.Component {
 	constructor(props) {
@@ -18,14 +19,14 @@ class ModalPopUp extends React.Component {
 		return (
 			<Modal isVisible={this.state.show()}
 				onBackdropPress={this.close}>
-				<View style={styles.content}>
-					<Text styles={styles.contentTitle}>
+				<View style={Styles.content}>
+					<Text style={Styles.contentTitle}>
 						{typeof this.state.text == "function" ? this.state.text() : this.state.text || "Oh, the programmers forgot to leave a message here"}
 					</Text>
 					{/*<TextInput*/}
 					{/*	placeholder="Your Placeholder"*/}
 					{/*	onChangeText={(value) => this.setState({value})}*/}
-					{/*	style={styles.watchuDoing}*/}
+					{/*	style={Styles.watchuDoing}*/}
 					{/*	editable={true}*/}
 					{/*	multiline={true}*/}
 					{/*	value={this.state.value}*/}
@@ -36,23 +37,5 @@ class ModalPopUp extends React.Component {
 		);
 	}
 }
-
-const styles = StyleSheet.create({
-	content: {
-		backgroundColor: 'white',
-		padding: 22,
-		justifyContent: 'center',
-		alignItems: 'center',
-		borderRadius: 4,
-		borderColor: 'rgba(0, 0, 0, 0.1)',
-	},
-	watchuDoing: {
-		maxHeight: 30
-	},
-	contentTitle: {
-		fontSize: 20,
-		marginBottom: 12,
-	},
-});
 
 export default ModalPopUp;

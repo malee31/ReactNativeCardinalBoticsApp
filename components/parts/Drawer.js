@@ -17,41 +17,17 @@ import FormsIcon from "../../images/form.svg";
 import {SafeAreaView} from "react-native-safe-area-context";
 import {Image, ScrollView, StyleSheet, Text, View} from "react-native";
 import React from "react";
-
-const styles = StyleSheet.create({
-	masterContainer: {
-		flex: 1
-	},
-	drawerHeading: {
-		width: "100%",
-		height: "20%",
-		alignItems: 'flex-start',
-		justifyContent: 'space-around'
-	},
-	drawerLogo: {
-		width: "40%",
-		height: "50%",
-		maxHeight: "50%",
-		borderRadius: 15
-	},
-	drawerText: {
-		fontSize: 18,
-		color: "#FFF",
-		textAlign: "left",
-		marginHorizontal: 15
-	},
-	drawerTimeIn: {
-		fontSize: 16,
-		color: "#FFF",
-		textAlign: "left",
-		marginHorizontal: 15
-	}
-});
+import Styles from "./Styles.js";
 
 const Drawer = createAppContainer(createDrawerNavigator({
 	Home: {
 		screen: props => (
-			<Home login={props.screenProps.login} logout={props.screenProps.logout} getPassword={props.screenProps.getPassword}/>),
+			<Home
+				login={props.screenProps.login}
+				logout={props.screenProps.logout}
+				getPassword={props.screenProps.getPassword}
+				setSignInStatus={props.screenProps.setSignInStatus}
+			/>),
 		navigationOptions: {
 			drawerLabel: 'Home',
 			drawerIcon: () => (
@@ -131,20 +107,20 @@ const Drawer = createAppContainer(createDrawerNavigator({
 
 }, {
 	contentComponent: (props) => (
-		<SafeAreaView style={styles.masterContainer}>
+		<SafeAreaView style={Styles.masterContainer}>
 			<LinearGradient
 				colors={["#7D1120", "#A6242F", "#FF4D4D"]}
 				start={[0, 0]}
 				end={[1, 1]}
-				style={styles.drawerHeading}>
+				style={Styles.drawerHeading}>
 				<Image source={require("../../assets/favicon.png")}
 					resizeMode="contain"
-					style={styles.drawerLogo}/>
+					style={Styles.drawerLogo}/>
 				<View>
-					<Text style={styles.drawerText}>
+					<Text style={Styles.drawerText}>
 						{props.screenProps.userText ? `Logged in as ${props.screenProps.userText}` : "Not Logged In"}
 					</Text>
-					<Text style={styles.drawerTimeIn}>
+					<Text style={Styles.drawerTimeIn}>
 						Session Time: {props.screenProps.timeIn ? props.screenProps.timeIn : "No Session"}
 					</Text>
 				</View>

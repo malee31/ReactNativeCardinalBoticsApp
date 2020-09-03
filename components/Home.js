@@ -1,9 +1,10 @@
-import {FlatList, Image, StyleSheet, Text, TouchableHighlight, View} from 'react-native';
+import {FlatList, Image, Text, TouchableHighlight, View} from 'react-native';
 import {TextInput} from 'react-native-paper';
 import React from "react";
 
 import ModalPopUp from './parts/ModalPopUp.js';
 import config from "../config.json";
+import Styles from "./parts/Styles.js";
 
 class Home extends React.Component {
 	constructor(props) {
@@ -16,6 +17,7 @@ class Home extends React.Component {
 			login: props.login,
 			logout: props.logout,
 			getPassword: props.getPassword,
+			setSignInStatus: props.setSignInStatus,
 			isLoading: false,
 			data: []
 		};
@@ -36,6 +38,7 @@ class Home extends React.Component {
 						signedIn: json.signedIn,
 						data: json["sessions"].reverse()
 					});
+					this.state.setSignInStatus(json.signedIn);
 				})
 				.catch((error) => console.error(error))
 				.finally(() => {
@@ -64,6 +67,7 @@ class Home extends React.Component {
 					signedIn: false,
 					whatDid: ""
 				});
+				this.state.setSignInStatus(false);
 				this.updateSessions();
 			}, failRes => {
 				this.setState({
@@ -93,14 +97,14 @@ class Home extends React.Component {
 
 	render() {
 		return (
-			<View style={styles.screen}>
+			<View style={Styles.screen}>
 				<Image source={require("../assets/cardinalbotics_logo_white_clear.png")}
 					resizeMode="contain"
-					style={styles.largeLogoImage}/>
+					style={Styles.largeLogoImage}/>
 				<TouchableHighlight onPress={this.signInToggle}
 					activeOpacity={0.7}
 					underlayColor={config.colors.darkGray}
-					style={styles.signInButton}>
+					style={Styles.signInButton}>
 					<View>
 						<Text style={{
 							color: this.state.signedIn ? "red" : "green",
@@ -111,7 +115,7 @@ class Home extends React.Component {
 				{this.state.signedIn ? <TextInput
 					label="What did you do while signed in?"
 					value={this.state.whatDid}
-					style={styles.whatchuDoing}
+					style={Styles.whatchuDoing}
 					onChange={newText => this.setState({whatDid: newText.nativeEvent.text})}
 				/> : <View/>}
 				<ModalPopUp show={() => {
@@ -138,7 +142,7 @@ class Home extends React.Component {
 
 							return (
 								<View>
-									<Text style={styles.log}>{`${entry.day} for ${timeClocked}\n\t|\t${entry.did}`}</Text>
+									<Text style={Styles.log}>{`${entry.day} for ${timeClocked}\n\t|\t${entry.did}`}</Text>
 								</View>
 							);
 						}}
@@ -150,39 +154,3 @@ class Home extends React.Component {
 }
 
 export default Home;
-
-const styles = StyleSheet.create({
-	screen: {
-		width: "100%",
-		height: "100%",
-		flex: 1,
-		paddingHorizontal: 30,
-		paddingVertical: 40,
-		backgroundColor: config.colors.background,
-	},
-	log: {
-		alignContent: "center",
-		fontSize: 15
-
-	},
-	largeLogoImage: {
-		width: "100%",
-		maxHeight: "25%",
-	},
-	signInButton: {
-		alignItems: "center",
-		justifyContent: "center",
-		alignSelf: "center",
-		backgroundColor: config.colors.gray,
-		width: "70%",
-		padding: "5%",
-		marginVertical: 20,
-	},
-	signInText: {
-		fontSize: 40,
-	},
-	whatchuDoing: {
-		color: "#7D1120",
-		marginBottom: 20
-	}
-});
