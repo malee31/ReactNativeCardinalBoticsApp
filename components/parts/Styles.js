@@ -81,15 +81,24 @@ const styles = StyleSheet.create({
 	},
 	formButton: {
 		width: "100%",
-		height: 40,
+		height: 45,
 		flex: 1,
 		justifyContent:'space-between',
+		alignContent: "center",
 		flexDirection: 'row',
-		paddingHorizontal: 30,
+		paddingHorizontal: "5%",
 		marginVertical: 10
 	},
 	formBtn: {
-		width:30
+		width: "70%"
+	},
+	formText: {
+		flex: 1,
+		width: "30%",
+		fontSize: 16,
+		paddingHorizontal: 5,
+		justifyContent: "center",
+		alignContent: "center"
 	},
 	leaderboardScreen: {
 		paddingVertical: '18%',
