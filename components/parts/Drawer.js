@@ -34,7 +34,7 @@ const Drawer = createAppContainer(createDrawerNavigator({
 				<HomeIcon
 					width={30}
 					height={30}
-					fill={config.colors.secondary}
+					fill={config.colors.darkGray}
 				/>
 			)
 		}
@@ -47,7 +47,7 @@ const Drawer = createAppContainer(createDrawerNavigator({
 				<LoginIcon
 					width={30}
 					height={30}
-					fill={config.colors.secondary}
+					fill={config.colors.darkGray}
 				/>
 			)
 		}
@@ -60,7 +60,7 @@ const Drawer = createAppContainer(createDrawerNavigator({
 				<LeaderboardIcon
 					width={30}
 					height={30}
-					fill={config.colors.secondary}
+					fill={config.colors.darkGray}
 				/>
 			)
 		}
@@ -73,7 +73,7 @@ const Drawer = createAppContainer(createDrawerNavigator({
 	// 			<CalendarIcon
 	// 				width={30}
 	// 				height={30}
-	// 				fill={config.colors.secondary}
+	// 				fill={config.colors.darkGray}
 	// 			/>
 	// 		)
 	// 	}
@@ -86,7 +86,7 @@ const Drawer = createAppContainer(createDrawerNavigator({
 				<ResourcesIcon
 					width={30}
 					height={30}
-					fill={config.colors.secondary}
+					fill={config.colors.darkGray}
 				/>
 			)
 		}
@@ -99,7 +99,7 @@ const Drawer = createAppContainer(createDrawerNavigator({
 				<FormsIcon
 					width={30}
 					height={30}
-					fill={config.colors.secondary}
+					fill={config.colors.darkGray}
 				/>
 			)
 		}

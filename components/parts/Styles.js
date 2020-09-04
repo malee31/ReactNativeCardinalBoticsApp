@@ -34,7 +34,8 @@ const styles = StyleSheet.create({
 		height: "100%",
 		flex: 1,
 		paddingHorizontal: 30,
-		paddingVertical: 50,
+		paddingTop: 50,
+		paddingBottom: 25,
 		backgroundColor: config.colors.background,
 
 	},
