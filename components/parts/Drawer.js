@@ -1,7 +1,7 @@
 import config from "../../config.json";
 import {createAppContainer} from "react-navigation";
 import {createDrawerNavigator, DrawerItems} from "react-navigation-drawer";
-import { LinearGradient } from 'expo-linear-gradient';
+import {LinearGradient} from 'expo-linear-gradient';
 import Home from "../Home";
 import HomeIcon from "../../images/home.svg";
 import Login from "../Login";
@@ -15,7 +15,7 @@ import ResourcesIcon from "../../images/list.svg";
 import Forms from "../Forms";
 import FormsIcon from "../../images/form.svg";
 import {SafeAreaView} from "react-native-safe-area-context";
-import {Image, ScrollView, StyleSheet, Text, View} from "react-native";
+import {Image, ScrollView, Text, View} from "react-native";
 import React from "react";
 import Styles from "./Styles.js";
 

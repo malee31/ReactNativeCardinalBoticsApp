@@ -1,5 +1,6 @@
 import {DefaultTheme, Provider as PaperProvider} from 'react-native-paper';
 import AsyncStorage from '@react-native-community/async-storage';
+import {SafeAreaProvider} from "react-native-safe-area-context";
 import {StatusBar} from 'expo-status-bar';
 import React from "react";
 
@@ -29,7 +30,8 @@ export default class App extends React.Component {
 	componentDidMount() {
 		this.getPassword(value => {
 			console.log(`Password: ${value}`);
-			this.setState({password: value});
+			if (value) this.setState({password: value});
+
 
 			let url = config.serverEndpointBaseURLs.getUserData + encodeURI(`?password=${value}`);
 			fetch(url)
@@ -37,11 +39,11 @@ export default class App extends React.Component {
 				.then((json) => {
 					this.setState({user: json.username});
 				}).catch(err => {
-					this.setState({
-						error: true,
-						errorMessage: `Error: Looks like either you don't exist or the server behaved unexpectedly\n\n${JSON.stringify(err)}`
-					});
+				this.setState({
+					error: true,
+					errorMessage: `Error: Looks like either you don't exist or the server behaved unexpectedly\n\n${JSON.stringify(err)}`
 				});
+			});
 		}, () => {
 			this.setState({
 				error: true,
@@ -79,7 +81,7 @@ export default class App extends React.Component {
 
 	//Pretty much only for Login.js
 	setPassword(value, onSuccess, onFail, user) {
-		if(this.state.signedIn) {
+		if (this.state.signedIn) {
 			this.setState({
 				error: true,
 				errorMessage: "Can't log into another account while signed in!"
@@ -112,14 +114,16 @@ export default class App extends React.Component {
 	getPassword(onSuccess, onFail) {
 		this.getData("password", val => {
 			onSuccess(val);
-			this.setState({
-				password: val
-			})
+			if (val) {
+				this.setState({
+					password: val
+				});
+			}
 		}, onFail);
 	}
 
 	login(onSuccess, onFail) {
-		if(this.state.password === "") {
+		if (this.state.password === "") {
 			this.setState({
 				error: true,
 				errorMessage: "You're not logged in!"
@@ -137,7 +141,8 @@ export default class App extends React.Component {
 
 	render() {
 		return (
-			<PaperProvider theme={{
+			<SafeAreaProvider>
+				<PaperProvider theme={{
 					...DefaultTheme,
 					roundness: 2,
 					colors: {
@@ -146,23 +151,30 @@ export default class App extends React.Component {
 						accent: config.colors.cardinalWhite
 					},
 				}} style={{flex: 1}}>
-				<StatusBar animated backgroundColor="#7D1120" style="dark"/>
-				<Drawer screenProps={{
-					userText: this.state.user,
-					timeIn: this.state.timeIn,
-					signedIn: this.state.signedIn,
-					setSignInStatus: this.setSignInStatus,
-					getData: this.getData,
-					setData: this.setData,
-					getPassword: this.getPassword,
-					setPassword: this.setPassword,
-					login: this.login,
-					logout: this.logout
-				}}/>
-				<ModalPopUp show={() => {return this.state.error}}
-					text={() => {return this.state.errorMessage}}
-					onPress={() => {this.setState({error: false})}}/>
-			</PaperProvider>
+					<StatusBar animated backgroundColor="#7D1120" style="dark"/>
+					<Drawer screenProps={{
+						userText: this.state.user,
+						timeIn: this.state.timeIn,
+						signedIn: this.state.signedIn,
+						setSignInStatus: this.setSignInStatus,
+						getData: this.getData,
+						setData: this.setData,
+						getPassword: this.getPassword,
+						setPassword: this.setPassword,
+						login: this.login,
+						logout: this.logout
+					}}/>
+					<ModalPopUp show={() => {
+						return this.state.error
+					}}
+						text={() => {
+							return this.state.errorMessage
+						}}
+						onPress={() => {
+							this.setState({error: false})
+						}}/>
+				</PaperProvider>
+			</SafeAreaProvider>
 		);
 	}
 }

@@ -78,13 +78,13 @@ const styles = StyleSheet.create({
 	formScreen: {
 		paddingVertical: '10%',
 		backgroundColor: config.colors.background,
-		height:'100%',
+		height: '100%',
 	},
 	formButton: {
 		width: "100%",
 		height: 45,
 		flex: 1,
-		justifyContent:'space-between',
+		justifyContent: 'space-between',
 		alignContent: "center",
 		flexDirection: 'row',
 		paddingHorizontal: "5%",
@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
 	},
 	leaderboardScreen: {
 		paddingVertical: '18%',
-		backgroundColor: "#FFFFFF"
+		backgroundColor: "#FFF"
 	},
 	memberEntry: {
 		width: "100%",

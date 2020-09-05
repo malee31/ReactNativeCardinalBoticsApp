@@ -21,7 +21,7 @@ export default class Login extends React.Component {
 
 	login() {
 		let newPass = this.state.ID.trim();
-		if(newPass.length === 0) {
+		if (newPass.length === 0) {
 			this.setState({
 				ID: "",
 				error: true,
@@ -29,7 +29,7 @@ export default class Login extends React.Component {
 			});
 			return;
 		}
-		if(this.state.signedIn) {
+		if (this.state.signedIn) {
 			console.log("ABORT! SIGNED IN!")
 			this.setState({
 				error: true,
@@ -57,10 +57,10 @@ export default class Login extends React.Component {
 					});
 				}, null, user);
 			}).catch(err => {
-				this.setState({
-					error: true,
-					errorMessage: `Error: Looks like either you don't exist or the server behaved unexpectedly\n\n${JSON.stringify(err)}`
-				});
+			this.setState({
+				error: true,
+				errorMessage: `Error: Looks like either you don't exist or the server behaved unexpectedly\n\n${JSON.stringify(err)}`
+			});
 		});
 	}
 
@@ -88,9 +88,9 @@ export default class Login extends React.Component {
 				}} text={() => {
 					return this.state.errorMessage
 				}}
-				onPress={() => {
-					this.setState({error: false})
-				}}/>
+					onPress={() => {
+						this.setState({error: false})
+					}}/>
 			</View>
 		);
 	};

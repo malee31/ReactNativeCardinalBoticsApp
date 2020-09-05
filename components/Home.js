@@ -133,12 +133,12 @@ class Home extends React.Component {
 						renderItem={(entry) => {
 							entry = entry.item;
 							let timeClocked = `${Math.floor(entry.time / 3600)} hour`;
-							if(Math.floor(entry.time / 3600) !== 1) {
+							if (Math.floor(entry.time / 3600) !== 1) {
 								timeClocked += "s";
 							}
 							timeClocked += ` and ${Math.floor((entry.time % 3600) / 60)} minute${Math.floor((entry.time % 3600) / 60) !== 1 ? "s" : ""}`;
 
-							if(entry.time < 60) timeClocked = `${entry.time} second${entry.time !== 1 ? "s" : ""}`;
+							if (entry.time < 60) timeClocked = `${entry.time} second${entry.time !== 1 ? "s" : ""}`;
 
 							return (
 								<View>

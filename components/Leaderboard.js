@@ -21,7 +21,7 @@ export default class Leaderboard extends React.Component {
 
 	componentDidMount() {
 		this.updateData();
-		if(typeof this.state.interval !== "number") {
+		if (typeof this.state.interval !== "number") {
 			this.setState({
 				interval: setInterval(this.updateData, 5000)
 			});
@@ -34,7 +34,7 @@ export default class Leaderboard extends React.Component {
 			.then((response) => response.json())
 			.then((json) => {
 				json.sort((a, b) => {
-					return b.totalTime- a.totalTime;
+					return b.totalTime - a.totalTime;
 				});
 				this.setState({userData: json});
 			})
@@ -46,7 +46,7 @@ export default class Leaderboard extends React.Component {
 	}
 
 	updateScroll() {
-		if(this.flatListRef) this.flatListRef.scrollToOffset({ animated: false, offset: this.scrollY });
+		if (this.flatListRef) this.flatListRef.scrollToOffset({animated: false, offset: this.scrollY});
 	}
 
 	handleScroll(event) {
@@ -58,7 +58,9 @@ export default class Leaderboard extends React.Component {
 			<View style={Styles.leaderboardScreen}>
 				{this.state.loadCount === 0 ? <Text> Loading </Text> : (
 					<FlatList
-						ref={ref => { this.flatListRef = ref; }}
+						ref={ref => {
+							this.flatListRef = ref;
+						}}
 						scrollEventThrottle={16}
 						onScroll={this.handleScroll}
 						onScrollAnimationEnd={this.handleScroll}
@@ -68,7 +70,7 @@ export default class Leaderboard extends React.Component {
 						renderItem={(entry) => {
 							entry = entry.item;
 							let timeClocked = `${Math.floor(entry.totalTime / 3600)} hour`;
-							if(Math.floor(entry.totalTime / 3600) !== 1) {
+							if (Math.floor(entry.totalTime / 3600) !== 1) {
 								timeClocked += "s";
 							}
 							timeClocked += ` and ${Math.floor((entry.totalTime % 3600) / 60)} minute${Math.floor((entry.totalTime % 3600) / 60) !== 1 ? "s" : ""}`;
