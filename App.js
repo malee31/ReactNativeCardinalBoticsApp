@@ -151,7 +151,7 @@ export default class App extends React.Component {
 						accent: config.colors.cardinalWhite
 					},
 				}} style={{flex: 1}}>
-					<StatusBar animated backgroundColor="#7D1120" style="dark"/>
+					<StatusBar animated hidden style="dark"/>
 					<Drawer screenProps={{
 						userText: this.state.user,
 						timeIn: this.state.timeIn,
