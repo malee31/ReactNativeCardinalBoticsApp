@@ -35,11 +35,21 @@ export default class App extends React.Component {
 
 			let url = config.serverEndpointBaseURLs.getUserData + encodeURI(`?password=${value}`);
 			fetch(url)
-				.then(res => res.json())
+				.then(res => {
+					if(res.status !== 200) return false;
+					return res.json();
+				})
 				.then((json) => {
-					this.setState({
-						user: json.username
-					});
+					if(json !== false) {
+						this.setState({
+							user: json.username
+						});
+					} else {
+						this.setState({
+							error: true,
+							errorMessage: "Looks like it's your first time on the app!\nSwipe from the left to open the menu to log in and get started!"
+						});
+					}
 					if(typeof this.state.updateTimer !== "number") this.state.updateTimer = setInterval(() => {
 						let url = config.serverEndpointBaseURLs.getUserData + encodeURI(`?password=${value}`);
 						fetch(url)
@@ -63,6 +73,7 @@ export default class App extends React.Component {
 						});
 					}, 250);
 				}).catch(err => {
+
 				this.setState({
 					error: true,
 					errorMessage: `Error: Looks like either you don't exist or the server behaved unexpectedly.\nMake sure you're logged in!\n\n${JSON.stringify(err)}`
