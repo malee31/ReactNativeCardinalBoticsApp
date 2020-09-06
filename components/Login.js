@@ -30,7 +30,6 @@ export default class Login extends React.Component {
 			return;
 		}
 		if (this.state.signedIn) {
-			console.log("ABORT! SIGNED IN!")
 			this.setState({
 				error: true,
 				errorMessage: "You can't switch users while signed in!"

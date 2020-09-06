@@ -29,9 +29,7 @@ export default class App extends React.Component {
 
 	componentDidMount() {
 		this.getPassword(value => {
-			console.log(`Password: ${value}`);
 			if (value) this.setState({password: value});
-
 
 			let url = config.serverEndpointBaseURLs.getUserData + encodeURI(`?password=${value}`);
 			fetch(url)
@@ -41,7 +39,7 @@ export default class App extends React.Component {
 				}).catch(err => {
 				this.setState({
 					error: true,
-					errorMessage: `Error: Looks like either you don't exist or the server behaved unexpectedly\n\n${JSON.stringify(err)}`
+					errorMessage: `Error: Looks like either you don't exist or the server behaved unexpectedly.\nMake sure you're logged in!\n\n${JSON.stringify(err)}`
 				});
 			});
 		}, () => {
@@ -72,7 +70,7 @@ export default class App extends React.Component {
 
 	getData(key, onSuccess, onFail) {
 		if (typeof key !== "string") {
-			console.warn("Uh oh. Invalid key or value to save");
+			console.warn("Uh oh. Invalid key or value to retrieve");
 			return;
 		}
 

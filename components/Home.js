@@ -49,7 +49,7 @@ class Home extends React.Component {
 				error: true,
 				errorMessage: `Failed to get past sessions with password: ${JSON.stringify(err)}`
 			});
-		})
+		});
 	}
 
 	signInToggle() {
@@ -79,17 +79,19 @@ class Home extends React.Component {
 		} else {
 			this.state.login(res => {
 				if (res.status !== 200) {
-					throw `Server responded with a ${res.status}`;
+					throw `Server responded with a ${res.status}.\nYou might not be signed in`;
 				}
 
 				this.setState({
 					signedIn: true,
 					whatDid: ""
 				});
+
+				this.updateSessions();
 			}, failRes => {
 				this.setState({
 					error: true,
-					errorMessage: `Straight up failed to log in: ${JSON.stringify(failRes)}`
+					errorMessage: `Log in failed: ${JSON.stringify(failRes)}`
 				});
 			});
 		}

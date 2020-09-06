@@ -8,7 +8,6 @@ export default class Resources extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			linkPairs: [],
 			isLoading: false
 		};
 	}
