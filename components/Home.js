@@ -14,10 +14,6 @@ class Home extends React.Component {
 			whatDid: "",
 			error: false,
 			errorMessage: "Welp, something went wrong.",
-			login: props.login,
-			logout: props.logout,
-			getPassword: props.getPassword,
-			setSignInStatus: props.setSignInStatus,
 			isLoading: false,
 			data: []
 		};
@@ -30,7 +26,7 @@ class Home extends React.Component {
 	}
 
 	updateSessions() {
-		this.state.getPassword(value => {
+		this.props.getPassword(value => {
 			fetch(config.serverEndpointBaseURLs.getUserData + encodeURI(`?password=${value}`))
 				.then((response) => response.json())
 				.then((json) => {
@@ -38,7 +34,7 @@ class Home extends React.Component {
 						signedIn: json.signedIn,
 						data: json["sessions"].reverse()
 					});
-					this.state.setSignInStatus(json.signedIn);
+					this.props.setSignInStatus(json.signedIn);
 				})
 				.catch((error) => console.error(error))
 				.finally(() => {
@@ -62,12 +58,12 @@ class Home extends React.Component {
 				return;
 			}
 
-			this.state.logout(this.state.whatDid.trim(), () => {
+			this.props.logout(this.state.whatDid.trim(), () => {
 				this.setState({
 					signedIn: false,
 					whatDid: ""
 				});
-				this.state.setSignInStatus(false);
+				this.props.setSignInStatus(false);
 				this.updateSessions();
 			}, failRes => {
 				this.setState({
@@ -77,7 +73,7 @@ class Home extends React.Component {
 			});
 
 		} else {
-			this.state.login(res => {
+			this.props.login(res => {
 				if (res.status !== 200) {
 					throw `Server responded with a ${res.status}.\nYou might not be signed in`;
 				}

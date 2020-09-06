@@ -9,8 +9,7 @@ export default class Leaderboard extends React.Component {
 		this.state = {
 			userData: [],
 			loadCount: 0,
-			interval: null,
-			flatListRef: null
+			interval: null
 		};
 		this.updateData = this.updateData.bind(this);
 		this.updateScroll = this.updateScroll.bind(this);

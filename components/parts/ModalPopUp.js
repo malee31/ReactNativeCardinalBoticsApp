@@ -6,22 +6,18 @@ import Styles from "./Styles.js";
 class ModalPopUp extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = {
-			onPress: props.onPress,
-			show: props.show,
-			text: props.text,
-			buttonText: props.buttonText,
-			value: ''
-		};
+		// this.state = {
+		// 	value: ''
+		// };
 	}
 
 	render() {
 		return (
-			<Modal isVisible={this.state.show()}
+			<Modal isVisible={this.props.show()}
 				onBackdropPress={this.close}>
 				<View style={Styles.content}>
 					<Text style={Styles.contentTitle}>
-						{typeof this.state.text == "function" ? this.state.text() : this.state.text || "Oh, the programmers forgot to leave a message here"}
+						{typeof this.props.text == "function" ? this.props.text() : this.props.text || "Oh, the programmers forgot to leave a message here"}
 					</Text>
 					{/*<TextInput*/}
 					{/*	placeholder="Your Placeholder"*/}
@@ -31,7 +27,7 @@ class ModalPopUp extends React.Component {
 					{/*	multiline={true}*/}
 					{/*	value={this.state.value}*/}
 					{/*/>*/}
-					<Button onPress={this.state.onPress} title={this.state.buttonText || "Close"}/>
+					<Button onPress={this.props.onPress} title={this.props.buttonText || "Close"}/>
 				</View>
 			</Modal>
 		);

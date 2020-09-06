@@ -10,13 +10,10 @@ export default class Login extends React.Component {
 		super(props);
 		this.state = {
 			ID: "",
-			signedIn: props.signedIn,
 			error: false,
-			errorMessage: "Something went wrong",
-			setPassword: props.setPassword
+			errorMessage: "Something went wrong"
 		};
 		this.login = this.login.bind(this);
-		console.log(this.state.signedIn);
 	}
 
 	login() {
@@ -29,7 +26,7 @@ export default class Login extends React.Component {
 			});
 			return;
 		}
-		if (this.state.signedIn) {
+		if (this.props.signedIn) {
 			this.setState({
 				error: true,
 				errorMessage: "You can't switch users while signed in!"
@@ -49,7 +46,7 @@ export default class Login extends React.Component {
 			.then((json) => {
 				let user = json.username;
 
-				this.state.setPassword(newPass, () => {
+				this.props.setPassword(newPass, () => {
 					this.setState({
 						errorMessage: `Success. You're now logged in as ${user} using ${newPass}`,
 						error: true

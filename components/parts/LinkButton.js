@@ -47,15 +47,12 @@ export default class LinkButton extends React.Component {
 		}
 
 		this.state = {
-			url: props.url,
-			title: props.title || "Resource",
-			icon: icon,
-			style: props.style || {}
+			icon: icon
 		};
 	}
 
 	openURL = async () => {
-		await WebBrowser.openBrowserAsync(this.state.url);
+		await WebBrowser.openBrowserAsync(this.props.url);
 	}
 
 	render() {
@@ -65,9 +62,9 @@ export default class LinkButton extends React.Component {
 				mode="contained"
 				color={config.colors.secondary}
 				onPress={this.openURL}
-				key={this.state.title + ": " + this.state.url + "<" + this.state.icon + ">"}
-				style={this.state.style}>
-				<Text style={{textAlign: "left"}}>{this.state.title}</Text>
+				key={this.props.title || "Resource" + ": " + this.props.url + "<" + this.state.icon + ">"}
+				style={this.props.style || {}}>
+				<Text style={{textAlign: "left"}}>{this.props.title || "Resource"}</Text>
 			</Button>
 		);
 	}
