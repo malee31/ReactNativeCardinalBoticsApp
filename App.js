@@ -15,7 +15,9 @@ export default class App extends React.Component {
 			user: "",
 			password: "",
 			signedIn: false,
-			timeIn: 0,
+			timeIn: 0, //Time in measured in seconds as an integer or long
+			lastTime: 0,
+			updateTimer: null,
 			timer: null,
 			error: false,
 			errorText: ""
@@ -35,7 +37,31 @@ export default class App extends React.Component {
 			fetch(url)
 				.then(res => res.json())
 				.then((json) => {
-					this.setState({user: json.username});
+					this.setState({
+						user: json.username
+					});
+					if(typeof this.state.updateTimer !== "number") this.state.updateTimer = setInterval(() => {
+						let url = config.serverEndpointBaseURLs.getUserData + encodeURI(`?password=${value}`);
+						fetch(url)
+							.then(res => res.json())
+							.then(json => {
+								this.setState({
+									user: json.username,
+									signedIn: json.signedIn,
+									timeIn: json.signedIn ? Math.round((new Date()).getTime() / 1000) - json.lastTime : 0,
+									lastTime: json.lastTime
+								});
+							})
+							.catch(err => {
+								console.log("F. Failed to update data");
+							});
+					}, 5000);
+
+					if(typeof this.state.timer !== "number") this.state.timer = setInterval(() => {
+						if(this.state.signedIn) this.setState({
+							timeIn: Math.round((new Date()).getTime() / 1000) - this.state.lastTime
+						});
+					}, 250);
 				}).catch(err => {
 				this.setState({
 					error: true,

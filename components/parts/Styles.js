@@ -9,18 +9,19 @@ const styles = StyleSheet.create({
 		width: "100%",
 		height: "20%",
 		alignItems: 'flex-start',
-		justifyContent: 'space-around'
+		justifyContent: 'center'
 	},
 	drawerLogo: {
 		width: "40%",
-		height: "50%",
-		maxHeight: "50%",
-		borderRadius: 15
+		height: "45%",
+		maxHeight: "45%",
+		borderRadius: 25
 	},
 	drawerText: {
-		fontSize: 18,
+		fontSize: 22,
 		color: "#FFF",
 		textAlign: "left",
+		marginTop: 10,
 		marginHorizontal: 15
 	},
 	drawerTimeIn: {

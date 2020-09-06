@@ -106,30 +106,49 @@ const Drawer = createAppContainer(createDrawerNavigator({
 	},
 
 }, {
-	contentComponent: (props) => (
-		<SafeAreaView style={Styles.masterContainer}>
-			<LinearGradient
-				colors={["#7D1120", "#A6242F", "#FF4D4D"]}
-				start={[0, 0]}
-				end={[1, 1]}
-				style={Styles.drawerHeading}>
-				<Image source={require("../../assets/favicon.png")}
-					resizeMode="contain"
-					style={Styles.drawerLogo}/>
-				<View>
-					<Text style={Styles.drawerText}>
-						{props.screenProps.userText ? `Logged in as ${props.screenProps.userText}` : "Not Logged In"}
-					</Text>
-					<Text style={Styles.drawerTimeIn}>
-						Session Time: {props.screenProps.timeIn ? props.screenProps.timeIn : "No Session"}
-					</Text>
-				</View>
-			</LinearGradient>
-			<ScrollView>
-				<DrawerItems {...props} />
-			</ScrollView>
-		</SafeAreaView>
-	)
+	contentComponent: (props) => {
+		let timeInText = "No Ongoing Session Active";
+		let timeInSecs = props.screenProps.timeIn;
+		// let pad = val => val < 10 ? "0" + val : val;
+		if(props.screenProps.signedIn) {
+			let hours = Math.floor(timeInSecs / 3600);
+			let minutes = Math.floor(timeInSecs % 3600 / 60);
+			let seconds = Math.floor(timeInSecs % 60);
+
+			hours = `${hours} hour${hours !== 1 ? "s" : ""}`;
+			minutes = `${minutes} minute${minutes !== 1 ? "s" : ""}`;
+			seconds = `${seconds} second${seconds !== 1 ? "s" : ""}`;
+			// minutes = `${pad(minutes)} minute${minutes !== 1 ? "s" : ""}`;
+			// seconds = `${pad(seconds)} second${seconds !== 1 ? "s" : ""}`;
+
+			timeInText =`Signed In for: \n${hours} ${minutes} ${seconds}`;
+		}
+
+		return (
+			<SafeAreaView style={Styles.masterContainer}>
+				<LinearGradient
+					colors={["#7D1120", "#A6242F", "#FF4D4D"]}
+					start={[0, 0]}
+					end={[1, 1]}
+					style={Styles.drawerHeading}>
+					<Image source={require("../../assets/favicon.png")}
+						resizeMode="contain"
+						style={Styles.drawerLogo}/>
+					<View>
+						<Text style={Styles.drawerText}>
+							{props.screenProps.userText ? `Logged in as ${props.screenProps.userText}` : "Not Logged In"}
+						</Text>
+						<Text style={Styles.drawerTimeIn}>
+							{timeInText}
+						</Text>
+					</View>
+				</LinearGradient>
+				<ScrollView>
+					<DrawerItems {...props} />
+				</ScrollView>
+			</SafeAreaView>
+		);
+	}
 }));
 
 export default Drawer;
