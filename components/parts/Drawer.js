@@ -27,6 +27,7 @@ const Drawer = createAppContainer(createDrawerNavigator({
 				logout={props.screenProps.logout}
 				getPassword={props.screenProps.getPassword}
 				setSignInStatus={props.screenProps.setSignInStatus}
+				signedIn={props.screenProps.signedIn}
 			/>),
 		navigationOptions: {
 			drawerLabel: 'Home',

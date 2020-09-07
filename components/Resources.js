@@ -34,13 +34,12 @@ export default class Resources extends React.Component {
 						renderItem={(entry) => {
 							entry = entry.item;
 							return (
-								<View style={Styles.resourceButton}>
-									<LinkButton
-										title={entry[0]}
-										url={entry[1]}
-										icon={entry[2]}
-									/>
-								</View>
+								<LinkButton
+									title={entry[0]}
+									url={entry[1]}
+									icon={entry[2]}
+									style={Styles.resourceButton}
+								/>
 							);
 						}}
 					/>

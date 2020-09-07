@@ -10,7 +10,6 @@ class Home extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			signedIn: false,
 			whatDid: "",
 			error: false,
 			errorMessage: "Welp, something went wrong.",
@@ -31,7 +30,6 @@ class Home extends React.Component {
 				.then((response) => response.json())
 				.then((json) => {
 					this.setState({
-						signedIn: json.signedIn,
 						data: json["sessions"].reverse()
 					});
 					this.props.setSignInStatus(json.signedIn);
@@ -49,7 +47,7 @@ class Home extends React.Component {
 	}
 
 	signInToggle() {
-		if (this.state.signedIn) {
+		if (this.props.signedIn) {
 			if (this.state.whatDid.trim().length === 0) {
 				this.setState({
 					error: true,
@@ -60,7 +58,6 @@ class Home extends React.Component {
 
 			this.props.logout(this.state.whatDid.trim(), () => {
 				this.setState({
-					signedIn: false,
 					whatDid: ""
 				});
 				this.props.setSignInStatus(false);
@@ -79,7 +76,6 @@ class Home extends React.Component {
 				}
 
 				this.setState({
-					signedIn: true,
 					whatDid: ""
 				});
 
@@ -105,12 +101,12 @@ class Home extends React.Component {
 					style={Styles.signInButton}>
 					<View>
 						<Text style={{
-							color: this.state.signedIn ? "red" : "green",
+							color: this.props.signedIn ? "red" : "green",
 							fontSize: 30
-						}}>{this.state.signedIn ? "Sign Out" : "Sign In"}</Text>
+						}}>{this.props.signedIn ? "Sign Out" : "Sign In"}</Text>
 					</View>
 				</TouchableHighlight>
-				{this.state.signedIn ? <TextInput
+				{this.props.signedIn ? <TextInput
 					label="What did you do while signed in?"
 					value={this.state.whatDid}
 					style={Styles.whatchuDoing}
