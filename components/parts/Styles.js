@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
 		width: "100%",
 		height: 40,
 		flex: 1,
-		paddingHorizontal: 30,
+		paddingHorizontal: 20,
 		marginVertical: 10
 	}
 });
