@@ -54,7 +54,7 @@ export default class Leaderboard extends React.Component {
 
 	render() {
 		return (
-			<View style={Styles.leaderboardScreen}>
+			<View style={Styles.screen}>
 				{this.state.loadCount === 0 ? <Text> Loading </Text> : (
 					<FlatList
 						ref={ref => {

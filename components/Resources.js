@@ -26,7 +26,7 @@ export default class Resources extends React.Component {
 
 	render() {
 		return (
-			<View style={Styles.resourceScreen}>
+			<View style={Styles.screen}>
 				{this.state.isLoading ? <Text> Loading </Text> : (
 					<FlatList
 						data={this.state.data}

@@ -34,9 +34,8 @@ const styles = StyleSheet.create({
 		width: "100%",
 		height: "100%",
 		flex: 1,
-		paddingHorizontal: 30,
-		paddingTop: 50,
-		paddingBottom: 25,
+		padding: "5%",
+		paddingBottom: "8%",
 		backgroundColor: config.colors.background,
 
 	},
@@ -76,11 +75,6 @@ const styles = StyleSheet.create({
 		fontSize: 20,
 		marginBottom: 12,
 	},
-	formScreen: {
-		paddingVertical: '10%',
-		backgroundColor: config.colors.background,
-		height: '100%',
-	},
 	formButton: {
 		width: "100%",
 		height: 45,
@@ -102,10 +96,6 @@ const styles = StyleSheet.create({
 		justifyContent: "center",
 		alignContent: "center"
 	},
-	leaderboardScreen: {
-		paddingVertical: '18%',
-		backgroundColor: "#FFF"
-	},
 	memberEntry: {
 		width: "100%",
 		height: 40,
@@ -113,10 +103,7 @@ const styles = StyleSheet.create({
 		paddingHorizontal: 30,
 	},
 	calendarScreen: {
-		paddingVertical: '10%',
-		marginTop: 40,
-		height: "100%",
-		backgroundColor: config.colors.background,
+		paddingHorizontal: 0
 	},
 	calendarView: {
 		minHeight: "45%"
@@ -132,10 +119,6 @@ const styles = StyleSheet.create({
 		flex: 1,
 		textAlign: 'center',
 		alignSelf: "center"
-	},
-	resourceScreen: {
-		paddingVertical: '10%',
-		backgroundColor: config.colors.background,
 	},
 	resourceButton: {
 		width: "100%",

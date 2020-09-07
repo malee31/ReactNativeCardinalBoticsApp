@@ -27,7 +27,7 @@ export default class Forms extends React.Component {
 
 	render() {
 		return (
-			<View style={Styles.formScreen}>
+			<View style={Styles.screen}>
 				{this.state.isLoading ? <Text> Loading </Text> : (
 					<FlatList
 						data={this.state.data}

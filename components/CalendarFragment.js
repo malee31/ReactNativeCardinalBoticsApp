@@ -126,7 +126,7 @@ class CalendarFragment extends React.Component {
 
 	render() {
 		return (
-			<View style={Styles.calendarScreen}>
+			<View style={[Styles.screen, Styles.calendarScreen]}>
 				<View style={Styles.calendarView}>
 					<Calendar
 						key={`CalendarReload: ${this.state.loadNum}`}
