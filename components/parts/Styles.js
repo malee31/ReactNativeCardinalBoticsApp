@@ -12,13 +12,13 @@ const styles = StyleSheet.create({
 		justifyContent: 'center'
 	},
 	drawerLogo: {
-		width: "40%",
-		height: "45%",
-		maxHeight: "45%",
+		width: "35%",
+		height: "30%",
+		maxHeight: "30%",
 		borderRadius: 25
 	},
 	drawerText: {
-		fontSize: 22,
+		fontSize: 18,
 		color: "#FFF",
 		textAlign: "left",
 		marginTop: 10,
