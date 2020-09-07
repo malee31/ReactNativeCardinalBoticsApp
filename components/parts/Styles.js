@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
 		justifyContent: 'space-between',
 		alignContent: "center",
 		flexDirection: 'row',
-		paddingHorizontal: "5%",
+		paddingHorizontal: "4%",
 		marginVertical: 10
 	},
 	formBtn: {
