@@ -111,17 +111,20 @@ const Drawer = createAppContainer(createDrawerNavigator({
 		let timeInSecs = props.screenProps.timeIn;
 		// let pad = val => val < 10 ? "0" + val : val;
 		if(props.screenProps.signedIn) {
-			let hours = Math.floor(timeInSecs / 3600);
+			let hoursInNumber = Math.floor(timeInSecs / 3600);
 			let minutes = Math.floor(timeInSecs % 3600 / 60);
 			let seconds = Math.floor(timeInSecs % 60);
 
-			hours = `${hours} hour${hours !== 1 ? "s" : ""}`;
+			let hours = `${hoursInNumber} hour${hoursInNumber !== 1 ? "s" : ""}`;
 			minutes = `${minutes} minute${minutes !== 1 ? "s" : ""}`;
 			seconds = `${seconds} second${seconds !== 1 ? "s" : ""}`;
 			// minutes = `${pad(minutes)} minute${minutes !== 1 ? "s" : ""}`;
 			// seconds = `${pad(seconds)} second${seconds !== 1 ? "s" : ""}`;
 
 			timeInText =`Signed In for: \n${hours} ${minutes} ${seconds}`;
+			if(hoursInNumber>254){
+				timeInText ='Loading...';
+			}
 		}
 
 		return (
