@@ -135,13 +135,18 @@ class Home extends React.Component {
 							if (entry.time < 60) timeClocked = `${entry.time} second${entry.time !== 1 ? "s" : ""}`;
 
 							return (
-								<View style={Styles.timeLogRow}>
-									<View style={Styles.timeLogRowHeader}>
-										<Text>{`| ${entry.day} |`}</Text>
-										<Text>{timeClocked}</Text>
+								<TouchableHighlight onPress={this.signInToggle}
+									activeOpacity={0.7}
+									underlayColor={config.colors.darkGray}
+									style={Styles.timeLogRow}>
+									<View>
+										<View style={Styles.timeLogRowHeader}>
+											<Text>{`| ${entry.day} |`}</Text>
+											<Text>{timeClocked}</Text>
+										</View>
+										<Text numberOfLines={1} style={Styles.timeLogRowDid}>{entry.did}</Text>
 									</View>
-									<Text numberOfLines={1} style={Styles.timeLogRowDid}>{entry.did}</Text>
-								</View>
+								</TouchableHighlight>
 							);
 						}}
 					/>
