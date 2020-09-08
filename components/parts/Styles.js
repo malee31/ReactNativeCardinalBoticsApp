@@ -119,9 +119,10 @@ const styles = StyleSheet.create({
 	title: {
 		textAlign: 'center',
 		alignSelf: 'center',
-		fontSize: 25,
+		width: "100%",
+		fontSize: 30,
 		color: config.colors.primary,
-		marginVertical: '5%',
+		marginTop: '5%',
 	},
 	resourceButton: {
 		width: "100%",
