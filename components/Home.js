@@ -93,12 +93,12 @@ class Home extends React.Component {
 		return (
 			<View style={Styles.screen}>
 				<Image source={require("../assets/cardinalbotics_logo_white_clear.png")}
-					   resizeMode="contain"
-					   style={Styles.largeLogoImage}/>
+					resizeMode="contain"
+					style={Styles.largeLogoImage}/>
 				<TouchableHighlight onPress={this.signInToggle}
-									activeOpacity={0.7}
-									underlayColor={config.colors.darkGray}
-									style={Styles.signInButton}>
+					activeOpacity={0.7}
+					underlayColor={config.colors.darkGray}
+					style={Styles.signInButton}>
 					<View>
 						<Text style={{
 							color: this.props.signedIn ? "red" : "green",
@@ -117,9 +117,9 @@ class Home extends React.Component {
 				}} text={() => {
 					return this.state.errorMessage
 				}}
-							onPress={() => {
-								this.setState({error: false})
-							}}/>
+					onPress={() => {
+						this.setState({error: false})
+					}}/>
 				{this.state.isLoading ? <Text> Loading </Text> : (
 					<FlatList
 						data={this.state.data}

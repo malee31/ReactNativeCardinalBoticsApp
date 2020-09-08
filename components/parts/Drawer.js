@@ -136,8 +136,8 @@ const Drawer = createAppContainer(createDrawerNavigator({
 					end={[1, 1]}
 					style={Styles.drawerHeading}>
 					<Image source={require("../../assets/favicon.png")}
-						   resizeMode="contain"
-						   style={Styles.drawerLogo}/>
+						resizeMode="contain"
+						style={Styles.drawerLogo}/>
 					<View>
 						<Text style={Styles.drawerText}>
 							{props.screenProps.userText ? `Logged in as ${props.screenProps.userText}` : "Not Logged In"}

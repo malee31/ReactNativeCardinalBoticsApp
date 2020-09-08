@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
 		alignSelf: 'center',
 		fontSize: 25,
 		color: config.colors.primary,
-		marginVertical:'5%',
+		marginVertical: '5%',
 	},
 	resourceButton: {
 		width: "100%",

@@ -202,12 +202,12 @@ export default class App extends React.Component {
 					<ModalPopUp show={() => {
 						return this.state.error
 					}}
-								text={() => {
-									return this.state.errorMessage
-								}}
-								onPress={() => {
-									this.setState({error: false})
-								}}/>
+						text={() => {
+							return this.state.errorMessage
+						}}
+						onPress={() => {
+							this.setState({error: false})
+						}}/>
 				</PaperProvider>
 			</SafeAreaProvider>
 		);

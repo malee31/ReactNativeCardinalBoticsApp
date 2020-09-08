@@ -64,17 +64,17 @@ export default class Login extends React.Component {
 		return (
 			<View style={Styles.screen}>
 				<Image source={require("../assets/cardinalbotics_logo_white_clear.png")}
-					   resizeMode="contain"
-					   style={Styles.largeLogoImage}/>
+					resizeMode="contain"
+					style={Styles.largeLogoImage}/>
 				<TextInput
 					label="Login"
 					value={this.state.ID}
 					style={Styles.whatchuDoing}
 					onChange={newText => this.setState({ID: newText.nativeEvent.text})}/>
 				<TouchableHighlight onPress={this.login}
-									activeOpacity={0.7}
-									underlayColor={config.colors.darkGray}
-									style={Styles.signInButton}>
+					activeOpacity={0.7}
+					underlayColor={config.colors.darkGray}
+					style={Styles.signInButton}>
 					<View>
 						<Text>Submit</Text>
 					</View>
@@ -84,9 +84,9 @@ export default class Login extends React.Component {
 				}} text={() => {
 					return this.state.errorMessage
 				}}
-							onPress={() => {
-								this.setState({error: false})
-							}}/>
+					onPress={() => {
+						this.setState({error: false})
+					}}/>
 			</View>
 		);
 	};
