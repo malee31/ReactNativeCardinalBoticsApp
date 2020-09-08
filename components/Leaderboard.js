@@ -32,9 +32,17 @@ export default class Leaderboard extends React.Component {
 		fetch(config.serverEndpointBaseURLs.getData)
 			.then((response) => response.json())
 			.then((json) => {
+				json.forEach((elem, index) => {
+					elem.key = "Leaderboard #" + (index + 1);
+				});
 				json.sort((a, b) => {
+					if(a.signedIn !== b.signedIn) {
+						console.log();
+						return b.signedIn - a.signedIn;
+					}
 					return b.totalTime - a.totalTime;
 				});
+				console.log(json);
 				this.setState({userData: json});
 			})
 			.catch((error) => console.error(error))
@@ -65,7 +73,7 @@ export default class Leaderboard extends React.Component {
 						onScrollAnimationEnd={this.handleScroll}
 						data={this.state.userData}
 						// key={"Leaderboard: " + this.state.loadCount}
-						keyExtractor={item => item.username}
+						keyExtractor={item => item.key}
 						renderItem={(entry) => {
 							entry = entry.item;
 							let timeClocked = `${Math.floor(entry.totalTime / 3600)} hour`;
