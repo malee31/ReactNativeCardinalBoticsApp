@@ -37,12 +37,10 @@ export default class Leaderboard extends React.Component {
 				});
 				json.sort((a, b) => {
 					if(a.signedIn !== b.signedIn) {
-						console.log();
 						return b.signedIn - a.signedIn;
 					}
 					return b.totalTime - a.totalTime;
 				});
-				console.log(json);
 				this.setState({userData: json});
 			})
 			.catch((error) => console.error(error))
