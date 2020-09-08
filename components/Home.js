@@ -126,18 +126,21 @@ class Home extends React.Component {
 						keyExtractor={(item) => `${item.date}: ${item.did}`}
 						renderItem={(entry) => {
 							entry = entry.item;
-							let timeClocked = `${Math.floor(entry.time / 3600)} hour`;
+							let timeClocked = `${Math.floor(entry.time / 3600)} hr`;
 							if (Math.floor(entry.time / 3600) !== 1) {
 								timeClocked += "s";
 							}
-							timeClocked += ` and ${Math.floor((entry.time % 3600) / 60)} minute${Math.floor((entry.time % 3600) / 60) !== 1 ? "s" : ""}`;
+							timeClocked += ` ${Math.floor((entry.time % 3600) / 60)} min${Math.floor((entry.time % 3600) / 60) !== 1 ? "s" : ""}`;
 
 							if (entry.time < 60) timeClocked = `${entry.time} second${entry.time !== 1 ? "s" : ""}`;
 
 							return (
-								<View>
-									<Text
-										style={Styles.log}>{`${entry.day} for ${timeClocked}\n\t|\t${entry.did}`}</Text>
+								<View style={Styles.timeLogRow}>
+									<View style={Styles.timeLogRowHeader}>
+										<Text>{`| ${entry.day} |`}</Text>
+										<Text>{timeClocked}</Text>
+									</View>
+									<Text numberOfLines={1} style={Styles.timeLogRowDid}>{entry.did}</Text>
 								</View>
 							);
 						}}

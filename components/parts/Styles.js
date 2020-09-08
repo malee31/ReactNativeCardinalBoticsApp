@@ -59,6 +59,25 @@ const styles = StyleSheet.create({
 	whatchuDoing: {
 		color: "#7D1120",
 	},
+	timeLogRow: {
+		flexDirection: "column",
+		width: "100%",
+		textAlign: "left",
+		backgroundColor: config.colors.gray,
+		borderRadius: 10,
+		padding: 5,
+		marginVertical: "1%"
+	},
+	timeLogRowHeader: {
+		flexDirection: "row",
+		justifyContent: "space-between",
+		alignItems: "center",
+		width: "100%"
+	},
+	timeLogRowDid: {
+		width: "100%",
+		paddingHorizontal: "2%"
+	},
 	content: {
 		backgroundColor: 'white',
 		padding: 22,
