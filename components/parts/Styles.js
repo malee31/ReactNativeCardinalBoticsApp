@@ -34,8 +34,8 @@ const styles = StyleSheet.create({
 		width: "100%",
 		height: "100%",
 		flex: 1,
-		padding: "5%",
-		paddingBottom: "8%",
+		paddingHorizontal: "5%",
+		paddingVertical: "2%",
 		backgroundColor: config.colors.background,
 
 	},
