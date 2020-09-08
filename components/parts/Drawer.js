@@ -111,7 +111,7 @@ const Drawer = createAppContainer(createDrawerNavigator({
 		let timeInText = "No Ongoing Session Active";
 		let timeInSecs = props.screenProps.timeIn;
 		// let pad = val => val < 10 ? "0" + val : val;
-		if(props.screenProps.signedIn) {
+		if (props.screenProps.signedIn) {
 			let hoursInNumber = Math.floor(timeInSecs / 3600);
 			let minutes = Math.floor(timeInSecs % 3600 / 60);
 			let seconds = Math.floor(timeInSecs % 60);
@@ -122,9 +122,9 @@ const Drawer = createAppContainer(createDrawerNavigator({
 			// minutes = `${pad(minutes)} minute${minutes !== 1 ? "s" : ""}`;
 			// seconds = `${pad(seconds)} second${seconds !== 1 ? "s" : ""}`;
 
-			timeInText =`Signed In for: \n${hours} ${minutes} ${seconds}`;
-			if(hoursInNumber>254){
-				timeInText ='Loading...';
+			timeInText = `Signed In for: \n${hours} ${minutes} ${seconds}`;
+			if (hoursInNumber > 254) {
+				timeInText = 'Loading...';
 			}
 		}
 
@@ -136,8 +136,8 @@ const Drawer = createAppContainer(createDrawerNavigator({
 					end={[1, 1]}
 					style={Styles.drawerHeading}>
 					<Image source={require("../../assets/favicon.png")}
-						resizeMode="contain"
-						style={Styles.drawerLogo}/>
+						   resizeMode="contain"
+						   style={Styles.drawerLogo}/>
 					<View>
 						<Text style={Styles.drawerText}>
 							{props.screenProps.userText ? `Logged in as ${props.screenProps.userText}` : "Not Logged In"}

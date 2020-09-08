@@ -36,11 +36,11 @@ export default class App extends React.Component {
 			let url = config.serverEndpointBaseURLs.getUserData + encodeURI(`?password=${value}`);
 			fetch(url)
 				.then(res => {
-					if(res.status !== 200) return false;
+					if (res.status !== 200) return false;
 					return res.json();
 				})
 				.then((json) => {
-					if(json !== false) {
+					if (json !== false) {
 						this.setState({
 							user: json.username
 						});
@@ -50,7 +50,7 @@ export default class App extends React.Component {
 							errorMessage: "Looks like it's your first time on the app!\nSwipe from the left to open the menu to log in and get started!"
 						});
 					}
-					if(typeof this.state.updateTimer !== "number") this.state.updateTimer = setInterval(() => {
+					if (typeof this.state.updateTimer !== "number") this.state.updateTimer = setInterval(() => {
 						let url = config.serverEndpointBaseURLs.getUserData + encodeURI(`?password=${value}`);
 						fetch(url)
 							.then(res => res.json())
@@ -67,8 +67,8 @@ export default class App extends React.Component {
 							});
 					}, 5000);
 
-					if(typeof this.state.timer !== "number") this.state.timer = setInterval(() => {
-						if(this.state.signedIn) this.setState({
+					if (typeof this.state.timer !== "number") this.state.timer = setInterval(() => {
+						if (this.state.signedIn) this.setState({
 							timeIn: Math.round((new Date()).getTime() / 1000) - this.state.lastTime
 						});
 					}, 250);
@@ -202,12 +202,12 @@ export default class App extends React.Component {
 					<ModalPopUp show={() => {
 						return this.state.error
 					}}
-						text={() => {
-							return this.state.errorMessage
-						}}
-						onPress={() => {
-							this.setState({error: false})
-						}}/>
+								text={() => {
+									return this.state.errorMessage
+								}}
+								onPress={() => {
+									this.setState({error: false})
+								}}/>
 				</PaperProvider>
 			</SafeAreaProvider>
 		);

@@ -36,10 +36,10 @@ export default class Leaderboard extends React.Component {
 					elem.key = "Leaderboard #" + (index + 1);
 				});
 				json.sort((a, b) => {
-					if ( a.username < b.username ){
+					if (a.username < b.username) {
 						return -1;
 					}
-					if ( a.username > b.username ){
+					if (a.username > b.username) {
 						return 1;
 					}
 					return 0;

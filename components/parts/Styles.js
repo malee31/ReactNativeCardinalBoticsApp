@@ -51,14 +51,13 @@ const styles = StyleSheet.create({
 		backgroundColor: config.colors.gray,
 		width: "70%",
 		padding: "5%",
-		marginVertical: 50,
+		marginVertical: 10,
 	},
 	signInText: {
 		fontSize: 30
 	},
 	whatchuDoing: {
 		color: "#7D1120",
-		marginTop: 20,
 	},
 	content: {
 		backgroundColor: 'white',
@@ -67,9 +66,6 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		borderRadius: 4,
 		borderColor: 'rgba(0, 0, 0, 0.1)',
-	},
-	watchuDoing: {
-		maxHeight: 30
 	},
 	contentTitle: {
 		fontSize: 20,
@@ -119,6 +115,13 @@ const styles = StyleSheet.create({
 		flex: 1,
 		textAlign: 'center',
 		alignSelf: "center"
+	},
+	title: {
+		textAlign: 'center',
+		alignSelf: 'center',
+		fontSize: 25,
+		color: config.colors.primary,
+		marginVertical:'5%',
 	},
 	resourceButton: {
 		width: "100%",

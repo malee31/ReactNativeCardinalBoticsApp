@@ -1,74 +1,74 @@
 {
-	"expo": {
-		"name": "CardinalHours App",
-		"slug": "ReactNative-CardinalBoticsApp",
-		"icon": "./assets/icon.png",
-		"version": "1.0.0",
-		"sdkVersion": "38.0.0",
-		"privacy": "unlisted",
-		"orientation": "portrait",
-		"description": "An app for Team4159 Cardinalbotics while social distancing",
-		"primaryColor": "#7D1120",
-		"backgroundColor": "#FFFFFF",
-		"splash": {
-			"image": "./assets/favicon.png",
-			"resizeMode": "contain",
-			"backgroundColor": "#7D1120",
-			"userInterfaceStyle": "automatic"
-		},
-		"notification": {
-			"icon": "./assets/icon.png",
-			"color": "#000000",
-			"iosDisplayInForeground": false,
-			"androidCollapsedTitle": "collapse"
-		},
-		"updates": {
-			"fallbackToCacheTimeout": 0
-		},
-		"assetBundlePatterns": [
-			"**/*"
-		],
-		"packagerOpts": {
-			"config": "metro.config.js",
-			"sourceExts": [
-				"expo.ts",
-				"expo.tsx",
-				"expo.js",
-				"expo.jsx",
-				"ts",
-				"tsx",
-				"js",
-				"jsx",
-				"json",
-				"wasm",
-				"svg"
-			]
-		},
-		"platforms": [
-			"ios",
-			"android",
-			"web"
-		],
-		"android": {
-			"package": "com.team4159.cardinalboticsapp",
-			"versionCode": 1
-		},
-		"androidStatusBar": {
-			"barStyle": "dark-content",
-			"hidden": true,
-			"translucent": true
-		},
-		"androidNavigationBar": {
-			"visible": "leanback",
-			"barStyle": "dark-content"
-		},
-		"ios": {
-			"bundleIdentifier": "com.team4159.cardinalboticsapp",
-			"supportsTablet": true,
-			"buildNumber": "1.0.0"
-		},
-		"web": {
-			"favicon": "./assets/favicon.png"
-		}
-	}
+  "expo": {
+    "name": "CardinalHours App",
+    "slug": "ReactNative-CardinalBoticsApp",
+    "icon": "./assets/icon.png",
+    "version": "1.0.0",
+    "sdkVersion": "38.0.0",
+    "privacy": "unlisted",
+    "orientation": "portrait",
+    "description": "An app for Team4159 Cardinalbotics while social distancing",
+    "primaryColor": "#7D1120",
+    "backgroundColor": "#FFFFFF",
+    "splash": {
+      "image": "./assets/favicon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#7D1120",
+      "userInterfaceStyle": "automatic"
+    },
+    "notification": {
+      "icon": "./assets/icon.png",
+      "color": "#000000",
+      "iosDisplayInForeground": false,
+      "androidCollapsedTitle": "collapse"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "packagerOpts": {
+      "config": "metro.config.js",
+      "sourceExts": [
+        "expo.ts",
+        "expo.tsx",
+        "expo.js",
+        "expo.jsx",
+        "ts",
+        "tsx",
+        "js",
+        "jsx",
+        "json",
+        "wasm",
+        "svg"
+      ]
+    },
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
+    "android": {
+      "package": "com.team4159.cardinalboticsapp",
+      "versionCode": 1
+    },
+    "androidStatusBar": {
+      "barStyle": "dark-content",
+      "hidden": true,
+      "translucent": true
+    },
+    "androidNavigationBar": {
+      "visible": "leanback",
+      "barStyle": "dark-content"
+    },
+    "ios": {
+      "bundleIdentifier": "com.team4159.cardinalboticsapp",
+      "supportsTablet": true,
+      "buildNumber": "1.0.0"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    }
+  }
 }

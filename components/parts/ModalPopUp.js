@@ -14,7 +14,7 @@ class ModalPopUp extends React.Component {
 	render() {
 		return (
 			<Modal isVisible={this.props.show()}
-				onBackdropPress={this.close}>
+				   onBackdropPress={this.close}>
 				<View style={Styles.content}>
 					<Text style={Styles.contentTitle}>
 						{typeof this.props.text == "function" ? this.props.text() : this.props.text || "Oh, the programmers forgot to leave a message here"}

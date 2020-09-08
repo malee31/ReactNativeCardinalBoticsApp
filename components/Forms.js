@@ -36,6 +36,9 @@ export default class Forms extends React.Component {
 							entry = entry.item;
 							return (
 								<View style={Styles.formButton}>
+									<Text style={Styles.title}>
+										{entry[0]}
+									</Text>
 									<LinkButton
 										style={Styles.formBtn}
 										title={entry[1]} url={entry[2]}/>
