@@ -40,9 +40,9 @@ const styles = StyleSheet.create({
 
 	},
 	largeLogoImage: {
-		width: "100%",
-		maxHeight: "25%",
-		marginVertical: 30
+		width: "70%",
+		alignSelf: "center",
+		maxHeight: "25%"
 	},
 	signInButton: {
 		alignItems: "center",
@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
 		backgroundColor: config.colors.gray,
 		width: "70%",
 		padding: "5%",
-		marginVertical: 10,
+		marginVertical: "3%",
 	},
 	signInText: {
 		fontSize: 30

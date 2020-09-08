@@ -135,9 +135,10 @@ class Home extends React.Component {
 							if (entry.time < 60) timeClocked = `${entry.time} second${entry.time !== 1 ? "s" : ""}`;
 
 							return (
-								<TouchableHighlight onPress={this.signInToggle}
+								<TouchableHighlight
 									activeOpacity={0.7}
 									underlayColor={config.colors.darkGray}
+									onPress={() => {this.setState({error: true, errorMessage: entry.did})}}
 									style={Styles.timeLogRow}>
 									<View>
 										<View style={Styles.timeLogRowHeader}>
