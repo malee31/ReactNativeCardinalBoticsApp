@@ -4,7 +4,6 @@
     "slug": "ReactNative-CardinalBoticsApp",
     "icon": "./assets/icon.png",
     "version": "1.0.0",
-    "sdkVersion": "38.0.0",
     "privacy": "unlisted",
     "orientation": "portrait",
     "description": "An app for Team4159 Cardinalbotics while social distancing",
