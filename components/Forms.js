@@ -18,8 +18,8 @@ export default class Forms extends React.Component {
 			.then((response) => response.json())
 			.then((json) => {
 				json = json.values;
-				for(let sheetRow = 0; sheetRow < json.length; sheetRow++) {
-					if(sheetRow === 0 || json[sheetRow][0].trim() !== json[sheetRow - 1][0].trim()) {
+				for (let sheetRow = 0; sheetRow < json.length; sheetRow++) {
+					if (sheetRow === 0 || json[sheetRow][0].trim() !== json[sheetRow - 1][0].trim()) {
 						json.splice(sheetRow, 0, json[sheetRow][0].trim());
 						sheetRow++;
 					}
@@ -41,7 +41,7 @@ export default class Forms extends React.Component {
 						keyExtractor={(item) => item[1] + ": " + item[2]}
 						renderItem={(entry) => {
 							entry = entry.item;
-							if(typeof entry == "string") {
+							if (typeof entry == "string") {
 								return (
 									<View style={Styles.formButton}>
 										<Text style={Styles.title}>

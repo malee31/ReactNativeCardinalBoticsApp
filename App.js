@@ -33,7 +33,7 @@ export default class App extends React.Component {
 		//Update the basic state (Drawer and who you are logged in as)
 		this.getPassword().then(pass => {
 			//Updates saved password in state when app starts up or tells you to log in if you haven't used it before
-			if(null === pass) {
+			if (null === pass) {
 				this.setState({
 					error: true,
 					errorMessage: "Looks like it's your first time on the app!\nSwipe from the left to open the menu, log in, and get started!"

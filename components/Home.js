@@ -139,7 +139,9 @@ class Home extends React.Component {
 								<TouchableHighlight
 									activeOpacity={0.7}
 									underlayColor={config.colors.darkGray}
-									onPress={() => {this.setState({error: true, errorMessage: entry.did})}}
+									onPress={() => {
+										this.setState({error: true, errorMessage: entry.did})
+									}}
 									style={Styles.timeLogRow}>
 									<View>
 										<View style={Styles.timeLogRowHeader}>
