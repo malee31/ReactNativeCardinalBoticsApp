@@ -1,23 +1,25 @@
-import config from "../../config.json";
-import {createAppContainer} from "react-navigation";
 import {createDrawerNavigator, DrawerItems} from "react-navigation-drawer";
-import {LinearGradient} from 'expo-linear-gradient';
-import Home from "../Home";
-import HomeIcon from "../../images/home.svg";
-import Login from "../Login";
-import LoginIcon from "../../images/login.svg";
-import Leaderboard from "../Leaderboard";
-import LeaderboardIcon from "../../images/volunteer.svg";
-// import Calendar from "../CalendarFragment";
-// import CalendarIcon from "../../images/calendar.svg";
-import Resources from "../Resources";
-import ResourcesIcon from "../../images/list.svg";
-import Forms from "../Forms";
-import FormsIcon from "../../images/form.svg";
-import {SafeAreaView} from "react-native-safe-area-context";
 import {Image, ScrollView, Text, View} from "react-native";
+import {createAppContainer} from "react-navigation";
+import {LinearGradient} from 'expo-linear-gradient';
 import React from "react";
+
+import config from "../../config.json";
 import Styles from "./Styles.js";
+
+// import Calendar from "../CalendarFragment";
+import Leaderboard from "../Leaderboard";
+import Resources from "../Resources";
+import Forms from "../Forms";
+import Login from "../Login";
+import Home from "../Home";
+
+import LeaderboardIcon from "../../images/volunteer.svg";
+// import CalendarIcon from "../../images/calendar.svg";
+import ResourcesIcon from "../../images/list.svg";
+import LoginIcon from "../../images/login.svg";
+import FormsIcon from "../../images/form.svg";
+import HomeIcon from "../../images/home.svg";
 
 const Drawer = createAppContainer(createDrawerNavigator({
 	Home: {
@@ -129,7 +131,7 @@ const Drawer = createAppContainer(createDrawerNavigator({
 		}
 
 		return (
-			<SafeAreaView style={Styles.masterContainer}>
+			<View style={Styles.masterContainer}>
 				<LinearGradient
 					colors={["#7D1120", "#A6242F", "#FF4D4D"]}
 					start={[0, 0]}
@@ -150,7 +152,7 @@ const Drawer = createAppContainer(createDrawerNavigator({
 				<ScrollView>
 					<DrawerItems {...props} />
 				</ScrollView>
-			</SafeAreaView>
+			</View>
 		);
 	}
 }));

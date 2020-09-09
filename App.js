@@ -1,6 +1,5 @@
 import {DefaultTheme, Provider as PaperProvider} from 'react-native-paper';
 import AsyncStorage from '@react-native-community/async-storage';
-import {SafeAreaProvider} from "react-native-safe-area-context";
 import {StatusBar} from 'expo-status-bar';
 import React from "react";
 
@@ -235,39 +234,37 @@ export default class App extends React.Component {
 
 	render() {
 		return (
-			<SafeAreaProvider>
-				<PaperProvider theme={{
-					...DefaultTheme,
-					roundness: 2,
-					colors: {
-						...DefaultTheme.colors,
-						primary: config.colors.primary,
-						accent: config.colors.cardinalWhite
-					},
-				}} style={{flex: 1}}>
-					<StatusBar animated hidden style="dark"/>
-					<Drawer screenProps={{
-						userText: this.state.user,
-						timeIn: this.state.timeIn,
-						signedIn: this.state.signedIn,
-						sessions: this.state.sessions,
-						leaderboardData: this.state.leaderboardData,
-						getPassword: this.getPassword,
-						setPassword: this.setPassword,
-						login: this.login,
-						logout: this.logout
-					}}/>
-					<ModalPopUp show={() => {
-						return this.state.error
+			<PaperProvider theme={{
+				...DefaultTheme,
+				roundness: 2,
+				colors: {
+					...DefaultTheme.colors,
+					primary: config.colors.primary,
+					accent: config.colors.cardinalWhite
+				},
+			}} style={{flex: 1}}>
+				<StatusBar animated hidden style="dark"/>
+				<Drawer screenProps={{
+					userText: this.state.user,
+					timeIn: this.state.timeIn,
+					signedIn: this.state.signedIn,
+					sessions: this.state.sessions,
+					leaderboardData: this.state.leaderboardData,
+					getPassword: this.getPassword,
+					setPassword: this.setPassword,
+					login: this.login,
+					logout: this.logout
+				}}/>
+				<ModalPopUp show={() => {
+					return this.state.error
+				}}
+					text={() => {
+						return this.state.errorMessage
 					}}
-						text={() => {
-							return this.state.errorMessage
-						}}
-						onPress={() => {
-							this.setState({error: false})
-						}}/>
-				</PaperProvider>
-			</SafeAreaProvider>
+					onPress={() => {
+						this.setState({error: false})
+					}}/>
+			</PaperProvider>
 		);
 	}
 }
