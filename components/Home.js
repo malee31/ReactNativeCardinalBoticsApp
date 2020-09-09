@@ -25,7 +25,8 @@ class Home extends React.Component {
 	}
 
 	updateSessions() {
-		this.props.getPassword(value => {
+		this.props.getPassword().then(value => {
+			// console.log("SESSION UPDATE!");
 			fetch(config.serverEndpointBaseURLs.getUserData + encodeURI(`?password=${value}`))
 				.then((response) => response.json())
 				.then((json) => {
@@ -38,10 +39,10 @@ class Home extends React.Component {
 				.finally(() => {
 					this.setState({isLoading: false});
 				});
-		}, err => {
+		}).catch(err => {
 			this.setState({
 				error: true,
-				errorMessage: `Failed to get past sessions with password: ${JSON.stringify(err)}`
+				errorMessage: `Failed to get past sessions using your password\n\n${JSON.stringify(err)}`
 			});
 		});
 	}

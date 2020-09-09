@@ -30,62 +30,62 @@ export default class App extends React.Component {
 	}
 
 	componentDidMount() {
-		this.getPassword(value => {
-			if (value) this.setState({password: value});
-
-			let url = config.serverEndpointBaseURLs.getUserData + encodeURI(`?password=${value}`);
-			fetch(url)
-				.then(res => {
-					if (res.status !== 200) return false;
-					return res.json();
-				})
-				.then((json) => {
-					if (json !== false) {
-						this.setState({
-							user: json.username
-						});
-					} else {
-						this.setState({
-							error: true,
-							errorMessage: "Looks like it's your first time on the app!\nSwipe from the left to open the menu to log in and get started!"
-						});
-					}
-					if (typeof this.state.updateTimer !== "number") this.state.updateTimer = setInterval(() => {
-						let url = config.serverEndpointBaseURLs.getUserData + encodeURI(`?password=${value}`);
-						fetch(url)
-							.then(res => res.json())
-							.then(json => {
-								this.setState({
-									user: json.username,
-									signedIn: json.signedIn,
-									timeIn: json.signedIn ? Math.round((new Date()).getTime() / 1000) - json.lastTime : 0,
-									lastTime: json.lastTime
-								});
-							})
-							.catch(err => {
-								console.log("F. Failed to update data");
-							});
-					}, 5000);
-
-					if (typeof this.state.timer !== "number") this.state.timer = setInterval(() => {
-						if (this.state.signedIn) this.setState({
-							timeIn: Math.round((new Date()).getTime() / 1000) - this.state.lastTime
-						});
-					}, 250);
-				}).catch(err => {
-
+		//Update the basic state (Drawer and who you are logged in as)
+		this.getPassword().then(pass => {
+			//Updates saved password in state when app starts up or tells you to log in if you haven't used it before
+			if(null === pass) {
 				this.setState({
 					error: true,
-					errorMessage: `Error: Looks like either you don't exist or the server behaved unexpectedly.\nMake sure you're logged in!\n\n${JSON.stringify(err)}`
+					errorMessage: "Looks like it's your first time on the app!\nSwipe from the left to open the menu, log in, and get started!"
 				});
-			});
-		}, () => {
-			this.setState({
-				error: true,
-				errorMessage: "No password found in memory. Go to the Login page to log in!"
-			});
+			} else {
+				this.setState({
+					password: pass
+				});
+
+				//Updates username in state using the password retrieved
+				let url = config.serverEndpointBaseURLs.getUserData + encodeURI(`?password=${pass}`);
+				fetch(url).then(res => {
+					return res.json();
+				}).then((json) => {
+					this.setState({
+						user: json.username
+					});
+				}).catch(err => {
+					this.setState({
+						error: true,
+						errorMessage: `Error: Looks like either you don't exist or the server behaved unexpectedly.\nMake sure you're logged in!\n\n${JSON.stringify(err)}`
+					});
+				});
+
+				//Setting up timers and intervals
+				this.state.updateTimer = setInterval(() => {
+					this.getPassword().then(value => {
+						let url = config.serverEndpointBaseURLs.getUserData + encodeURI(`?password=${value}`);
+						fetch(url).then(res => {
+							return res.json();
+						}).then(json => {
+							this.setState({
+								user: json.username,
+								signedIn: json.signedIn,
+								timeIn: json.signedIn ? Math.round((new Date()).getTime() / 1000) - json.lastTime : 0,
+								lastTime: json.lastTime
+							});
+						}).catch(err => {
+							console.log(`F. Failed to update data\n\n${JSON.stringify(err)}`);
+						});
+					});
+				}, 5000);
+
+				//Signed in session timer
+				if (typeof this.state.timer !== "number") this.state.timer = setInterval(() => {
+					if (this.state.signedIn) this.setState({
+						timeIn: Math.round((new Date()).getTime() / 1000) - this.state.lastTime
+					});
+				}, 250);
+			}
 		});
-		console.log("MOUNT LEADERBOARD.JS");
+		console.log("MOUNT APP.JS");
 	}
 
 	componentWillUnmount() {
@@ -100,13 +100,23 @@ export default class App extends React.Component {
 		});
 	}
 
+	async getPassword() {
+		let pass = await AsyncStorage.getItem("password");
+
+		this.setState({
+			password: pass
+		});
+
+		return pass;
+	}
+
 	async setPassword(newPass, onStart) {
 		newPass = newPass.trim();
 		if (newPass.length === 0) {
-			console.log("HEY! No empty passwords!");
+			// console.log("HEY! No empty passwords!");
 			throw "HEY! No empty passwords!";
 		} else if (this.state.signedIn) {
-			console.log("You can't switch users while signed in!");
+			// console.log("You can't switch users while signed in!");
 			throw "You can't switch users while signed in!";
 		}
 
@@ -118,54 +128,30 @@ export default class App extends React.Component {
 		try {
 			let json = await fetch(url);
 			// console.log("\nFETCHED: " + JSON.stringify(json));
-			if(json.status === 404) throw "Error: Looks like you don't exist. Sorry.";
+			if (json.status === 404) throw "Error: Looks like you don't exist. Sorry.";
 			json = await json.json();
 			// console.log("\nPARSED: " + JSON.stringify(json));
 			user = json.username;
 			// console.log("\nSNATCHED: " + JSON.stringify(user));
+
+			try {
+				await AsyncStorage.setItem("password", newPass);
+			} catch (err) {
+				throw `Failed to save password on your phone\n\n${JSON.stringify(err)}`;
+			}
+
 			this.setState({
 				user: user,
 				password: newPass
 			});
-		} catch(err) {
-			if(typeof err == "string") throw err;
+
+		} catch (err) {
+			if (typeof err == "string") throw err;
 			else throw `Error: Looks like the server behaved unexpectedly\n\n${JSON.stringify(err)}`;
 		}
 
-		console.log(`Success. You're now logged in as ${user} using ${newPass}`);
+		// console.log(`Success. You're now logged in as ${user} using ${newPass}`);
 		return `Success. You're now logged in as ${user} using ${newPass}`;
-	}
-
-	setData(key, value, onSuccess, onFail) {
-		if (!key || !value) {
-			this.setState({
-				error: true,
-				errorMessage: "Uh oh. Invalid key or value to save"
-			});
-			return;
-		}
-
-		AsyncStorage.setItem(key, typeof value == "string" ? value : JSON.stringify(value)).then(onSuccess).catch(onFail);
-	}
-
-	getData(key, onSuccess, onFail) {
-		if (typeof key !== "string") {
-			console.warn("Uh oh. Invalid key or value to retrieve");
-			return;
-		}
-
-		AsyncStorage.getItem(key).then(onSuccess).catch(onFail);
-	}
-
-	getPassword(onSuccess, onFail) {
-		this.getData("password", val => {
-			onSuccess(val);
-			if (val) {
-				this.setState({
-					password: val
-				});
-			}
-		}, onFail);
 	}
 
 	login(onSuccess, onFail) {
