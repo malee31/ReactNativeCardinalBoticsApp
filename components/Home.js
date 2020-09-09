@@ -58,7 +58,8 @@ class Home extends React.Component {
 					<View>
 						<Text style={{
 							color: this.props.signedIn ? "red" : "green",
-							fontSize: 30
+							fontSize: 30,
+							fontWeight: "bold"
 						}}>{this.props.signedIn ? "Sign Out" : "Sign In"}</Text>
 					</View>
 				</TouchableHighlight>
@@ -100,8 +101,8 @@ class Home extends React.Component {
 									style={Styles.timeLogRow}>
 									<View>
 										<View style={Styles.timeLogRowHeader}>
-											<Text>{`| ${entry.day} |`}</Text>
-											<Text>{timeClocked}</Text>
+											<Text style={Styles.logTime}>{` ${entry.day} `}</Text>
+											<Text >{timeClocked}</Text>
 										</View>
 										<Text numberOfLines={1} style={Styles.timeLogRowDid}>{entry.did}</Text>
 									</View>

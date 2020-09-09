@@ -96,7 +96,7 @@ export default class Leaderboard extends React.Component {
 								<View style={Styles.memberEntry}>
 									<Text style={{
 										color: entry.signedIn ? "green" : "black",
-										fontSize: 16
+										fontSize: 16,
 									}}>{`${entry.username}: ${timeClocked}`}</Text>
 								</View>
 							);

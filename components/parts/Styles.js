@@ -143,6 +143,9 @@ const styles = StyleSheet.create({
 		color: config.colors.primary,
 		marginTop: '5%',
 	},
+	logTime: {
+		fontWeight: "bold",
+	},
 	resourceButton: {
 		width: "100%",
 		height: 40,
