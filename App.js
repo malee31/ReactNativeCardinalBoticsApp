@@ -15,6 +15,7 @@ export default class App extends React.Component {
 			user: "",
 			password: "",
 			signedIn: false,
+			sessions: [],
 			lastTime: 0, //Last time recorded by the server (Last log in or out) in unix seconds
 			timeIn: 0, //Time in measured in seconds as an integer or long
 			updateTimer: null, //This timer updates general data from entire team for leaderboard and to determine when to update self data
@@ -68,6 +69,9 @@ export default class App extends React.Component {
 						timeIn: Math.round((new Date()).getTime() / 1000) - this.state.lastTime
 					});
 				}, 250);
+
+				//Ensure first update takes less than 5 seconds... So that was what was making it so slow...
+				this.updateUserData();
 			}
 		});
 		console.log("MOUNT APP.JS");
@@ -86,6 +90,7 @@ export default class App extends React.Component {
 	}
 
 	updateUserData() {
+		// console.log("UPDATING");
 		this.getPassword().then(value => {
 			let url = config.serverEndpointBaseURLs.getUserData + encodeURI(`?password=${value}`);
 			fetch(url).then(res => {
@@ -94,10 +99,12 @@ export default class App extends React.Component {
 				this.setState({
 					user: json.username,
 					signedIn: json.signedIn,
+					sessions: json.sessions.reverse(),
 					timeIn: json.signedIn ? Math.round((new Date()).getTime() / 1000) - json.lastTime : 0,
 					lastTime: json.lastTime
 				});
 			}).catch(err => {
+				//TODO: Make this function get called so rarely that adding an error modal here is actually viable
 				console.log(`F. Failed to update data\n\n${JSON.stringify(err)}`);
 			});
 		});
@@ -165,10 +172,7 @@ export default class App extends React.Component {
 			if (res.status !== 200) {
 				throw `Server responded with a ${res.status}.\nYou might not be signed in`;
 			}
-			//TODO: Might want to get status by requesting server update instead
-			this.setState({
-				signedIn: true
-			});
+			this.updateUserData();
 		});
 	}
 
@@ -181,10 +185,7 @@ export default class App extends React.Component {
 			if(res.status !== 200) {
 				throw "Unable to sign out. Try again or check your wifi connection";
 			}
-			//TODO: Might want to get status by requesting server update instead
-			this.setState({
-				signedIn: false
-			});
+			this.updateUserData();
 		});
 	}
 
@@ -205,6 +206,7 @@ export default class App extends React.Component {
 						userText: this.state.user,
 						timeIn: this.state.timeIn,
 						signedIn: this.state.signedIn,
+						sessions: this.state.sessions,
 						setSignInStatus: this.setSignInStatus,
 						getData: this.getData,
 						setData: this.setData,

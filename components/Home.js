@@ -12,40 +12,12 @@ class Home extends React.Component {
 		this.state = {
 			whatDid: "",
 			error: false,
-			errorMessage: "Welp, something went wrong.",
-			isLoading: false,
-			data: []
+			errorMessage: "Welp, something went wrong."
 		};
 		this.signInToggle = this.signInToggle.bind(this);
-		this.updateSessions = this.updateSessions.bind(this);
 	}
 
-	componentDidMount() {
-		this.updateSessions();
-	}
-
-	updateSessions() {
-		this.props.getPassword().then(value => {
-			// console.log("SESSION UPDATE!");
-			fetch(config.serverEndpointBaseURLs.getUserData + encodeURI(`?password=${value}`))
-				.then((response) => response.json())
-				.then((json) => {
-					this.setState({
-						data: json["sessions"].reverse()
-					});
-					this.props.setSignInStatus(json.signedIn);
-				})
-				.catch((error) => console.error(error))
-				.finally(() => {
-					this.setState({isLoading: false});
-				});
-		}).catch(err => {
-			this.setState({
-				error: true,
-				errorMessage: `Failed to get past sessions using your password\n\n${JSON.stringify(err)}`
-			});
-		});
-	}
+	componentDidMount() {}
 
 	signInToggle() {
 		if (this.props.signedIn) {
@@ -53,8 +25,6 @@ class Home extends React.Component {
 				this.setState({
 					whatDid: ""
 				});
-				this.props.setSignInStatus(false);
-				this.updateSessions();
 			}).catch(failText => {
 				this.setState({
 					error: true,
@@ -62,12 +32,10 @@ class Home extends React.Component {
 				});
 			});
 		} else {
-			this.props.login().then(res => {
+			this.props.login().then(() => {
 				this.setState({
 					whatDid: ""
 				});
-
-				this.updateSessions();
 			}).catch(failText => {
 				this.setState({
 					error: true,
@@ -108,11 +76,11 @@ class Home extends React.Component {
 					onPress={() => {
 						this.setState({error: false})
 					}}/>
-				{this.state.isLoading ? <Text> Loading </Text> : (
+				{this.props.sessions.length === 0 ? <Text> Loading </Text> : (
 					<FlatList
-						data={this.state.data}
-						keyExtractor={(item) => `${item.date}: ${item.did}`}
-						renderItem={(entry) => {
+						data={this.props.sessions}
+						keyExtractor={item => `${item.date}: ${item.did}`}
+						renderItem={entry => {
 							entry = entry.item;
 							let timeClocked = `${Math.floor(entry.time / 3600)} hr`;
 							if (Math.floor(entry.time / 3600) !== 1) {
