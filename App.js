@@ -15,17 +15,18 @@ export default class App extends React.Component {
 			user: "",
 			password: "",
 			signedIn: false,
+			lastTime: 0, //Last time recorded by the server (Last log in or out) in unix seconds
 			timeIn: 0, //Time in measured in seconds as an integer or long
-			lastTime: 0,
-			updateTimer: null,
-			timer: null,
+			updateTimer: null, //This timer updates general data from entire team for leaderboard and to determine when to update self data
+			timer: null, //This timer is just to count the current session time
 			error: false,
 			errorText: ""
 		}
-		this.setPassword = this.setPassword.bind(this);
-		this.getPassword = this.getPassword.bind(this);
 		this.login = this.login.bind(this);
 		this.logout = this.logout.bind(this);
+		this.getPassword = this.getPassword.bind(this);
+		this.setPassword = this.setPassword.bind(this);
+		this.updateUserData = this.updateUserData.bind(this);
 		this.setSignInStatus = this.setSignInStatus.bind(this);
 	}
 
@@ -59,23 +60,7 @@ export default class App extends React.Component {
 				});
 
 				//Setting up timers and intervals
-				this.state.updateTimer = setInterval(() => {
-					this.getPassword().then(value => {
-						let url = config.serverEndpointBaseURLs.getUserData + encodeURI(`?password=${value}`);
-						fetch(url).then(res => {
-							return res.json();
-						}).then(json => {
-							this.setState({
-								user: json.username,
-								signedIn: json.signedIn,
-								timeIn: json.signedIn ? Math.round((new Date()).getTime() / 1000) - json.lastTime : 0,
-								lastTime: json.lastTime
-							});
-						}).catch(err => {
-							console.log(`F. Failed to update data\n\n${JSON.stringify(err)}`);
-						});
-					});
-				}, 5000);
+				this.state.updateTimer = setInterval(this.updateUserData, 5000);
 
 				//Signed in session timer
 				if (typeof this.state.timer !== "number") this.state.timer = setInterval(() => {
@@ -97,6 +82,24 @@ export default class App extends React.Component {
 	setSignInStatus(status) {
 		this.setState({
 			signedIn: status
+		});
+	}
+
+	updateUserData() {
+		this.getPassword().then(value => {
+			let url = config.serverEndpointBaseURLs.getUserData + encodeURI(`?password=${value}`);
+			fetch(url).then(res => {
+				return res.json();
+			}).then(json => {
+				this.setState({
+					user: json.username,
+					signedIn: json.signedIn,
+					timeIn: json.signedIn ? Math.round((new Date()).getTime() / 1000) - json.lastTime : 0,
+					lastTime: json.lastTime
+				});
+			}).catch(err => {
+				console.log(`F. Failed to update data\n\n${JSON.stringify(err)}`);
+			});
 		});
 	}
 
@@ -143,8 +146,7 @@ export default class App extends React.Component {
 			this.setState({
 				user: user,
 				password: newPass
-			});
-
+			}, this.updateUserData);
 		} catch (err) {
 			if (typeof err == "string") throw err;
 			else throw `Error: Looks like the server behaved unexpectedly\n\n${JSON.stringify(err)}`;
