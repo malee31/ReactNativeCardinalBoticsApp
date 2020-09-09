@@ -85,6 +85,13 @@ export default class App extends React.Component {
 				errorMessage: "No password found in memory. Go to the Login page to log in!"
 			});
 		});
+		console.log("MOUNT LEADERBOARD.JS");
+	}
+
+	componentWillUnmount() {
+		clearInterval(this.state.timer);
+		clearInterval(this.state.updateTimer);
+		console.log("UNMOUNT APP.JS");
 	}
 
 	setSignInStatus(status) {

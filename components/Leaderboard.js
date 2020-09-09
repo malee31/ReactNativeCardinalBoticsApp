@@ -24,8 +24,14 @@ export default class Leaderboard extends React.Component {
 			this.setState({
 				interval: setInterval(this.updateData, 5000)
 			});
-			// console.log("UPDATED TIMER FOR LEADERBOARD. If this runs twice... Oh no.")
+			console.log("UPDATED TIMER FOR LEADERBOARD. If this runs twice... Oh no.")
 		}
+		console.log("MOUNT LEADERBOARD.JS");
+	}
+
+	componentWillUnmount() {
+		clearInterval(this.state.interval);
+		console.log("UNMOUNT LEADERBOARD.JS");
 	}
 
 	updateData() {
