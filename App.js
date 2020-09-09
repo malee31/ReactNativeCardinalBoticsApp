@@ -100,6 +100,42 @@ export default class App extends React.Component {
 		});
 	}
 
+	async setPassword(newPass, onStart) {
+		newPass = newPass.trim();
+		if (newPass.length === 0) {
+			console.log("HEY! No empty passwords!");
+			throw "HEY! No empty passwords!";
+		} else if (this.state.signedIn) {
+			console.log("You can't switch users while signed in!");
+			throw "You can't switch users while signed in!";
+		}
+
+		if (typeof onStart == "function") onStart("Verifying that you exist");
+
+		let url = config.serverEndpointBaseURLs.getUserData + encodeURI(`?password=${newPass}`);
+		let user;
+
+		try {
+			let json = await fetch(url);
+			// console.log("\nFETCHED: " + JSON.stringify(json));
+			if(json.status === 404) throw "Error: Looks like you don't exist. Sorry.";
+			json = await json.json();
+			// console.log("\nPARSED: " + JSON.stringify(json));
+			user = json.username;
+			// console.log("\nSNATCHED: " + JSON.stringify(user));
+			this.setState({
+				user: user,
+				password: newPass
+			});
+		} catch(err) {
+			if(typeof err == "string") throw err;
+			else throw `Error: Looks like the server behaved unexpectedly\n\n${JSON.stringify(err)}`;
+		}
+
+		console.log(`Success. You're now logged in as ${user} using ${newPass}`);
+		return `Success. You're now logged in as ${user} using ${newPass}`;
+	}
+
 	setData(key, value, onSuccess, onFail) {
 		if (!key || !value) {
 			this.setState({
@@ -119,38 +155,6 @@ export default class App extends React.Component {
 		}
 
 		AsyncStorage.getItem(key).then(onSuccess).catch(onFail);
-	}
-
-	//Pretty much only for Login.js
-	setPassword(value, onSuccess, onFail, user) {
-		if (this.state.signedIn) {
-			this.setState({
-				error: true,
-				errorMessage: "Can't log into another account while signed in!"
-			});
-			return;
-		}
-
-		this.setData("password", value, () => {
-			if (typeof onSuccess == "function") onSuccess();
-			this.getPassword(value => {
-				if (user) {
-					this.setState({
-						user: user,
-						password: value
-					});
-				} else {
-					this.setState({
-						password: value
-					});
-				}
-			}, err => {
-				this.setState({
-					error: true,
-					errorMessage: `Failed to update password\n${JSON.stringify(err)}`
-				});
-			});
-		}, onFail);
 	}
 
 	getPassword(onSuccess, onFail) {
