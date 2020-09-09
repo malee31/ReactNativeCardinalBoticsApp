@@ -30,61 +30,68 @@ export default class App extends React.Component {
 	}
 
 	componentDidMount() {
-		this.getPassword(value => {
-			if (value) this.setState({password: value});
-
-			let url = config.serverEndpointBaseURLs.getUserData + encodeURI(`?password=${value}`);
-			fetch(url)
-				.then(res => {
-					if (res.status !== 200) return false;
-					return res.json();
-				})
-				.then((json) => {
-					if (json !== false) {
-						this.setState({
-							user: json.username
-						});
-					} else {
-						this.setState({
-							error: true,
-							errorMessage: "Looks like it's your first time on the app!\nSwipe from the left to open the menu to log in and get started!"
-						});
-					}
-					if (typeof this.state.updateTimer !== "number") this.state.updateTimer = setInterval(() => {
-						let url = config.serverEndpointBaseURLs.getUserData + encodeURI(`?password=${value}`);
-						fetch(url)
-							.then(res => res.json())
-							.then(json => {
-								this.setState({
-									user: json.username,
-									signedIn: json.signedIn,
-									timeIn: json.signedIn ? Math.round((new Date()).getTime() / 1000) - json.lastTime : 0,
-									lastTime: json.lastTime
-								});
-							})
-							.catch(err => {
-								console.log("F. Failed to update data");
-							});
-					}, 5000);
-
-					if (typeof this.state.timer !== "number") this.state.timer = setInterval(() => {
-						if (this.state.signedIn) this.setState({
-							timeIn: Math.round((new Date()).getTime() / 1000) - this.state.lastTime
-						});
-					}, 250);
-				}).catch(err => {
-
+		//Update the basic state (Drawer and who you are logged in as)
+		this.getPassword().then(pass => {
+			//Updates saved password in state when app starts up or tells you to log in if you haven't used it before
+			if (null === pass) {
 				this.setState({
 					error: true,
-					errorMessage: `Error: Looks like either you don't exist or the server behaved unexpectedly.\nMake sure you're logged in!\n\n${JSON.stringify(err)}`
+					errorMessage: "Looks like it's your first time on the app!\nSwipe from the left to open the menu, log in, and get started!"
 				});
-			});
-		}, () => {
-			this.setState({
-				error: true,
-				errorMessage: "No password found in memory. Go to the Login page to log in!"
-			});
+			} else {
+				this.setState({
+					password: pass
+				});
+
+				//Updates username in state using the password retrieved
+				let url = config.serverEndpointBaseURLs.getUserData + encodeURI(`?password=${pass}`);
+				fetch(url).then(res => {
+					return res.json();
+				}).then((json) => {
+					this.setState({
+						user: json.username
+					});
+				}).catch(err => {
+					this.setState({
+						error: true,
+						errorMessage: `Error: Looks like either you don't exist or the server behaved unexpectedly.\nMake sure you're logged in!\n\n${JSON.stringify(err)}`
+					});
+				});
+
+				//Setting up timers and intervals
+				this.state.updateTimer = setInterval(() => {
+					this.getPassword().then(value => {
+						let url = config.serverEndpointBaseURLs.getUserData + encodeURI(`?password=${value}`);
+						fetch(url).then(res => {
+							return res.json();
+						}).then(json => {
+							this.setState({
+								user: json.username,
+								signedIn: json.signedIn,
+								timeIn: json.signedIn ? Math.round((new Date()).getTime() / 1000) - json.lastTime : 0,
+								lastTime: json.lastTime
+							});
+						}).catch(err => {
+							console.log(`F. Failed to update data\n\n${JSON.stringify(err)}`);
+						});
+					});
+				}, 5000);
+
+				//Signed in session timer
+				if (typeof this.state.timer !== "number") this.state.timer = setInterval(() => {
+					if (this.state.signedIn) this.setState({
+						timeIn: Math.round((new Date()).getTime() / 1000) - this.state.lastTime
+					});
+				}, 250);
+			}
 		});
+		console.log("MOUNT APP.JS");
+	}
+
+	componentWillUnmount() {
+		clearInterval(this.state.timer);
+		clearInterval(this.state.updateTimer);
+		console.log("UNMOUNT APP.JS");
 	}
 
 	setSignInStatus(status) {
@@ -93,85 +100,90 @@ export default class App extends React.Component {
 		});
 	}
 
-	setData(key, value, onSuccess, onFail) {
-		if (!key || !value) {
-			this.setState({
-				error: true,
-				errorMessage: "Uh oh. Invalid key or value to save"
-			});
-			return;
-		}
+	async getPassword() {
+		let pass = await AsyncStorage.getItem("password");
 
-		AsyncStorage.setItem(key, typeof value == "string" ? value : JSON.stringify(value)).then(onSuccess).catch(onFail);
+		this.setState({
+			password: pass
+		});
+
+		return pass;
 	}
 
-	getData(key, onSuccess, onFail) {
-		if (typeof key !== "string") {
-			console.warn("Uh oh. Invalid key or value to retrieve");
-			return;
+	async setPassword(newPass, onStart) {
+		newPass = newPass.trim();
+		if (newPass.length === 0) {
+			// console.log("HEY! No empty passwords!");
+			throw "HEY! No empty passwords!";
+		} else if (this.state.signedIn) {
+			// console.log("You can't switch users while signed in!");
+			throw "You can't switch users while signed in!";
 		}
 
-		AsyncStorage.getItem(key).then(onSuccess).catch(onFail);
-	}
+		if (typeof onStart == "function") onStart("Verifying that you exist");
 
-	//Pretty much only for Login.js
-	setPassword(value, onSuccess, onFail, user) {
-		if (this.state.signedIn) {
-			this.setState({
-				error: true,
-				errorMessage: "Can't log into another account while signed in!"
-			});
-			return;
-		}
+		let url = config.serverEndpointBaseURLs.getUserData + encodeURI(`?password=${newPass}`);
+		let user;
 
-		this.setData("password", value, () => {
-			if (typeof onSuccess == "function") onSuccess();
-			this.getPassword(value => {
-				if (user) {
-					this.setState({
-						user: user,
-						password: value
-					});
-				} else {
-					this.setState({
-						password: value
-					});
-				}
-			}, err => {
-				this.setState({
-					error: true,
-					errorMessage: `Failed to update password\n${JSON.stringify(err)}`
-				});
-			});
-		}, onFail);
-	}
+		try {
+			let json = await fetch(url);
+			// console.log("\nFETCHED: " + JSON.stringify(json));
+			if (json.status === 404) throw "Error: Looks like you don't exist. Sorry.";
+			json = await json.json();
+			// console.log("\nPARSED: " + JSON.stringify(json));
+			user = json.username;
+			// console.log("\nSNATCHED: " + JSON.stringify(user));
 
-	getPassword(onSuccess, onFail) {
-		this.getData("password", val => {
-			onSuccess(val);
-			if (val) {
-				this.setState({
-					password: val
-				});
+			try {
+				await AsyncStorage.setItem("password", newPass);
+			} catch (err) {
+				throw `Failed to save password on your phone\n\n${JSON.stringify(err)}`;
 			}
-		}, onFail);
+
+			this.setState({
+				user: user,
+				password: newPass
+			});
+
+		} catch (err) {
+			if (typeof err == "string") throw err;
+			else throw `Error: Looks like the server behaved unexpectedly\n\n${JSON.stringify(err)}`;
+		}
+
+		// console.log(`Success. You're now logged in as ${user} using ${newPass}`);
+		return `Success. You're now logged in as ${user} using ${newPass}`;
 	}
 
-	login(onSuccess, onFail) {
+	async login() {
 		if (this.state.password === "") {
-			this.setState({
-				error: true,
-				errorMessage: "You're not logged in!"
-			})
-			return;
+			throw "You're not logged in!";
 		}
 		let url = `${config.serverEndpointBaseURLs.login}?password=${encodeURI(this.state.password)}`;
-		fetch(url).then(onSuccess).catch(onFail);
+		fetch(url).then(res => {
+			if (res.status !== 200) {
+				throw `Server responded with a ${res.status}.\nYou might not be signed in`;
+			}
+			//TODO: Might want to get status by requesting server update instead
+			this.setState({
+				signedIn: true
+			});
+		});
 	}
 
-	logout(whatDid, onSuccess, onFail) {
+	async logout(whatDid) {
+		whatDid = whatDid.trim();
+		if(whatDid.length === 0) throw "Can't Logout with a Blank Message";
+
 		let url = `${config.serverEndpointBaseURLs.logout}?password=${encodeURI(this.state.password)}&did=${encodeURI(whatDid)}`;
-		fetch(url).then(onSuccess).catch(onFail);
+		fetch(url).then(res => {
+			if(res.status !== 200) {
+				throw "Unable to sign out. Try again or check your wifi connection";
+			}
+			//TODO: Might want to get status by requesting server update instead
+			this.setState({
+				signedIn: false
+			});
+		});
 	}
 
 	render() {
@@ -202,12 +214,12 @@ export default class App extends React.Component {
 					<ModalPopUp show={() => {
 						return this.state.error
 					}}
-								text={() => {
-									return this.state.errorMessage
-								}}
-								onPress={() => {
-									this.setState({error: false})
-								}}/>
+						text={() => {
+							return this.state.errorMessage
+						}}
+						onPress={() => {
+							this.setState({error: false})
+						}}/>
 				</PaperProvider>
 			</SafeAreaProvider>
 		);

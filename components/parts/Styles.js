@@ -34,15 +34,15 @@ const styles = StyleSheet.create({
 		width: "100%",
 		height: "100%",
 		flex: 1,
-		padding: "5%",
-		paddingBottom: "8%",
+		paddingHorizontal: "5%",
+		paddingVertical: "2%",
 		backgroundColor: config.colors.background,
 
 	},
 	largeLogoImage: {
-		width: "100%",
-		maxHeight: "25%",
-		marginVertical: 30
+		width: "70%",
+		alignSelf: "center",
+		maxHeight: "25%"
 	},
 	signInButton: {
 		alignItems: "center",
@@ -51,13 +51,32 @@ const styles = StyleSheet.create({
 		backgroundColor: config.colors.gray,
 		width: "70%",
 		padding: "5%",
-		marginVertical: 10,
+		marginVertical: "3%",
 	},
 	signInText: {
 		fontSize: 30
 	},
 	whatchuDoing: {
 		color: "#7D1120",
+	},
+	timeLogRow: {
+		flexDirection: "column",
+		width: "100%",
+		textAlign: "left",
+		backgroundColor: config.colors.gray,
+		borderRadius: 10,
+		padding: 5,
+		marginVertical: "1%"
+	},
+	timeLogRowHeader: {
+		flexDirection: "row",
+		justifyContent: "space-between",
+		alignItems: "center",
+		width: "100%"
+	},
+	timeLogRowDid: {
+		width: "100%",
+		paddingHorizontal: "2%"
 	},
 	content: {
 		backgroundColor: 'white',
@@ -119,9 +138,10 @@ const styles = StyleSheet.create({
 	title: {
 		textAlign: 'center',
 		alignSelf: 'center',
-		fontSize: 25,
+		width: "100%",
+		fontSize: 30,
 		color: config.colors.primary,
-		marginVertical:'5%',
+		marginTop: '5%',
 	},
 	resourceButton: {
 		width: "100%",

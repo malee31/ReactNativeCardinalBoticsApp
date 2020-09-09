@@ -17,45 +17,21 @@ export default class Login extends React.Component {
 	}
 
 	login() {
-		let newPass = this.state.ID.trim();
-		if (newPass.length === 0) {
+		this.props.setPassword(this.state.ID, () => {
+			this.setState({
+				error: true,
+				errorMessage: "Verifying that you exist."
+			});
+		}).then(successText => {
 			this.setState({
 				ID: "",
 				error: true,
-				errorMessage: "HEY! No empty passwords!"
+				errorMessage: successText
 			});
-			return;
-		}
-		if (this.props.signedIn) {
+		}).catch(failText => {
 			this.setState({
 				error: true,
-				errorMessage: "You can't switch users while signed in!"
-			});
-			return;
-		}
-
-		this.setState({
-			ID: "",
-			error: true,
-			errorMessage: "Verifying that you exist."
-		});
-
-		let url = config.serverEndpointBaseURLs.getUserData + encodeURI(`?password=${newPass}`);
-		fetch(url)
-			.then(res => res.json())
-			.then((json) => {
-				let user = json.username;
-
-				this.props.setPassword(newPass, () => {
-					this.setState({
-						errorMessage: `Success. You're now logged in as ${user} using ${newPass}`,
-						error: true
-					});
-				}, null, user);
-			}).catch(err => {
-			this.setState({
-				error: true,
-				errorMessage: `Error: Looks like either you don't exist or the server behaved unexpectedly\n\n${JSON.stringify(err)}`
+				errorMessage: failText
 			});
 		});
 	}
@@ -64,17 +40,17 @@ export default class Login extends React.Component {
 		return (
 			<View style={Styles.screen}>
 				<Image source={require("../assets/cardinalbotics_logo_white_clear.png")}
-					   resizeMode="contain"
-					   style={Styles.largeLogoImage}/>
+					resizeMode="contain"
+					style={Styles.largeLogoImage}/>
 				<TextInput
 					label="Login"
 					value={this.state.ID}
 					style={Styles.whatchuDoing}
 					onChange={newText => this.setState({ID: newText.nativeEvent.text})}/>
 				<TouchableHighlight onPress={this.login}
-									activeOpacity={0.7}
-									underlayColor={config.colors.darkGray}
-									style={Styles.signInButton}>
+					activeOpacity={0.7}
+					underlayColor={config.colors.darkGray}
+					style={Styles.signInButton}>
 					<View>
 						<Text>Submit</Text>
 					</View>
@@ -84,9 +60,9 @@ export default class Login extends React.Component {
 				}} text={() => {
 					return this.state.errorMessage
 				}}
-							onPress={() => {
-								this.setState({error: false})
-							}}/>
+					onPress={() => {
+						this.setState({error: false})
+					}}/>
 			</View>
 		);
 	};

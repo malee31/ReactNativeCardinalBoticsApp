@@ -25,7 +25,8 @@ class Home extends React.Component {
 	}
 
 	updateSessions() {
-		this.props.getPassword(value => {
+		this.props.getPassword().then(value => {
+			// console.log("SESSION UPDATE!");
 			fetch(config.serverEndpointBaseURLs.getUserData + encodeURI(`?password=${value}`))
 				.then((response) => response.json())
 				.then((json) => {
@@ -38,52 +39,39 @@ class Home extends React.Component {
 				.finally(() => {
 					this.setState({isLoading: false});
 				});
-		}, err => {
+		}).catch(err => {
 			this.setState({
 				error: true,
-				errorMessage: `Failed to get past sessions with password: ${JSON.stringify(err)}`
+				errorMessage: `Failed to get past sessions using your password\n\n${JSON.stringify(err)}`
 			});
 		});
 	}
 
 	signInToggle() {
 		if (this.props.signedIn) {
-			if (this.state.whatDid.trim().length === 0) {
-				this.setState({
-					error: true,
-					errorMessage: "Can't Logout with a Blank Message"
-				});
-				return;
-			}
-
-			this.props.logout(this.state.whatDid.trim(), () => {
+			this.props.logout(this.state.whatDid).then(() => {
 				this.setState({
 					whatDid: ""
 				});
 				this.props.setSignInStatus(false);
 				this.updateSessions();
-			}, failRes => {
+			}).catch(failText => {
 				this.setState({
 					error: true,
-					errorMessage: `FAILED LOGOUT ${JSON.stringify(failRes)}`
+					errorMessage: failText
 				});
 			});
-
 		} else {
-			this.props.login(res => {
-				if (res.status !== 200) {
-					throw `Server responded with a ${res.status}.\nYou might not be signed in`;
-				}
-
+			this.props.login().then(res => {
 				this.setState({
 					whatDid: ""
 				});
 
 				this.updateSessions();
-			}, failRes => {
+			}).catch(failText => {
 				this.setState({
 					error: true,
-					errorMessage: `Log in failed: ${JSON.stringify(failRes)}`
+					errorMessage: failText
 				});
 			});
 		}
@@ -93,12 +81,12 @@ class Home extends React.Component {
 		return (
 			<View style={Styles.screen}>
 				<Image source={require("../assets/cardinalbotics_logo_white_clear.png")}
-					   resizeMode="contain"
-					   style={Styles.largeLogoImage}/>
+					resizeMode="contain"
+					style={Styles.largeLogoImage}/>
 				<TouchableHighlight onPress={this.signInToggle}
-									activeOpacity={0.7}
-									underlayColor={config.colors.darkGray}
-									style={Styles.signInButton}>
+					activeOpacity={0.7}
+					underlayColor={config.colors.darkGray}
+					style={Styles.signInButton}>
 					<View>
 						<Text style={{
 							color: this.props.signedIn ? "red" : "green",
@@ -117,28 +105,39 @@ class Home extends React.Component {
 				}} text={() => {
 					return this.state.errorMessage
 				}}
-							onPress={() => {
-								this.setState({error: false})
-							}}/>
+					onPress={() => {
+						this.setState({error: false})
+					}}/>
 				{this.state.isLoading ? <Text> Loading </Text> : (
 					<FlatList
 						data={this.state.data}
 						keyExtractor={(item) => `${item.date}: ${item.did}`}
 						renderItem={(entry) => {
 							entry = entry.item;
-							let timeClocked = `${Math.floor(entry.time / 3600)} hour`;
+							let timeClocked = `${Math.floor(entry.time / 3600)} hr`;
 							if (Math.floor(entry.time / 3600) !== 1) {
 								timeClocked += "s";
 							}
-							timeClocked += ` and ${Math.floor((entry.time % 3600) / 60)} minute${Math.floor((entry.time % 3600) / 60) !== 1 ? "s" : ""}`;
+							timeClocked += ` ${Math.floor((entry.time % 3600) / 60)} min${Math.floor((entry.time % 3600) / 60) !== 1 ? "s" : ""}`;
 
 							if (entry.time < 60) timeClocked = `${entry.time} second${entry.time !== 1 ? "s" : ""}`;
 
 							return (
-								<View>
-									<Text
-										style={Styles.log}>{`${entry.day} for ${timeClocked}\n\t|\t${entry.did}`}</Text>
-								</View>
+								<TouchableHighlight
+									activeOpacity={0.7}
+									underlayColor={config.colors.darkGray}
+									onPress={() => {
+										this.setState({error: true, errorMessage: entry.did})
+									}}
+									style={Styles.timeLogRow}>
+									<View>
+										<View style={Styles.timeLogRowHeader}>
+											<Text>{`| ${entry.day} |`}</Text>
+											<Text>{timeClocked}</Text>
+										</View>
+										<Text numberOfLines={1} style={Styles.timeLogRowDid}>{entry.did}</Text>
+									</View>
+								</TouchableHighlight>
 							);
 						}}
 					/>
