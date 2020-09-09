@@ -49,42 +49,29 @@ class Home extends React.Component {
 
 	signInToggle() {
 		if (this.props.signedIn) {
-			if (this.state.whatDid.trim().length === 0) {
-				this.setState({
-					error: true,
-					errorMessage: "Can't Logout with a Blank Message"
-				});
-				return;
-			}
-
-			this.props.logout(this.state.whatDid.trim(), () => {
+			this.props.logout(this.state.whatDid).then(() => {
 				this.setState({
 					whatDid: ""
 				});
 				this.props.setSignInStatus(false);
 				this.updateSessions();
-			}, failRes => {
+			}).catch(failText => {
 				this.setState({
 					error: true,
-					errorMessage: `FAILED LOGOUT ${JSON.stringify(failRes)}`
+					errorMessage: failText
 				});
 			});
-
 		} else {
-			this.props.login(res => {
-				if (res.status !== 200) {
-					throw `Server responded with a ${res.status}.\nYou might not be signed in`;
-				}
-
+			this.props.login().then(res => {
 				this.setState({
 					whatDid: ""
 				});
 
 				this.updateSessions();
-			}, failRes => {
+			}).catch(failText => {
 				this.setState({
 					error: true,
-					errorMessage: `Log in failed: ${JSON.stringify(failRes)}`
+					errorMessage: failText
 				});
 			});
 		}

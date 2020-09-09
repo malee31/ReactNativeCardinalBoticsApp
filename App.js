@@ -154,21 +154,36 @@ export default class App extends React.Component {
 		return `Success. You're now logged in as ${user} using ${newPass}`;
 	}
 
-	login(onSuccess, onFail) {
+	async login() {
 		if (this.state.password === "") {
-			this.setState({
-				error: true,
-				errorMessage: "You're not logged in!"
-			})
-			return;
+			throw "You're not logged in!";
 		}
 		let url = `${config.serverEndpointBaseURLs.login}?password=${encodeURI(this.state.password)}`;
-		fetch(url).then(onSuccess).catch(onFail);
+		fetch(url).then(res => {
+			if (res.status !== 200) {
+				throw `Server responded with a ${res.status}.\nYou might not be signed in`;
+			}
+			//TODO: Might want to get status by requesting server update instead
+			this.setState({
+				signedIn: true
+			});
+		});
 	}
 
-	logout(whatDid, onSuccess, onFail) {
+	async logout(whatDid) {
+		whatDid = whatDid.trim();
+		if(whatDid.length === 0) throw "Can't Logout with a Blank Message";
+
 		let url = `${config.serverEndpointBaseURLs.logout}?password=${encodeURI(this.state.password)}&did=${encodeURI(whatDid)}`;
-		fetch(url).then(onSuccess).catch(onFail);
+		fetch(url).then(res => {
+			if(res.status !== 200) {
+				throw "Unable to sign out. Try again or check your wifi connection";
+			}
+			//TODO: Might want to get status by requesting server update instead
+			this.setState({
+				signedIn: false
+			});
+		});
 	}
 
 	render() {
