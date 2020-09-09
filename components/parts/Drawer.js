@@ -26,7 +26,6 @@ const Drawer = createAppContainer(createDrawerNavigator({
 				login={props.screenProps.login}
 				logout={props.screenProps.logout}
 				getPassword={props.screenProps.getPassword}
-				setSignInStatus={props.screenProps.setSignInStatus}
 				signedIn={props.screenProps.signedIn}
 				sessions={props.screenProps.sessions}
 			/>),
@@ -55,7 +54,7 @@ const Drawer = createAppContainer(createDrawerNavigator({
 		}
 	},
 	Leaderboard: {
-		screen: Leaderboard,
+		screen: props => (<Leaderboard leaderboardData={props.screenProps.leaderboardData}/>),
 		navigationOptions: {
 			drawerLabel: 'Other Members',
 			drawerIcon: () => (

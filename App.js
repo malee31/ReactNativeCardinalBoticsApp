@@ -16,9 +16,11 @@ export default class App extends React.Component {
 			password: "",
 			signedIn: false,
 			sessions: [],
+			leaderboardData: [],
 			lastTime: 0, //Last time recorded by the server (Last log in or out) in unix seconds
 			timeIn: 0, //Time in measured in seconds as an integer or long
 			updateTimer: null, //This timer updates general data from entire team for leaderboard and to determine when to update self data
+			leaderboardTimer: null, //This timer is for updating leaderboard with general team member sign in statuses and determining when to update user data
 			timer: null, //This timer is just to count the current session time
 			error: false,
 			errorText: ""
@@ -27,8 +29,9 @@ export default class App extends React.Component {
 		this.logout = this.logout.bind(this);
 		this.getPassword = this.getPassword.bind(this);
 		this.setPassword = this.setPassword.bind(this);
+		this.updateAllData = this.updateAllData.bind(this);
 		this.updateUserData = this.updateUserData.bind(this);
-		this.setSignInStatus = this.setSignInStatus.bind(this);
+		this.updateLeaderboardData = this.updateLeaderboardData.bind(this);
 	}
 
 	componentDidMount() {
@@ -70,8 +73,17 @@ export default class App extends React.Component {
 					});
 				}, 250);
 
+				//Leaderboard update timer (Also should determine when to update user data)
+				if (typeof this.state.leaderboardTimer !== "number") {
+					this.setState({
+						leaderboardTimer: setInterval(this.updateAllData, 5000)
+					});
+					console.log("UPDATED TIMER FOR LEADERBOARD. If this runs twice... Oh no.")
+				}
+
 				//Ensure first update takes less than 5 seconds... So that was what was making it so slow...
 				this.updateUserData();
+				this.updateLeaderboardData();
 			}
 		});
 		console.log("MOUNT APP.JS");
@@ -80,12 +92,44 @@ export default class App extends React.Component {
 	componentWillUnmount() {
 		clearInterval(this.state.timer);
 		clearInterval(this.state.updateTimer);
+		clearInterval(this.state.leaderboardTimer);
 		console.log("UNMOUNT APP.JS");
 	}
 
-	setSignInStatus(status) {
-		this.setState({
-			signedIn: status
+	//TODO: Make it check for signed in status here to determine when to update user data
+	updateAllData() {
+		this.updateLeaderboardData();
+	}
+
+	updateLeaderboardData() {
+		fetch(config.serverEndpointBaseURLs.getData).then(res => {
+			if(res.status !== 200) throw `Failed to connect to server with status code ${res.status}`;
+			return res.json();
+		}).then(json => {
+			json.forEach((elem, index) => {
+				elem.key = "Leaderboard #" + (index + 1);
+			});
+
+			//Sorts by Username (a-zA-Z) then total time logged in and finally signed in/out status
+			json.sort((a, b) => {
+				if (a.username < b.username) {
+					return -1;
+				}
+				if (a.username > b.username) {
+					return 1;
+				}
+				return 0;
+			}).sort((a, b) => {
+				return b.totalTime - a.totalTime;
+			}).sort((a, b) => {
+				return b.signedIn - a.signedIn;
+			});
+
+			this.setState({
+				leaderboardData: json
+			});
+		}).catch(err => {
+			console.log(`Failed to update basic data. F. ${JSON.stringify(err)}`);
 		});
 	}
 
@@ -207,9 +251,7 @@ export default class App extends React.Component {
 						timeIn: this.state.timeIn,
 						signedIn: this.state.signedIn,
 						sessions: this.state.sessions,
-						setSignInStatus: this.setSignInStatus,
-						getData: this.getData,
-						setData: this.setData,
+						leaderboardData: this.state.leaderboardData,
 						getPassword: this.getPassword,
 						setPassword: this.setPassword,
 						login: this.login,
