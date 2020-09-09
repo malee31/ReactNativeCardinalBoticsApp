@@ -178,11 +178,11 @@ export default class App extends React.Component {
 
 	async logout(whatDid) {
 		whatDid = whatDid.trim();
-		if(whatDid.length === 0) throw "Can't Logout with a Blank Message";
+		if (whatDid.length === 0) throw "Can't Logout with a Blank Message";
 
 		let url = `${config.serverEndpointBaseURLs.logout}?password=${encodeURI(this.state.password)}&did=${encodeURI(whatDid)}`;
 		fetch(url).then(res => {
-			if(res.status !== 200) {
+			if (res.status !== 200) {
 				throw "Unable to sign out. Try again or check your wifi connection";
 			}
 			this.updateUserData();

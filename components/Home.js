@@ -17,7 +17,8 @@ class Home extends React.Component {
 		this.signInToggle = this.signInToggle.bind(this);
 	}
 
-	componentDidMount() {}
+	componentDidMount() {
+	}
 
 	signInToggle() {
 		if (this.props.signedIn) {
@@ -102,7 +103,7 @@ class Home extends React.Component {
 									<View>
 										<View style={Styles.timeLogRowHeader}>
 											<Text style={Styles.logTime}>{` ${entry.day} `}</Text>
-											<Text >{timeClocked}</Text>
+											<Text>{timeClocked}</Text>
 										</View>
 										<Text numberOfLines={1} style={Styles.timeLogRowDid}>{entry.did}</Text>
 									</View>
