@@ -102,7 +102,7 @@ export default class App extends React.Component {
 
 	updateLeaderboardData() {
 		fetch(config.serverEndpointBaseURLs.getData).then(res => {
-			if(res.status !== 200) throw `Failed to connect to server with status code ${res.status}`;
+			if (res.status !== 200) throw `Failed to connect to server with status code ${res.status}`;
 			return res.json();
 		}).then(json => {
 			json.forEach((elem, index) => {

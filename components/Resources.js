@@ -13,15 +13,15 @@ export default class Resources extends React.Component {
 	}
 
 	componentDidMount() {
-		fetch(config.urls.resources)
-			.then((response) => response.json())
-			.then((json) => {
-				this.setState({data: json.values});
-			})
-			.catch((error) => console.error(error))
-			.finally(() => {
-				this.setState({isLoading: false});
-			});
+		fetch(config.urls.resources).then(response => {
+			return response.json();
+		}).then(json => {
+			this.setState({data: json.values});
+		}).catch(error => {
+			console.error(error);
+		}).finally(() => {
+			this.setState({isLoading: false});
+		});
 	}
 
 	render() {

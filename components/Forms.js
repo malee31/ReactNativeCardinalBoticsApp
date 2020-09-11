@@ -14,22 +14,22 @@ export default class Forms extends React.Component {
 	}
 
 	componentDidMount() {
-		fetch(config.urls.sheet)
-			.then((response) => response.json())
-			.then((json) => {
-				json = json.values;
-				for (let sheetRow = 0; sheetRow < json.length; sheetRow++) {
-					if (sheetRow === 0 || json[sheetRow][0].trim() !== json[sheetRow - 1][0].trim()) {
-						json.splice(sheetRow, 0, json[sheetRow][0].trim());
-						sheetRow++;
-					}
+		fetch(config.urls.sheet).then(response => {
+			return response.json();
+		}).then(json => {
+			json = json.values;
+			for (let sheetRow = 0; sheetRow < json.length; sheetRow++) {
+				if (sheetRow === 0 || json[sheetRow][0].trim() !== json[sheetRow - 1][0].trim()) {
+					json.splice(sheetRow, 0, json[sheetRow][0].trim());
+					sheetRow++;
 				}
-				this.setState({data: json});
-			})
-			.catch((error) => console.error(error))
-			.finally(() => {
-				this.setState({isLoading: false});
-			});
+			}
+			this.setState({data: json});
+		}).catch(error => {
+			console.error(error)
+		}).finally(() => {
+			this.setState({isLoading: false});
+		});
 	}
 
 	render() {
