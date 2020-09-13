@@ -18,7 +18,7 @@ export default class App extends React.Component {
 			leaderboardData: [],
 			lastTime: 0, //Last time recorded by the server (Last log in or out) in unix seconds
 			timeIn: 0, //Time in measured in seconds as an integer or long
-			updateTimer: null, //This timer updates general data from entire team for leaderboard and to determine when to update self data
+			totalTime: 0,
 			leaderboardTimer: null, //This timer is for updating leaderboard with general team member sign in statuses and determining when to update user data
 			timer: null, //This timer is just to count the current session time
 			error: false,
@@ -28,7 +28,6 @@ export default class App extends React.Component {
 		this.logout = this.logout.bind(this);
 		this.getPassword = this.getPassword.bind(this);
 		this.setPassword = this.setPassword.bind(this);
-		this.updateAllData = this.updateAllData.bind(this);
 		this.updateUserData = this.updateUserData.bind(this);
 		this.updateLeaderboardData = this.updateLeaderboardData.bind(this);
 	}
@@ -62,9 +61,6 @@ export default class App extends React.Component {
 					});
 				});
 
-				//Setting up timers and intervals
-				this.state.updateTimer = setInterval(this.updateUserData, 5000);
-
 				//Signed in session timer
 				if (typeof this.state.timer !== "number") this.state.timer = setInterval(() => {
 					if (this.state.signedIn) this.setState({
@@ -75,9 +71,9 @@ export default class App extends React.Component {
 				//Leaderboard update timer (Also should determine when to update user data)
 				if (typeof this.state.leaderboardTimer !== "number") {
 					this.setState({
-						leaderboardTimer: setInterval(this.updateAllData, 5000)
+						leaderboardTimer: setInterval(this.updateLeaderboardData, 1000)
 					});
-					console.log("UPDATED TIMER FOR LEADERBOARD. If this runs twice... Oh no.")
+					console.log("UPDATED TIMER FOR LEADERBOARD. If this runs twice... Oh no.");
 				}
 
 				//Ensure first update takes less than 5 seconds... So that was what was making it so slow...
@@ -85,19 +81,11 @@ export default class App extends React.Component {
 				this.updateLeaderboardData();
 			}
 		});
-		console.log("MOUNT APP.JS");
 	}
 
 	componentWillUnmount() {
 		clearInterval(this.state.timer);
-		clearInterval(this.state.updateTimer);
 		clearInterval(this.state.leaderboardTimer);
-		console.log("UNMOUNT APP.JS");
-	}
-
-	//TODO: Make it check for signed in status here to determine when to update user data
-	updateAllData() {
-		this.updateLeaderboardData();
 	}
 
 	updateLeaderboardData() {
@@ -107,6 +95,13 @@ export default class App extends React.Component {
 		}).then(json => {
 			json.forEach((elem, index) => {
 				elem.key = "Leaderboard #" + (index + 1);
+				if (elem.username === this.state.user && (elem.lastTime !== this.state.lastTime || elem.signedIn !== this.state.signedIn)) {
+					// console.log("SHOULD UPDATE USER DATA");
+					this.setState({
+						signedIn: elem.signedIn,
+						lastTime: elem.lastTime
+					}, this.updateUserData);
+				}
 			});
 
 			//Sorts by Username (a-zA-Z) then total time logged in and finally signed in/out status
