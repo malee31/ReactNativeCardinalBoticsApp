@@ -111,12 +111,6 @@ const styles = StyleSheet.create({
 		justifyContent: "center",
 		alignContent: "center"
 	},
-	memberEntry: {
-		width: "100%",
-		height: 40,
-		flex: 1,
-		paddingHorizontal: 30,
-	},
 	calendarScreen: {
 		paddingHorizontal: 0
 	},

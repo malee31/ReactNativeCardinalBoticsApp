@@ -11,6 +11,9 @@
 		"login": "http://18.221.165.138/src/endpoints/signin.php",
 		"logout": "http://18.221.165.138/src/endpoints/signout.php"
 	},
+	"serverData": {
+		"flagTime": 43200
+	},
 	"colors": {
 		"primary": "#7D1120",
 		"secondary": "#9C3131",

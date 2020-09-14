@@ -19,7 +19,7 @@ export default class Leaderboard extends React.Component {
 							}
 							timeClocked += ` and ${Math.floor((entry.totalTime % 3600) / 60)} minute${Math.floor((entry.totalTime % 3600) / 60) !== 1 ? "s" : ""}`;
 							return (
-								<View style={Styles.memberEntry}>
+								<View style={Styles.timeLogRow}>
 									<Text style={{
 										color: entry.signedIn ? "green" : "black",
 										fontSize: 16,

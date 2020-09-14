@@ -17,8 +17,7 @@ class Home extends React.Component {
 		this.signInToggle = this.signInToggle.bind(this);
 	}
 
-	componentDidMount() {
-	}
+	// componentDidMount() {}
 
 	signInToggle() {
 		if (this.props.signedIn) {
@@ -91,7 +90,6 @@ class Home extends React.Component {
 							timeClocked += ` ${Math.floor((entry.time % 3600) / 60)} min${Math.floor((entry.time % 3600) / 60) !== 1 ? "s" : ""}`;
 
 							if (entry.time < 60) timeClocked = `${entry.time} second${entry.time !== 1 ? "s" : ""}`;
-
 							return (
 								<TouchableHighlight
 									activeOpacity={0.7}
@@ -103,7 +101,7 @@ class Home extends React.Component {
 									<View>
 										<View style={Styles.timeLogRowHeader}>
 											<Text style={Styles.logTime}>{` ${entry.day} `}</Text>
-											<Text>{timeClocked}</Text>
+											<Text style={(entry.flagged ? {color: "#DD0000"} : {})}>{timeClocked}</Text>
 										</View>
 										<Text numberOfLines={1} style={Styles.timeLogRowDid}>{entry.did}</Text>
 									</View>

@@ -142,7 +142,7 @@ export default class App extends React.Component {
 					lastTime: json.lastTime
 				});
 			}).catch(err => {
-				//TODO: Make this function get called so rarely that adding an error modal here is actually viable
+				//TODO: Test to make sure that modals won't spam if this fails repeatedly
 				console.log(`F. Failed to update data\n\n${JSON.stringify(err)}`);
 			});
 		});
