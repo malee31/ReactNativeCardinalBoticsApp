@@ -8,7 +8,7 @@ export default class Resources extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			isLoading: false
+			data: []
 		};
 	}
 
@@ -19,15 +19,17 @@ export default class Resources extends React.Component {
 			this.setState({data: json.values});
 		}).catch(error => {
 			console.error(error);
-		}).finally(() => {
-			this.setState({isLoading: false});
 		});
+	}
+
+	shouldComponentUpdate(nextProps, nextState) {
+		return this.state.data.length !== nextState.data.length;
 	}
 
 	render() {
 		return (
 			<View style={Styles.screen}>
-				{this.state.isLoading ? <Text> Loading </Text> : (
+				{this.state.data.length === 0 ? <Text> Loading </Text> : (
 					<FlatList
 						data={this.state.data}
 						keyExtractor={item => item[0] + ": " + item[1]}
