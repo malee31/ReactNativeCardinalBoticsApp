@@ -17,7 +17,14 @@ class Home extends React.Component {
 		this.signInToggle = this.signInToggle.bind(this);
 	}
 
-	// componentDidMount() {}
+	shouldComponentUpdate(nextProps, nextState) {
+		if(this.props.signedIn !== nextProps.signedIn || this.state.error !== nextState.error
+			|| this.state.whatDid !== nextState.whatDid || this.state.errorMessage !== nextState.errorMessage
+			|| this.props.sessions.length !== nextProps.sessions.length){
+			return true;
+		}
+		return false;
+	}
 
 	signInToggle() {
 		if (this.props.signedIn) {
