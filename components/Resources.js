@@ -1,4 +1,4 @@
-import {FlatList, Text, View} from 'react-native';
+import {ActivityIndicator, FlatList, View} from 'react-native';
 import LinkButton from "./parts/LinkButton.js";
 import config from "../config.json";
 import React from "react";
@@ -29,7 +29,9 @@ export default class Resources extends React.Component {
 	render() {
 		return (
 			<View style={Styles.screen}>
-				{this.state.data.length === 0 ? <Text> Loading </Text> : (
+				{this.state.data.length === 0 ? (
+					<ActivityIndicator size="large" color={config.colors.primary}/>
+				) : (
 					<FlatList
 						data={this.state.data}
 						keyExtractor={item => item[0] + ": " + item[1]}

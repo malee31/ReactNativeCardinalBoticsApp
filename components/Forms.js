@@ -1,4 +1,4 @@
-import {FlatList, Text, View} from 'react-native';
+import {ActivityIndicator, FlatList, Text, View} from 'react-native';
 import LinkButton from "./parts/LinkButton.js";
 import config from "../config.json";
 import React from "react";
@@ -36,35 +36,39 @@ export default class Forms extends React.Component {
 	render() {
 		return (
 			<View style={Styles.screen}>
-				{this.state.data.length === 0 ? <Text> Loading </Text> : (
-					<FlatList
-						data={this.state.data}
-						keyExtractor={item => item[1] + ": " + item[2]}
-						renderItem={entry => {
-							entry = entry.item;
-							if (typeof entry == "string") {
-								return (
-									<View style={Styles.formButton}>
-										<Text style={Styles.title}>
-											{entry}
-										</Text>
-									</View>
-								);
-							} else {
-								return (
-									<View style={Styles.formButton}>
-										<LinkButton
-											style={Styles.formBtn}
-											title={entry[1]} url={entry[2]}/>
-										<Text style={Styles.formText}>
-											Due {entry[4]}
-										</Text>
-									</View>
-								);
-							}
-						}}
-					/>
-				)}
+				{this.state.data.length === 0
+					? (
+						<ActivityIndicator size="large" color={config.colors.primary}/>
+					) : (
+						<FlatList
+							data={this.state.data}
+							keyExtractor={item => item[1] + ": " + item[2]}
+							renderItem={entry => {
+								entry = entry.item;
+								if (typeof entry == "string") {
+									return (
+										<View style={Styles.formButton}>
+											<Text style={Styles.title}>
+												{entry}
+											</Text>
+										</View>
+									);
+								} else {
+									return (
+										<View style={Styles.formButton}>
+											<LinkButton
+												style={Styles.formBtn}
+												title={entry[1]} url={entry[2]}/>
+											<Text style={Styles.formText}>
+												Due {entry[4]}
+											</Text>
+										</View>
+									);
+								}
+							}}
+						/>
+					)
+				}
 			</View>
 		);
 	}

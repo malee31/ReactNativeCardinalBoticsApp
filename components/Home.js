@@ -1,4 +1,4 @@
-import {FlatList, Image, Text, TouchableHighlight, View} from 'react-native';
+import {ActivityIndicator, FlatList, Image, Text, TouchableHighlight, View} from 'react-native';
 import {TextInput} from 'react-native-paper';
 import React from "react";
 
@@ -18,12 +18,10 @@ class Home extends React.Component {
 	}
 
 	shouldComponentUpdate(nextProps, nextState) {
-		if(this.props.signedIn !== nextProps.signedIn || this.state.error !== nextState.error
+		return this.props.signedIn !== nextProps.signedIn || this.state.error !== nextState.error
 			|| this.state.whatDid !== nextState.whatDid || this.state.errorMessage !== nextState.errorMessage
-			|| this.props.sessions.length !== nextProps.sessions.length){
-			return true;
-		}
-		return false;
+			|| this.props.sessions.length !== nextProps.sessions.length;
+
 	}
 
 	signInToggle() {
@@ -84,7 +82,9 @@ class Home extends React.Component {
 					onPress={() => {
 						this.setState({error: false})
 					}}/>
-				{this.props.sessions.length === 0 ? <Text> Loading </Text> : (
+				{this.props.sessions.length === 0 ? (
+					<ActivityIndicator size="large" color={config.colors.primary}/>
+				) : (
 					<FlatList
 						data={this.props.sessions}
 						keyExtractor={item => `${item.date}: ${item.did}`}
@@ -108,7 +108,7 @@ class Home extends React.Component {
 									<View>
 										<View style={Styles.timeLogRowHeader}>
 											<Text style={Styles.logTime}>{` ${entry.day} `}</Text>
-											<Text style={(entry.flagged ? {color: "#DD0000"} : {})}>{timeClocked}</Text>
+											<Text style={(entry.flagged ? {color: "#D00"} : {})}>{timeClocked}</Text>
 										</View>
 										<Text numberOfLines={1} style={Styles.timeLogRowDid}>{entry.did}</Text>
 									</View>
