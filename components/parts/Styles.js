@@ -94,14 +94,13 @@ const styles = StyleSheet.create({
 		width: "100%",
 		minHeight: 45,
 		flex: 1,
-		justifyContent: 'space-between',
+		justifyContent: 'space-around',
 		alignItems: "flex-start",
-		flexDirection: 'row',
 		paddingHorizontal: "4%",
-		marginVertical: 10
+		marginVertical: 4
 	},
 	formBtn: {
-		width: "70%"
+		marginVertical: 2
 	},
 	formText: {
 		flex: 1,

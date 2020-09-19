@@ -56,12 +56,14 @@ export default class Forms extends React.Component {
 								} else {
 									return (
 										<View style={Styles.formButton}>
+											{entry[4].trim().toLowerCase() !== "n/a" && entry[4].trim() !== "" ? (
+												<Text style={Styles.formText}>
+													Due {entry[4]}
+												</Text>
+											) : null}
 											<LinkButton
-												style={Styles.formBtn}
+												style={[Styles.resourceButton, Styles.formBtn]}
 												title={entry[1]} url={entry[2]}/>
-											<Text style={Styles.formText}>
-												Due {entry[4]}
-											</Text>
 										</View>
 									);
 								}
