@@ -92,10 +92,10 @@ const styles = StyleSheet.create({
 	},
 	formButton: {
 		width: "100%",
-		height: 45,
+		minHeight: 45,
 		flex: 1,
 		justifyContent: 'space-between',
-		alignContent: "center",
+		alignItems: "flex-start",
 		flexDirection: 'row',
 		paddingHorizontal: "4%",
 		marginVertical: 10
@@ -142,9 +142,10 @@ const styles = StyleSheet.create({
 	},
 	resourceButton: {
 		width: "100%",
-		height: 40,
+		minHeight: 40,
 		flex: 1,
-		paddingHorizontal: 20,
+		justifyContent: "center",
+		alignItems: "flex-start",
 		marginVertical: 10
 	}
 });
