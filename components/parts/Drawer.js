@@ -14,12 +14,12 @@ import Forms from "../Forms";
 import Login from "../Login";
 import Home from "../Home";
 
-import LeaderboardIcon from "../../images/volunteer.svg";
-// import CalendarIcon from "../../images/calendar.svg";
-import ResourcesIcon from "../../images/list.svg";
-import LoginIcon from "../../images/login.svg";
-import FormsIcon from "../../images/form.svg";
-import HomeIcon from "../../images/home.svg";
+import LeaderboardIcon from "../../images/OtherMembersSVG.js";
+// import CalendarIcon from "../../images/CalendarSVG.js";
+import ResourcesIcon from "../../images/ResourcesSVG.js";
+import LoginIcon from "../../images/LoginSVG.js";
+import FormsIcon from "../../images/FormSVG.js";
+import HomeIcon from "../../images/HomeSVG.js";
 
 const Drawer = createAppContainer(createDrawerNavigator({
 	Home: {
