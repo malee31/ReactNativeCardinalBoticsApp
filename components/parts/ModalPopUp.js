@@ -12,8 +12,8 @@ class ModalPopUp extends React.Component {
 	}
 
 	render() {
-		return (
-			<Modal isVisible={this.props.show()}
+		return this.props.show() ? (
+			<Modal isVisible={true}
 				onBackdropPress={this.close}>
 				<View style={Styles.content}>
 					<Text style={Styles.contentTitle}>
@@ -30,7 +30,7 @@ class ModalPopUp extends React.Component {
 					<Button onPress={this.props.onPress} title={this.props.buttonText || "Close"}/>
 				</View>
 			</Modal>
-		);
+		) : null;
 	}
 }
 

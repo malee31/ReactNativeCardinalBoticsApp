@@ -14,8 +14,8 @@ import Forms from "../Forms";
 import Login from "../Login";
 import Home from "../Home";
 
-import LeaderboardIcon from "../../images/OtherMembersSVG.js";
 // import CalendarIcon from "../../images/CalendarSVG.js";
+import LeaderboardIcon from "../../images/OtherMembersSVG.js";
 import ResourcesIcon from "../../images/ResourcesSVG.js";
 import LoginIcon from "../../images/LoginSVG.js";
 import FormsIcon from "../../images/FormSVG.js";
@@ -33,78 +33,42 @@ const Drawer = createAppContainer(createDrawerNavigator({
 			/>),
 		navigationOptions: {
 			drawerLabel: 'Home',
-			drawerIcon: () => (
-				<HomeIcon
-					width={30}
-					height={30}
-					fill={config.colors.darkGray}
-				/>
-			)
+			drawerIcon: HomeIcon
 		}
 	},
 	Login: {
 		screen: props => (<Login setPassword={props.screenProps.setPassword} signedIn={props.screenProps.signedIn}/>),
 		navigationOptions: {
 			drawerLabel: 'Login',
-			drawerIcon: () => (
-				<LoginIcon
-					width={30}
-					height={30}
-					fill={config.colors.darkGray}
-				/>
-			)
+			drawerIcon: LoginIcon
 		}
 	},
 	Leaderboard: {
 		screen: props => (<Leaderboard leaderboardData={props.screenProps.leaderboardData}/>),
 		navigationOptions: {
 			drawerLabel: 'Other Members',
-			drawerIcon: () => (
-				<LeaderboardIcon
-					width={30}
-					height={30}
-					fill={config.colors.darkGray}
-				/>
-			)
+			drawerIcon: LeaderboardIcon
 		}
 	},
 	// Calendar: {
 	// 	screen: Calendar,
 	// 	navigationOptions: {
 	// 		drawerLabel: 'Calendar',
-	// 		drawerIcon: () => (
-	// 			<CalendarIcon
-	// 				width={30}
-	// 				height={30}
-	// 				fill={config.colors.darkGray}
-	// 			/>
-	// 		)
+	// 		drawerIcon: CalendarIcon
 	// 	}
 	// },
 	Resources: {
 		screen: Resources,
 		navigationOptions: {
 			drawerLabel: 'Resources',
-			drawerIcon: () => (
-				<ResourcesIcon
-					width={30}
-					height={30}
-					fill={config.colors.darkGray}
-				/>
-			)
+			drawerIcon: ResourcesIcon
 		}
 	},
 	Forms: {
 		screen: Forms,
 		navigationOptions: {
 			drawerLabel: 'Forms',
-			drawerIcon: () => (
-				<FormsIcon
-					width={30}
-					height={30}
-					fill={config.colors.darkGray}
-				/>
-			)
+			drawerIcon: FormsIcon
 		}
 	},
 

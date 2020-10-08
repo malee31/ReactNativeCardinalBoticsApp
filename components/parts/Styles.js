@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
 	timeLogRow: {
 		flexDirection: "column",
 		width: "100%",
-		textAlign: "left",
+		// textAlign: "left",
 		backgroundColor: config.colors.gray,
 		borderRadius: 10,
 		padding: 5,

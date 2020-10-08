@@ -21,5 +21,9 @@
 		"background": "#FFFFFF",
 		"gray": "#EDEDED",
 		"darkGray": "#B0B0B0"
+	},
+	"icons": {
+		"color": "#B0B0B0",
+		"size": 30
 	}
 }
