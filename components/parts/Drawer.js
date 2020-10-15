@@ -3,8 +3,6 @@ import {Image, ScrollView, Text, View} from "react-native";
 import {createAppContainer} from "react-navigation";
 import {LinearGradient} from 'expo-linear-gradient';
 import React from "react";
-
-import config from "../../config.json";
 import Styles from "./Styles.js";
 
 // import Calendar from "../CalendarFragment";

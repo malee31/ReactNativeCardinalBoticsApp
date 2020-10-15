@@ -2,37 +2,27 @@ import {Image, Text, TouchableHighlight, View} from 'react-native';
 import {TextInput} from 'react-native-paper';
 import React from "react";
 import config from "../config.json";
-import ModalPopUp from "./parts/ModalPopUp";
 import Styles from "./parts/Styles";
+import {bindActionCreators} from "redux";
+import {setErrorMessage} from "./parts/reducerActions";
+import {connect} from "react-redux";
 
-export default class Login extends React.Component {
+class Login extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			ID: "",
-			error: false,
-			errorMessage: "Something went wrong"
+			ID: ""
 		};
 		this.login = this.login.bind(this);
 	}
 
 	login() {
 		this.props.setPassword(this.state.ID, () => {
-			this.setState({
-				error: true,
-				errorMessage: "Verifying that you exist."
-			});
+			this.props.setErrorMessage("Verifying that you exist.");
 		}).then(successText => {
-			this.setState({
-				ID: "",
-				error: true,
-				errorMessage: successText
-			});
+			this.props.setErrorMessage(successText);
 		}).catch(failText => {
-			this.setState({
-				error: true,
-				errorMessage: failText
-			});
+			this.props.setErrorMessage(failText);
 		});
 	}
 
@@ -55,15 +45,15 @@ export default class Login extends React.Component {
 						<Text>Submit</Text>
 					</View>
 				</TouchableHighlight>
-				<ModalPopUp show={() => {
-					return this.state.error
-				}} text={() => {
-					return this.state.errorMessage
-				}}
-					onPress={() => {
-						this.setState({error: false})
-					}}/>
 			</View>
 		);
 	};
 }
+
+const mapDispatchToProps = dispatch => (
+	bindActionCreators({
+		setErrorMessage,
+	}, dispatch)
+);
+
+export default connect(null, mapDispatchToProps)(Login);

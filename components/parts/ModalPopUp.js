@@ -2,6 +2,9 @@ import {Button, Text, View} from 'react-native';
 import Modal from 'react-native-modal';
 import React from 'react';
 import Styles from "./Styles.js";
+import {bindActionCreators} from "redux";
+import {dismissError} from "./reducerActions";
+import {connect} from "react-redux";
 
 class ModalPopUp extends React.Component {
 	constructor(props) {
@@ -12,12 +15,12 @@ class ModalPopUp extends React.Component {
 	}
 
 	render() {
-		return this.props.show() ? (
+		return this.props.errorReducer.error ? (
 			<Modal isVisible={true}
 				onBackdropPress={this.close}>
 				<View style={Styles.content}>
 					<Text style={Styles.contentTitle}>
-						{typeof this.props.text == "function" ? this.props.text() : this.props.text || "Oh, the programmers forgot to leave a message here"}
+						{this.props.errorReducer.msg || "Oh, the programmers forgot to leave a message here"}
 					</Text>
 					{/*<TextInput*/}
 					{/*	placeholder="Your Placeholder"*/}
@@ -27,11 +30,22 @@ class ModalPopUp extends React.Component {
 					{/*	multiline={true}*/}
 					{/*	value={this.state.value}*/}
 					{/*/>*/}
-					<Button onPress={this.props.onPress} title={this.props.buttonText || "Close"}/>
+					<Button onPress={this.props.dismissError} title={this.props.buttonText || "Close"}/>
 				</View>
 			</Modal>
 		) : null;
 	}
 }
 
-export default ModalPopUp;
+const stateMap = state => {
+	const {errorReducer} = state;
+	return {errorReducer};
+};
+
+const mapDispatchToProps = dispatch => (
+	bindActionCreators({
+		dismissError,
+	}, dispatch)
+);
+
+export default connect(stateMap, mapDispatchToProps)(ModalPopUp);

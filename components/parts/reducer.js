@@ -1,29 +1,23 @@
 import {combineReducers} from 'redux';
 
 const INITIAL_STATE = {
-	current: 0,
-	possible: [
-		'Alice',
-		'Bob',
-		'Sammy'
-	],
+	errorMessage: "Welp, something went wrong",
+	error: false
 };
 
-const reducer1 = (state = INITIAL_STATE, action) => {
+const errorReducer = (state = INITIAL_STATE, action) => {
 	switch (action.type) {
-		case "UPDATE_SESSIONS":
-			console.log("REDUX UPDATE SESSIONS");
-			let newState = Object.assign({}, state, {current: Math.floor(Math.random() * 3)});
-			console.log(newState);
-
-			return newState;
-		break;
+		case "ERROR_MESSAGE":
+			return Object.assign({}, state, {msg: action.msg, error: true});
+			return;
+		case "ERROR_DISMISS":
+			return Object.assign({}, state, {error: false});
+			break;
 		default:
-			console.log("REDUX DEFAULT");
 			return state;
 	}
 };
 
 export default combineReducers({
-	reducer1: reducer1
+	errorReducer: errorReducer
 });
