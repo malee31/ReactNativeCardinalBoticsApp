@@ -6,6 +6,11 @@ import ModalPopUp from './parts/ModalPopUp.js';
 import config from "../config.json";
 import Styles from "./parts/Styles.js";
 
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import {sessionUpdate} from './parts/reducerActions';
+
+
 class Home extends React.Component {
 	constructor(props) {
 		super(props);
@@ -20,7 +25,7 @@ class Home extends React.Component {
 	shouldComponentUpdate(nextProps, nextState) {
 		return this.props.signedIn !== nextProps.signedIn || this.state.error !== nextState.error
 			|| this.state.whatDid !== nextState.whatDid || this.state.errorMessage !== nextState.errorMessage
-			|| this.props.sessions.length !== nextProps.sessions.length;
+			|| this.props.sessions.length !== nextProps.sessions.length || true;
 
 	}
 
@@ -56,7 +61,10 @@ class Home extends React.Component {
 				<Image source={require("../assets/cardinalbotics_logo_white_clear.png")}
 					resizeMode="contain"
 					style={Styles.largeLogoImage}/>
-				<TouchableHighlight onPress={this.signInToggle}
+				{/*<TouchableHighlight onPress={this.signInToggle}*/}
+				<TouchableHighlight onPress={() => {
+					this.props.sessionUpdate(1)
+				}}
 					activeOpacity={0.7}
 					underlayColor={config.colors.darkGray}
 					style={Styles.signInButton}>
@@ -111,6 +119,7 @@ class Home extends React.Component {
 											<Text style={(entry.flagged ? {color: "#D00"} : {})}>{timeClocked}</Text>
 										</View>
 										<Text numberOfLines={1} style={Styles.timeLogRowDid}>{entry.did}</Text>
+										<Text>{this.props.reducer1.possible[this.props.reducer1.current]}</Text>
 									</View>
 								</TouchableHighlight>
 							);
@@ -122,4 +131,15 @@ class Home extends React.Component {
 	};
 }
 
-export default Home;
+const stateMap = state => {
+	const {reducer1} = state;
+	return {reducer1};
+};
+
+const mapDispatchToProps = dispatch => (
+	bindActionCreators({
+		sessionUpdate,
+	}, dispatch)
+);
+
+export default connect(stateMap, mapDispatchToProps)(Home);

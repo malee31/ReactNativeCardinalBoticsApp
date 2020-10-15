@@ -7,6 +7,12 @@ import ModalPopUp from "./components/parts/ModalPopUp.js";
 import Drawer from "./components/parts/Drawer.js";
 import config from "./config.json";
 
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
+import reducer1 from './components/parts/reducer';
+
+const store = createStore(reducer1);
+
 export default class App extends React.Component {
 	constructor(props) {
 		super(props);
@@ -229,37 +235,39 @@ export default class App extends React.Component {
 
 	render() {
 		return (
-			<PaperProvider theme={{
-				...DefaultTheme,
-				roundness: 2,
-				colors: {
-					...DefaultTheme.colors,
-					primary: config.colors.primary,
-					accent: config.colors.cardinalWhite
-				},
-			}} style={{flex: 1}}>
-				<StatusBar animated hidden style="dark"/>
-				<Drawer screenProps={{
-					userText: this.state.user,
-					timeIn: this.state.timeIn,
-					signedIn: this.state.signedIn,
-					sessions: this.state.sessions,
-					leaderboardData: this.state.leaderboardData,
-					getPassword: this.getPassword,
-					setPassword: this.setPassword,
-					login: this.login,
-					logout: this.logout
-				}}/>
-				<ModalPopUp show={() => {
-					return this.state.error
-				}}
-					text={() => {
-						return this.state.errorMessage
-					}}
-					onPress={() => {
-						this.setState({error: false})
+			<Provider store={store}>
+				<PaperProvider theme={{
+					...DefaultTheme,
+					roundness: 2,
+					colors: {
+						...DefaultTheme.colors,
+						primary: config.colors.primary,
+						accent: config.colors.cardinalWhite
+					},
+				}} style={{flex: 1}}>
+					<StatusBar animated hidden style="dark"/>
+					<Drawer screenProps={{
+						userText: this.state.user,
+						timeIn: this.state.timeIn,
+						signedIn: this.state.signedIn,
+						sessions: this.state.sessions,
+						leaderboardData: this.state.leaderboardData,
+						getPassword: this.getPassword,
+						setPassword: this.setPassword,
+						login: this.login,
+						logout: this.logout
 					}}/>
-			</PaperProvider>
+					<ModalPopUp show={() => {
+						return this.state.error
+					}}
+						text={() => {
+							return this.state.errorMessage
+						}}
+						onPress={() => {
+							this.setState({error: false})
+						}}/>
+				</PaperProvider>
+			</Provider>
 		);
 	}
 }
