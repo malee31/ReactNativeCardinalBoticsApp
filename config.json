@@ -6,10 +6,10 @@
 		"calendar": "https://www.googleapis.com/calendar/v3/calendars/nicholas.do%40team4159.org/events?key=AIzaSyDRSH4Trb-AdjEdzA06J7WOFLbyhOqnq-M&timeZone=UTC&timeMin=2020-08-16T00:00:00Z&orderBy=startTime&singleEvents=True"
 	},
 	"serverEndpointBaseURLs": {
-		"getData": "https://api.hours.robotics.lowellhs.org/src/endpoints/getdata.php",
-		"getUserData": "https://api.hours.robotics.lowellhs.org/src/endpoints/getuserdata.php",
-		"login": "https://api.hours.robotics.lowellhs.org/src/endpoints/signin.php",
-		"logout": "https://api.hours.robotics.lowellhs.org/src/endpoints/signout.php"
+		"getData": "https://hours.team4159.org/users/getusers",
+		"getUserData": "https://hours.team4159.org/users/getuserdata",
+		"login": "https://hours.team4159.org/users/getuserdata",
+		"logout": "https://hours.team4159.org/users/signout"
 	},
 	"serverData": {
 		"flagTime": 43200
