@@ -29,10 +29,6 @@ export default class Forms extends React.Component {
 		});
 	}
 
-	shouldComponentUpdate(nextProps, nextState) {
-		return this.state.data.length !== nextState.data.length;
-	}
-
 	render() {
 		return (
 			<View style={Styles.screen}>

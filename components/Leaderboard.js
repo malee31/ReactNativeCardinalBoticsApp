@@ -4,19 +4,6 @@ import config from "../config.json";
 import React from "react";
 
 export default class Leaderboard extends React.Component {
-	shouldComponentUpdate(nextProps) {
-		if (this.props.leaderboardData.length !== nextProps.leaderboardData.length) return true;
-		for (let entry = 0; entry < this.props.leaderboardData.length; entry++) {
-			let data = this.props.leaderboardData[entry];
-			let newData = nextProps.leaderboardData[entry];
-
-			if (data.signedIn !== newData.signedIn || data.totalTime !== newData.totalTime || data.lastTime !== newData.lastTime || data.username !== newData.username) {
-				return true;
-			}
-		}
-		return false;
-	}
-
 	render() {
 		return (
 			<View style={Styles.screen}>
