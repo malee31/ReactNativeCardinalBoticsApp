@@ -2,19 +2,17 @@ import {StyleSheet} from "react-native";
 import config from "../../config.json";
 
 const styles = StyleSheet.create({
-	masterContainer: {
-		flex: 1
-	},
 	drawerHeading: {
 		width: "100%",
-		height: "20%",
+		minHeight: "20%",
+		maxHeight: "25%",
 		alignItems: 'flex-start',
 		justifyContent: 'center'
 	},
 	drawerLogo: {
 		width: "35%",
 		height: "30%",
-		maxHeight: "30%",
+		maxHeight: "35%",
 		borderRadius: 25
 	},
 	drawerText: {

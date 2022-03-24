@@ -155,7 +155,7 @@ export default function Base(props) {
 	};
 
 	useEffect(() => {
-		//Update the basic state (Drawer and who you are logged in as)
+		//Update the basic state (OldDrawer and who you are logged in as)
 		getPassword().then(pass => {
 			setPassword(pass || "");
 			//Updates saved password in state when app starts up or tells you to log in if you haven't used it before
