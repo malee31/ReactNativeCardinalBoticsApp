@@ -1,16 +1,30 @@
+import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
+import { UserInfoProvider } from "./components/UserInfoProvider";
+import { StatusBar } from 'expo-status-bar';
+import Drawer from "./components/parts/Drawer.js";
+import config from "./config.json";
 import React from 'react';
-
-import { Provider } from 'react-redux';
-import { createStore } from 'redux';
-import errorReducer from './components/parts/reducer';
-import Base from "./components/DemoBase";
-
-const store = createStore(errorReducer);
+import { ModalProvider } from "./components/ModalProvider";
 
 export default function App() {
+	const paperTheme = {
+		...DefaultTheme,
+		roundness: 2,
+		colors: {
+			...DefaultTheme.colors,
+			primary: config.colors.primary,
+			accent: config.colors.cardinalWhite
+		}
+	};
+
 	return (
-		<Provider store={store}>
-			<Base/>
-		</Provider>
+		<UserInfoProvider>
+			<ModalProvider>
+				<PaperProvider theme={paperTheme} style={{ flex: 1 }}>
+					<StatusBar animated hidden style="dark"/>
+					<Drawer/>
+				</PaperProvider>
+			</ModalProvider>
+		</UserInfoProvider>
 	);
 }

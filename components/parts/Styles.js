@@ -1,4 +1,4 @@
-import {StyleSheet} from "react-native";
+import { StyleSheet } from "react-native";
 import config from "../../config.json";
 
 const styles = StyleSheet.create({
@@ -17,14 +17,14 @@ const styles = StyleSheet.create({
 	},
 	drawerText: {
 		fontSize: 18,
-		color: "#FFF",
+		color: "#FFFFFF",
 		textAlign: "left",
 		marginTop: 10,
 		marginHorizontal: 15
 	},
 	drawerTimeIn: {
 		fontSize: 16,
-		color: "#FFF",
+		color: "#FFFFFF",
 		textAlign: "left",
 		marginHorizontal: 15
 	},
@@ -35,12 +35,12 @@ const styles = StyleSheet.create({
 		paddingHorizontal: "5%",
 		paddingVertical: "2%",
 		backgroundColor: config.colors.background,
-
+		alignItems: "center"
 	},
 	largeLogoImage: {
-		width: "70%",
+		width: "100%",
+		height: "50%",
 		alignSelf: "center",
-		maxHeight: "25%"
 	},
 	signInButton: {
 		alignItems: "center",
@@ -49,6 +49,19 @@ const styles = StyleSheet.create({
 		backgroundColor: config.colors.gray,
 		width: "70%",
 		padding: "5%",
+		marginVertical: "3%",
+	},
+	signInInput: {
+		color: "#7D1120",
+		width: "70%",
+	},
+	loginButton: {
+		alignItems: "center",
+		justifyContent: "center",
+		alignSelf: "center",
+		backgroundColor: config.colors.gray,
+		width: "70%",
+		padding: "2%",
 		marginVertical: "3%",
 	},
 	signInText: {

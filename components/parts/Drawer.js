@@ -3,24 +3,54 @@ import { NavigationContainer } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Image, Text, View } from "react-native";
 import Favicon from "../../assets/favicon.png"
+import useUserInfo from "../UserInfoProvider";
 import Icons from "./AllIconsSVG";
 import Styles from "./Styles.js";
-import React from "react";
+import React, { useEffect, useState } from "react";
+
 
 import DemoComponentProducer from "../DummyElement";
-
-/*
 // import Calendar from "../CalendarFragment";
 import Leaderboard from "../Leaderboard";
 import Resources from "../Resources";
 import Forms from "../Forms";
 import Login from "../Login";
 import Home from "../Home";
-*/
+
 
 const DrawerNavigator = createDrawerNavigator();
 
+/**
+ * Takes in time in milliseconds and converts it to a readable format
+ * @param {number} elapsedSeconds Number of seconds signed in
+ * @return {string} Displayable elapsed time string
+ */
+function formatTimeIn(elapsedSeconds) {
+	const plural = (num, word) => `${num} ${word}${num === 1 ? "" : "s"}`;
+	const hours = Math.floor(elapsedSeconds / 3600);
+	const minutes = Math.floor((elapsedSeconds % 3600) / 60);
+	const seconds = Math.floor(elapsedSeconds % 60);
+	return `Signed in for: \n${plural(hours, "hour")} ${plural(minutes, "minute")} ${plural(seconds, "second")}`;
+}
+
 function DrawerContent(props) {
+	const userInfo = useUserInfo();
+	const [timeIn, setTimeIn] = useState(0);
+	console.log(userInfo)
+
+	const updateTimeIn = () => {
+		if(!userInfo.signedIn) {
+			return;
+		}
+		setTimeIn(Math.floor((Date.now() - userInfo.signedIn) / 1000));
+	}
+
+	useEffect(() => {
+		updateTimeIn();
+		const timeTicker = setInterval(updateTimeIn, 1000);
+		return () => clearInterval(timeTicker);
+	}, []);
+
 	return (
 		<View style={{ flex: 1 }}>
 			<LinearGradient
@@ -33,10 +63,10 @@ function DrawerContent(props) {
 					style={Styles.drawerLogo}/>
 				<View>
 					<Text style={Styles.drawerText}>
-						Insert Login Status Here
+						{userInfo.loggedIn ? userInfo.name : "Not Logged In"}
 					</Text>
 					<Text style={Styles.drawerTimeIn}>
-						Insert Time Here
+						{!userInfo.signedIn ? "No Sessions Active" : formatTimeIn(timeIn)}
 					</Text>
 				</View>
 			</LinearGradient>
@@ -54,10 +84,9 @@ function Drawer() {
 				initialRouteName="Home"
 				backBehavior="history"
 				// openByDefault={true}
-				screenOptions={{
-
-				}}
-				drawerContent={DrawerContent}
+				screenOptions={{}}
+				drawerContent={props =>
+					<DrawerContent {...props}/> /* Oddly required for hooks: https://github.com/react-navigation/react-navigation/issues/7725 */}
 			>
 				<DrawerNavigator.Screen
 					name="Home"
@@ -68,7 +97,7 @@ function Drawer() {
 				/>
 				<DrawerNavigator.Screen
 					name="Login"
-					component={DemoComponentProducer("Login Screen")}
+					component={Login}
 					options={{
 						drawerIcon: Icons.Login
 					}}

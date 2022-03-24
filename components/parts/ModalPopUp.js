@@ -4,15 +4,17 @@ import React from 'react';
 import Styles from "./Styles.js";
 
 export default function CustomModal(props) {
-	return props.error ? (
-		<Modal isVisible={true}
-			onBackdropPress={this.close}>
+	if(!props.show) return null;
+
+	return (
+		<Modal isVisible={props.show}
+			onBackdropPress={props.dismiss}>
 			<View style={Styles.content}>
 				<Text style={Styles.contentTitle}>
 					{props.message || "Oh, the programmers forgot to leave a message here"}
 				</Text>
-				<Button onPress={props.dismissError} title={props.buttonText || "Close"}/>
+				<Button onPress={props.dismiss} title={props.buttonText || "Close"}/>
 			</View>
 		</Modal>
-	) : null;
+	);
 }
