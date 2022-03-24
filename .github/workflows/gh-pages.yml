@@ -1,0 +1,36 @@
+# Builds React Native app as a webpage and deploys it to GitHub Pages
+name: Deploy Web
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ deploy-web ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: deploy-web
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Setup Expo
+        uses: expo/expo-github-action@v7
+        with:
+          expo-version: latest
+          packager: npm
+
+      - name: Build Web App with Expo
+        run: expo build:web
+
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4.2.5
+        with:
+          branch: gh-pages
+          folder: web-build
