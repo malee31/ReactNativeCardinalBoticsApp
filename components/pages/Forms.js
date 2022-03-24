@@ -1,8 +1,8 @@
 import {ActivityIndicator, FlatList, Text, View} from 'react-native';
-import LinkButton from "./parts/LinkButton.js";
-import config from "../config.json";
+import LinkButton from "../parts/LinkButton.js";
+import config from "../../config.json";
 import React from "react";
-import Styles from "./parts/Styles.js";
+import Styles from "../parts/Styles.js";
 
 export default class Forms extends React.Component {
 	constructor(props) {

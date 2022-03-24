@@ -2,8 +2,8 @@ import {ActivityIndicator, FlatList, Image, Text, TouchableHighlight, View} from
 import {TextInput} from 'react-native-paper';
 import React from "react";
 
-import config from "../config.json";
-import Styles from "./parts/Styles.js";
+import config from "../../config.json";
+import Styles from "../parts/Styles.js";
 
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
@@ -42,7 +42,7 @@ class Home extends React.Component {
 	render() {
 		return (
 			<View style={Styles.screen}>
-				<Image source={require("../assets/cardinalbotics_logo_white_clear.png")}
+				<Image source={require("../../assets/cardinalbotics_logo_white_clear.png")}
 					resizeMode="contain"
 					style={Styles.largeLogoImage}/>
 				<TouchableHighlight onPress={this.signInToggle}

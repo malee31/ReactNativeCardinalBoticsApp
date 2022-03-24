@@ -1,6 +1,6 @@
 import { ActivityIndicator, FlatList, Text, View } from 'react-native';
-import Styles from "./parts/Styles.js";
-import config from "../config.json";
+import Styles from "../parts/Styles.js";
+import config from "../../config.json";
 import React from "react";
 
 export default function Leaderboard(props) {

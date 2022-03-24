@@ -1,9 +1,9 @@
 import {Calendar, LocaleConfig} from 'react-native-calendars';
 import {ScrollView, Text, View} from 'react-native';
-import config from "../config.json";
+import config from "../../config.json";
 import React from "react";
 import moment from 'moment';
-import Styles from "./parts/Styles.js";
+import Styles from "../parts/Styles.js";
 
 LocaleConfig.locales['en'] = {
 	formatAccessibilityLabel: 'dddd d \'of\' MMMM \'of\' yyyy',
@@ -41,7 +41,7 @@ LocaleConfig.locales['en'] = {
 
 LocaleConfig.defaultLocale = 'en';
 
-class CalendarFragment extends React.Component {
+class Calendar extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -155,4 +155,4 @@ class CalendarFragment extends React.Component {
 	};
 }
 
-export default CalendarFragment;
+export default Calendar;

@@ -1,13 +1,13 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Image, Text, TouchableHighlight, View } from 'react-native';
-import Logo from "../assets/cardinalbotics_logo_white_clear.png";
+import Logo from "../../assets/cardinalbotics_logo_white_clear.png";
 import { TextInput } from 'react-native-paper';
-import config from "../config.json";
-import Styles from "./parts/Styles";
-import useUserInfo from "./UserInfoProvider";
-import useModal from "./ModalProvider";
+import config from "../../config.json";
+import Styles from "../parts/Styles";
+import useUserInfo from "../parts/UserInfoProvider";
+import useModal from "../parts/ModalProvider";
 import React, { useState } from "react";
-import CustomModal from "./parts/ModalPopUp";
+import CustomModal from "../parts/ModalPopUp";
 
 async function savePassword(newPass) {
 	const status = {

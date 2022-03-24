@@ -3,19 +3,19 @@ import { NavigationContainer } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Image, Text, View } from "react-native";
 import Favicon from "../../assets/favicon.png"
-import useUserInfo from "../UserInfoProvider";
+import useUserInfo from "./UserInfoProvider";
 import Icons from "./AllIconsSVG";
 import Styles from "./Styles.js";
 import React, { useEffect, useState } from "react";
 
 
 import DemoComponentProducer from "../DummyElement";
-// import Calendar from "../CalendarFragment";
-import Leaderboard from "../Leaderboard";
-import Resources from "../Resources";
-import Forms from "../Forms";
-import Login from "../Login";
-import Home from "../Home";
+// import Calendar from "../Calendar";
+import Leaderboard from "../pages/Leaderboard";
+import Resources from "../pages/Resources";
+import Forms from "../pages/Forms";
+import Login from "../pages/Login";
+import Home from "../pages/Home";
 
 
 const DrawerNavigator = createDrawerNavigator();
