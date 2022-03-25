@@ -61,10 +61,10 @@ function DrawerContent(props) {
 					style={Styles.drawerLogo}/>
 				<View>
 					<Text style={Styles.drawerText}>
-						{userInfo.loggedIn ? userInfo.name : "Not Logged In"}
+						{!userInfo.loaded ? "Loading..." : (userInfo.loggedIn ? userInfo.name : "Not Logged In")}
 					</Text>
 					<Text style={Styles.drawerTimeIn}>
-						{!userInfo.signedIn ? "No Sessions Active" : formatTimeIn(timeIn)}
+						{!userInfo.loaded ? "Loading..." : (!userInfo.signedIn ? "No Sessions Active" : formatTimeIn(timeIn))}
 					</Text>
 				</View>
 			</LinearGradient>

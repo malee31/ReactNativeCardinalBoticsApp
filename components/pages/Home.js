@@ -19,12 +19,13 @@ export default function Home({ navigation }) {
 
 	const toggleSignIn = () => {
 		setLoading(true);
-		if(userInfo.data.signedIn) {
+		if(!userInfo.data.signedIn) {
 			signIn(userInfo.data.password)
 				.then(result => {
+					console.log(result)
 					if(result.ok) {
 						userInfo.updateData({
-							signedIn: 0
+							signedIn: Date.now() // TODO: Fetch and use actual time
 						});
 					} else {
 						modal.showMessage(result.messages.join("\n"));
@@ -36,7 +37,7 @@ export default function Home({ navigation }) {
 				.then(result => {
 					if(result.ok) {
 						userInfo.updateData({
-							signedIn: Date.now() // TODO: Fetch and use actual time
+							signedIn: 0
 						});
 						modal.showMessage("Successfully Signed Out");
 					} else {

@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { getPassword } from "./storageManager";
+import { verifyPassword } from "./serverClient";
 
 /**
  * @typedef UserInfoWritable
@@ -50,16 +51,19 @@ export function UserInfoProvider({ children }) {
 
 	useEffect(() => {
 		getPassword()
-			.then(storedPassword => {
-				if(!storedPassword) {
-					return contextValue.updateData({ loaded: true });
+			.then(async storedPassword => {
+				const updatedData = { loaded: true };
+				if(storedPassword) {
+					// Does not load password if unable to verify. Silently drops errors
+					const result = await verifyPassword(storedPassword);
+					if(result.ok && result.data.verified) {
+						updatedData.loggedIn = true;
+						updatedData.name = result.data.user.name;
+						updatedData.password = result.data.user.password;
+					}
 				}
 
-				// TODO: Sync other data too
-				contextValue.updateData({
-					loaded: true,
-					password: storedPassword
-				});
+				contextValue.updateData(updatedData);
 			})
 	}, []);
 
