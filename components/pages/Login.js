@@ -8,6 +8,7 @@ import useUserInfo from "../parts/UserInfoProvider";
 import useModal from "../parts/ModalProvider";
 import React, { useState } from "react";
 import CustomModal from "../parts/ModalPopUp";
+import MenuButton from "../parts/MenuButton";
 
 async function savePassword(newPass) {
 	const status = {
@@ -22,10 +23,14 @@ async function savePassword(newPass) {
 		const res = await fetch(url);
 		if(res.status !== 404) {
 			const jsonResponse = await res.json();
+			console.log("Response")
+			console.log(jsonResponse)
 			status.verified = true;
+			// TODO: Actually sync the time using a different endpoint instead of setting current time
 			status.user = {
 				name: jsonResponse.name,
-				password: newPass
+				password: newPass,
+				signedIn: Boolean(jsonResponse.signedIn) ? Date.now() : 0
 			};
 		} else {
 			status.messages.push("Sorry, it looks like you don't exist");
@@ -37,7 +42,7 @@ async function savePassword(newPass) {
 	if(status.verified) {
 		try {
 			await AsyncStorage.setItem("password", newPass);
-			status.messages.push(`Success. You're now logged in as ${status.user.name} using ${status.user.password}`);
+			status.messages.push(`Success. You're now logged in as ${status.user.name.trim()} using ${status.user.password}`);
 		} catch(err) {
 			status.messages.push(`Logged In\nFailed to save password on your device, you will have to log in again next time`);
 		}
@@ -75,6 +80,7 @@ export default function Login({ navigation }) {
 
 	return (
 		<View style={Styles.screen}>
+			<MenuButton navigation={navigation}/>
 			<Image source={Logo}
 				resizeMode="contain"
 				style={Styles.largeLogoImage}/>
@@ -96,8 +102,6 @@ export default function Login({ navigation }) {
 				message={modal.message}
 				dismiss={() => {
 					modal.toggle(false);
-					// TODO: Remove after adding menu button
-					navigation.toggleDrawer();
 				}}
 			/>
 		</View>

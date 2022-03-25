@@ -8,8 +8,8 @@
 	"serverEndpointBaseURLs": {
 		"getData": "https://hours.team4159.org/users/getusers",
 		"getUserData": "https://hours.team4159.org/users/getuserdata",
-		"login": "https://hours.team4159.org/users/getuserdata",
-		"logout": "https://hours.team4159.org/users/signout"
+		"signIn": "https://hours.team4159.org/users/signin",
+		"signOut": "https://hours.team4159.org/users/signout"
 	},
 	"serverData": {
 		"flagTime": 43200

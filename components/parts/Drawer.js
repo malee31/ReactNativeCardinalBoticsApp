@@ -26,6 +26,7 @@ const DrawerNavigator = createDrawerNavigator();
  * @return {string} Displayable elapsed time string
  */
 function formatTimeIn(elapsedSeconds) {
+	console.log(`Formatting: ${elapsedSeconds}`);
 	const plural = (num, word) => `${num} ${word}${num === 1 ? "" : "s"}`;
 	const hours = Math.floor(elapsedSeconds / 3600);
 	const minutes = Math.floor((elapsedSeconds % 3600) / 60);
@@ -36,7 +37,6 @@ function formatTimeIn(elapsedSeconds) {
 function DrawerContent(props) {
 	const userInfo = useUserInfo();
 	const [timeIn, setTimeIn] = useState(0);
-	console.log(userInfo)
 
 	const updateTimeIn = () => {
 		if(!userInfo.signedIn) {
@@ -49,7 +49,7 @@ function DrawerContent(props) {
 		updateTimeIn();
 		const timeTicker = setInterval(updateTimeIn, 1000);
 		return () => clearInterval(timeTicker);
-	}, []);
+	}, [userInfo.signedIn]);
 
 	return (
 		<View style={{ flex: 1 }}>
@@ -90,7 +90,7 @@ function Drawer() {
 			>
 				<DrawerNavigator.Screen
 					name="Home"
-					component={DemoComponentProducer("Home Screen")}
+					component={Home}
 					options={{
 						drawerIcon: Icons.Home
 					}}

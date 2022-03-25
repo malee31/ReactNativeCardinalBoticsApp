@@ -46,7 +46,6 @@ export function UserInfoProvider({ children }) {
 		},
 		data: userInfo
 	};
-	console.log(contextValue);
 
 	return (
 		<userInfoContext.Provider value={contextValue}>
