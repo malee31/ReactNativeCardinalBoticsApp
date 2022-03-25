@@ -7,8 +7,10 @@ export default function CustomModal(props) {
 	if(!props.show) return null;
 
 	return (
-		<Modal isVisible={props.show}
-			onBackdropPress={props.dismiss}>
+		<Modal
+			isVisible={props.show}
+			onBackdropPress={props.dismiss}
+		>
 			<View style={Styles.content}>
 				<Text style={Styles.contentTitle}>
 					{props.message || "Oh, the programmers forgot to leave a message here"}

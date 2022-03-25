@@ -11,10 +11,9 @@ import React, { useEffect, useState } from "react";
 
 import DemoComponentProducer from "../DummyElement";
 // import Calendar from "../Calendar";
-import Leaderboard from "../pages/Leaderboard";
 import Resources from "../pages/Resources";
-import Forms from "../pages/Forms";
 import Login from "../pages/Login";
+import Forms from "../pages/Forms";
 import Home from "../pages/Home";
 
 
@@ -119,14 +118,14 @@ function Drawer() {
 				{/*/>*/}
 				<DrawerNavigator.Screen
 					name="Resources"
-					component={DemoComponentProducer("Resources Screen")}
+					component={Resources}
 					options={{
 						drawerIcon: Icons.Resources
 					}}
 				/>
 				<DrawerNavigator.Screen
 					name="Forms"
-					component={DemoComponentProducer("Forms Screen")}
+					component={Forms}
 					options={{
 						drawerIcon: Icons.Forms
 					}}
