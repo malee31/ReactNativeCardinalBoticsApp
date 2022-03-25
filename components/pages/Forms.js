@@ -1,73 +1,73 @@
-import {ActivityIndicator, FlatList, Text, View} from 'react-native';
+import { ActivityIndicator, FlatList, Text, View } from 'react-native';
 import LinkButton from "../parts/LinkButton.js";
 import config from "../../config.json";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Styles from "../parts/Styles.js";
+import MenuButton from "../parts/MenuButton";
+import useModal from "../parts/ModalProvider";
 
-export default class Forms extends React.Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			data: []
-		};
-	}
+export default function Forms({ navigation }) {
+	const [data, setData] = useState([]);
+	const modal = useModal();
 
-	componentDidMount() {
-		fetch(config.urls.sheet).then(response => {
-			return response.json();
-		}).then(json => {
-			json = json.values;
-			for (let sheetRow = 0; sheetRow < json.length; sheetRow++) {
-				if (sheetRow === 0 || json[sheetRow][0].trim() !== json[sheetRow - 1][0].trim()) {
-					json.splice(sheetRow, 0, json[sheetRow][0].trim());
-					sheetRow++;
+	useEffect(() => {
+		fetch(config.urls.sheet)
+			.then(response => response.json())
+			.then(json => json.values)
+			.then(values => {
+				for(let sheetRow = 0; sheetRow < values.length; sheetRow++) {
+					if(sheetRow === 0 || values[sheetRow][0].trim() !== values[sheetRow - 1][0].trim()) {
+						// Extracts headers from rows
+						values.splice(sheetRow, 0, values[sheetRow][0].trim());
+						sheetRow++;
+					}
 				}
-			}
-			this.setState({data: json});
-		}).catch(error => {
-			console.error(error)
-		});
-	}
+				setData(values);
+			})
+			.catch(err => modal.showMessage(`Unable to load forms: ${err}`));
+	}, []);
 
-	render() {
-		return (
-			<View style={Styles.screen}>
-				{this.state.data.length === 0
-					? (
-						<ActivityIndicator size="large" color={config.colors.primary}/>
-					) : (
-						<FlatList
-							data={this.state.data}
-							keyExtractor={item => item[1] + ": " + item[2]}
-							renderItem={entry => {
-								entry = entry.item;
-								if (typeof entry == "string") {
-									return (
-										<View style={Styles.formButton}>
-											<Text style={Styles.title}>
-												{entry}
-											</Text>
-										</View>
-									);
-								} else {
-									return (
-										<View style={Styles.formButton}>
-											{entry[4].trim().toLowerCase() !== "n/a" && entry[4].trim() !== "" ? (
-												<Text style={Styles.formText}>
-													Due {entry[4]}
-												</Text>
-											) : null}
-											<LinkButton
-												style={[Styles.resourceButton, Styles.formBtn]}
-												title={entry[1]} url={entry[2]}/>
-										</View>
-									);
-								}
-							}}
+	let component = <ActivityIndicator size="large" color={config.colors.primary}/>;
+
+	if(data) {
+		component = <FlatList
+			data={data}
+			keyExtractor={item => item[1] + ": " + item[2]}
+			renderItem={entry => {
+				entry = entry.item;
+				if(typeof entry == "string") {
+					return (
+						<View style={Styles.formButton}>
+							<Text style={Styles.title}>
+								{entry}
+							</Text>
+						</View>
+					);
+				}
+
+				const trimmed = entry[4].trim();
+
+				return (
+					<View style={Styles.formButton}>
+						{trimmed && trimmed.toLowerCase() !== "n/a" && (
+							<Text style={Styles.formText}>
+								Due {entry[4]}
+							</Text>
+						)}
+						<LinkButton
+							style={[Styles.resourceButton, Styles.formBtn]}
+							title={entry[1]} url={entry[2]}
 						/>
-					)
-				}
-			</View>
-		);
+					</View>
+				);
+			}}
+		/>;
 	}
+
+	return (
+		<View style={Styles.screen}>
+			<MenuButton navigation={navigation}/>
+			{component}
+		</View>
+	);
 }
