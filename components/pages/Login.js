@@ -10,6 +10,7 @@ import React, { useState } from "react";
 import CustomModal from "../parts/ModalPopUp";
 import MenuButton from "../parts/MenuButton";
 import { verifyPassword } from "../parts/serverClient";
+import { savePassword } from "../parts/storageManager";
 
 export default function Login({ navigation }) {
 	const userInfo = useUserInfo(false);
@@ -38,10 +39,10 @@ export default function Login({ navigation }) {
 		});
 
 		try {
-			await AsyncStorage.setItem("password", newPassword);
+			await savePassword(newPassword);
 			modal.showMessage(`Success. You're now logged in as ${result.data.user.name.trim()} using ${result.data.user.password}`);
 		} catch(err) {
-			modal.showMessage(`Logged In\nFailed to save password on your device, you will have to log in again next time`);
+			modal.showMessage(`Successfully Logged In!\n${err.message}`);
 		}
 	};
 

@@ -1,4 +1,5 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
+import { getPassword } from "./storageManager";
 
 /**
  * @typedef UserInfoWritable
@@ -46,6 +47,21 @@ export function UserInfoProvider({ children }) {
 		},
 		data: userInfo
 	};
+
+	useEffect(() => {
+		getPassword()
+			.then(storedPassword => {
+				if(!storedPassword) {
+					return contextValue.updateData({ loaded: true });
+				}
+
+				// TODO: Sync other data too
+				contextValue.updateData({
+					loaded: true,
+					password: storedPassword
+				});
+			})
+	}, []);
 
 	return (
 		<userInfoContext.Provider value={contextValue}>

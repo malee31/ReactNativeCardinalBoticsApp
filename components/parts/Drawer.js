@@ -25,7 +25,6 @@ const DrawerNavigator = createDrawerNavigator();
  * @return {string} Displayable elapsed time string
  */
 function formatTimeIn(elapsedSeconds) {
-	console.log(`Formatting: ${elapsedSeconds}`);
 	const plural = (num, word) => `${num} ${word}${num === 1 ? "" : "s"}`;
 	const hours = Math.floor(elapsedSeconds / 3600);
 	const minutes = Math.floor((elapsedSeconds % 3600) / 60);
