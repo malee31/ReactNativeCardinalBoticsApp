@@ -9,12 +9,12 @@ import Styles from "./Styles.js";
 import React, { useEffect, useState } from "react";
 
 
-import DemoComponentProducer from "../DummyElement";
 // import Calendar from "../Calendar";
 import Resources from "../pages/Resources";
 import Login from "../pages/Login";
 import Forms from "../pages/Forms";
 import Home from "../pages/Home";
+import Leaderboard from "../pages/Leaderboard";
 
 
 const DrawerNavigator = createDrawerNavigator();
@@ -102,7 +102,7 @@ function Drawer() {
 				/>
 				<DrawerNavigator.Screen
 					name="Leaderboard"
-					component={DemoComponentProducer("Leaderboard Screen")}
+					component={Leaderboard}
 					options={{
 						drawerIcon: Icons.Leaderboard,
 						drawerLabel: "Other Members"

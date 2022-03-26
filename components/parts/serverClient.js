@@ -1,4 +1,4 @@
-import { serverEndpointBaseURLs as endpoints } from "../../config.json";
+import config, { serverEndpointBaseURLs as endpoints } from "../../config.json";
 
 export async function verifyPassword(password) {
 	const url = `${endpoints.getUserData}?password=${encodeURIComponent(password)}`;
@@ -83,4 +83,33 @@ export function signIn(password) {
 
 export function signOut(password) {
 	return signInOut(password, false);
+}
+
+export function getLeaderboard() {
+	return fetch(config.serverEndpointBaseURLs.getData)
+		.then(res => res.json())
+		.then(data => {
+			// TODO: Update self
+			// Sorted by sign in status, total time, then username
+			return data
+				.sort((a, b) => {
+					if(a.signedIn !== b.signedIn) {
+						return b.signedIn - a.signedIn;
+					}
+					if(a.totalTime !== b.totalTime) {
+						return b.totalTime - a.totalTime;
+					}
+					if(a.username < b.username) {
+						return -1;
+					}
+					if(a.username > b.username) {
+						return 1;
+					}
+					return 0;
+				});
+		})
+		.catch(err => {
+			console.log(`Failed to update basic data. F. ${JSON.stringify(err)}`);
+			return [];
+		});
 }
