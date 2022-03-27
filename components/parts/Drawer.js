@@ -72,7 +72,7 @@ function DrawerContent(props) {
 				<DrawerItemList {...props}/>
 			</DrawerContentScrollView>
 		</View>
-	)
+	);
 }
 
 function Drawer() {

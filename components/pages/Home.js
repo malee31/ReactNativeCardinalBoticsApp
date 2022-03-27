@@ -1,5 +1,5 @@
 import { Image, View } from 'react-native';
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import Styles from "../parts/Styles.js";
 import useUserInfo from "../parts/UserInfoProvider";
@@ -17,12 +17,17 @@ export default function Home({ navigation }) {
 	const modal = useModal();
 	const showLoading = loading || !userInfo.data.loaded;
 
+	useEffect(() => {
+		if(userInfo.data.loaded && !userInfo.data.password) {
+			modal.showMessage("Looks like it's your first time here!\nSwipe from the left or click the menu icon and login to get started!");
+		}
+	}, [userInfo.data.loaded]);
+
 	const toggleSignIn = () => {
 		setLoading(true);
 		if(!userInfo.data.signedIn) {
 			signIn(userInfo.data.password)
 				.then(result => {
-					console.log(result)
 					if(result.ok) {
 						userInfo.updateData({
 							signedIn: Date.now() // TODO: Fetch and use actual time
@@ -76,7 +81,7 @@ export default function Home({ navigation }) {
 					fontWeight: "bold"
 				}}
 			>
-				{showLoading ? "" : (userInfo.data.signedIn ? "Sign Out" : "Sign In")}
+				{showLoading ? "" : `${userInfo.data.signedIn ? "Sign Out" : "Sign In"} as ${userInfo.data.name.trim() || "new user"}`}
 			</Button>
 			<CustomModal
 				show={modal.show}
