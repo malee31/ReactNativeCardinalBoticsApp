@@ -1,9 +1,9 @@
-import HomeIcon from "../../images/HomeSVG.js";
-import LoginIcon from "../../images/LoginSVG.js";
 import LeaderboardIcon from "../../images/OtherMembersSVG.js";
 import ResourcesIcon from "../../images/ResourcesSVG.js";
-import FormsIcon from "../../images/FormSVG.js";
 // import CalendarIcon from "../../images/CalendarSVG.js";
+import LoginIcon from "../../images/LoginSVG.js";
+import FormsIcon from "../../images/FormSVG.js";
+import HomeIcon from "../../images/HomeSVG.js";
 
 const Icons = {
 	Home: HomeIcon,

@@ -4,18 +4,16 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { Image, Text, View } from "react-native";
 import Favicon from "../../assets/favicon.png"
 import useUserInfo from "./UserInfoProvider";
-import Icons from "./AllIconsSVG";
 import Styles from "./Styles.js";
 import React, { useEffect, useState } from "react";
 
-
-// import Calendar from "../Calendar";
+import Leaderboard from "../pages/Leaderboard";
 import Resources from "../pages/Resources";
+// import Calendar from "../pages/Calendar";
 import Login from "../pages/Login";
 import Forms from "../pages/Forms";
 import Home from "../pages/Home";
-import Leaderboard from "../pages/Leaderboard";
-
+import Icons from "./AllIconsSVG";
 
 const DrawerNavigator = createDrawerNavigator();
 
@@ -110,7 +108,7 @@ function Drawer() {
 				/>
 				{/*<DrawerNavigator.Screen*/}
 				{/*	name="Calendar"*/}
-				{/*	component={DemoComponentProducer("Calendar Screen")}*/}
+				{/*	component={Calendar}*/}
 				{/*	options={{*/}
 				{/*		drawerIcon: Icons.Calendar*/}
 				{/*	}}*/}
