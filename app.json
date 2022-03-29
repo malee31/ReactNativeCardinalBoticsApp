@@ -3,10 +3,10 @@
     "name": "CardinalHours App",
     "slug": "ReactNative-CardinalBoticsApp",
     "icon": "./assets/icon.png",
-    "version": "1.0.0",
+    "version": "2.0.0",
     "privacy": "unlisted",
     "orientation": "portrait",
-    "description": "An app for Team4159 Cardinalbotics while social distancing",
+    "description": "Team4159 CardinalBotics Sign-In App",
     "primaryColor": "#7D1120",
     "backgroundColor": "#FFFFFF",
     "splash": {
@@ -34,7 +34,7 @@
     ],
     "android": {
       "package": "com.team4159.cardinalboticsapp",
-      "versionCode": 1
+      "versionCode": 2
     },
     "androidStatusBar": {
       "barStyle": "dark-content",
@@ -47,7 +47,7 @@
     "ios": {
       "bundleIdentifier": "com.team4159.cardinalboticsapp",
       "supportsTablet": true,
-      "buildNumber": "1.0.0"
+      "buildNumber": "2.0.0"
     },
     "web": {
       "favicon": "./assets/favicon.png"

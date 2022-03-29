@@ -1,10 +1,11 @@
-import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
+import { DefaultTheme, Provider as PaperProvider } from "react-native-paper";
 import { UserInfoProvider } from "./components/parts/UserInfoProvider";
-import { StatusBar } from 'expo-status-bar';
-import Drawer from "./components/parts/Drawer.js";
-import config from "./config.json";
-import React from 'react';
 import { ModalProvider } from "./components/parts/ModalProvider";
+import Drawer from "./components/parts/Drawer.js";
+import { StatusBar } from "expo-status-bar";
+import "react-native-gesture-handler";
+import config from "./config.json";
+import React from "react";
 
 export default function App() {
 	const paperTheme = {

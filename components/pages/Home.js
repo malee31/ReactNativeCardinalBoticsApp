@@ -59,7 +59,8 @@ export default function Home({ navigation }) {
 			<Image source={Logo}
 				resizeMode="contain"
 				style={Styles.largeLogoImage}/>
-			<Button onPress={toggleSignIn}
+			<Button
+				onPress={toggleSignIn}
 				mode="contained"
 				loading={showLoading}
 				disabled={showLoading}
@@ -86,9 +87,7 @@ export default function Home({ navigation }) {
 			<CustomModal
 				show={modal.show}
 				message={modal.message}
-				dismiss={() => {
-					modal.toggle(false);
-				}}
+				dismiss={() => modal.toggle(false)}
 			/>
 		</View>
 	);

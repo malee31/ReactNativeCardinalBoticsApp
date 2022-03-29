@@ -1,5 +1,6 @@
 import {Button, Text, View} from 'react-native';
-import Modal from 'react-native-modal';
+import { Modal } from "react-native-paper";
+// import Modal from 'react-native-modal';
 import React from 'react';
 import Styles from "./Styles.js";
 
@@ -8,8 +9,9 @@ export default function CustomModal(props) {
 
 	return (
 		<Modal
-			isVisible={props.show}
-			onBackdropPress={props.dismiss}
+			visible={props.show}
+			animationType="slide"
+			onDismiss={props.dismiss}
 		>
 			<View style={Styles.content}>
 				<Text style={Styles.contentTitle}>

@@ -79,8 +79,10 @@ function Drawer() {
 			<DrawerNavigator.Navigator
 				initialRouteName="Home"
 				backBehavior="history"
-				// openByDefault={true}
-				screenOptions={{}}
+				defaultStatus={true}
+				screenOptions={{
+					headerShown: false
+				}}
 				drawerContent={props =>
 					<DrawerContent {...props}/> /* Oddly required for hooks: https://github.com/react-navigation/react-navigation/issues/7725 */}
 			>
