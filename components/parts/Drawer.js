@@ -79,7 +79,7 @@ function Drawer() {
 			<DrawerNavigator.Navigator
 				initialRouteName="Home"
 				backBehavior="history"
-				defaultStatus={true}
+				// defaultStatus={true}
 				screenOptions={{
 					headerShown: false
 				}}
