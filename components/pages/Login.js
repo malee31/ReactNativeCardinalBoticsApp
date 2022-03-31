@@ -7,7 +7,6 @@ import Styles from "../parts/Styles";
 import useUserInfo from "../parts/UserInfoProvider";
 import useModal from "../parts/ModalProvider";
 import React, { useState } from "react";
-import CustomModal from "../parts/ModalPopUp";
 import MenuButton from "../parts/MenuButton";
 import { verifyPassword } from "../parts/serverClient";
 import { savePassword } from "../parts/storageManager";
@@ -65,13 +64,6 @@ export default function Login({ navigation }) {
 					<Text>Submit</Text>
 				</View>
 			</TouchableHighlight>
-			<CustomModal
-				show={modal.show}
-				message={modal.message}
-				dismiss={() => {
-					modal.toggle(false);
-				}}
-			/>
 		</View>
 	);
 }

@@ -29,9 +29,15 @@ export function ModalProvider({ children }) {
 			return;
 		}
 
-		updateModal({
+		const newData = {
 			show: show
-		});
+		};
+
+		if(!show) {
+			newData.message = "";
+		}
+
+		updateModal(newData);
 	};
 
 	const showMessage = message => {

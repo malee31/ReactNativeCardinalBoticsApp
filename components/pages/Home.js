@@ -7,23 +7,25 @@ import Logo from "../../assets/cardinalbotics_logo_white_clear.png";
 import useModal from "../parts/ModalProvider";
 import MenuButton from "../parts/MenuButton";
 import { signIn, signOut } from "../parts/serverClient";
-import CustomModal from "../parts/ModalPopUp";
 import { Button } from "react-native-paper";
 import config from "../../config.json";
 
 export default function Home({ navigation }) {
+	const modal = useModal();
 	const userInfo = useUserInfo(false);
 	const [loading, setLoading] = useState(false);
-	const modal = useModal();
 	const showLoading = loading || !userInfo.data.loaded;
 
 	useEffect(() => {
 		if(userInfo.data.loaded && !userInfo.data.password) {
-			modal.showMessage("Looks like it's your first time here!\nSwipe from the left or click the menu icon and login to get started!");
+			modal.showMessage("Looks like it's your first time here!\nSwipe from the left or click the menu icon and log in to get started!");
 		}
 	}, [userInfo.data.loaded]);
 
 	const toggleSignIn = () => {
+		if(!userInfo.data.password) {
+			return modal.showMessage("You have to log in before you can sign in!");
+		}
 		setLoading(true);
 		if(!userInfo.data.signedIn) {
 			signIn(userInfo.data.password)
@@ -84,11 +86,6 @@ export default function Home({ navigation }) {
 			>
 				{showLoading ? "" : `${userInfo.data.signedIn ? "Sign Out" : "Sign In"} as ${userInfo.data.name.trim() || "new user"}`}
 			</Button>
-			<CustomModal
-				show={modal.show}
-				message={modal.message}
-				dismiss={() => modal.toggle(false)}
-			/>
 		</View>
 	);
 }

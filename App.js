@@ -1,7 +1,8 @@
 import { DefaultTheme, Provider as PaperProvider } from "react-native-paper";
 import { UserInfoProvider } from "./components/parts/UserInfoProvider";
 import { ModalProvider } from "./components/parts/ModalProvider";
-import Drawer from "./components/parts/Drawer.js";
+import Modal from "./components/parts/ModalDisplayer";
+import Drawer from "./components/parts/Drawer";
 import { StatusBar } from "expo-status-bar";
 import "react-native-gesture-handler";
 import config from "./config.json";
@@ -24,6 +25,7 @@ export default function App() {
 				<PaperProvider theme={paperTheme} style={{ flex: 1 }}>
 					<StatusBar animated hidden style="dark"/>
 					<Drawer/>
+					<Modal/>
 				</PaperProvider>
 			</ModalProvider>
 		</UserInfoProvider>
