@@ -52,8 +52,11 @@ export default function LinkButton(props) {
 				await WebBrowser.openBrowserAsync(props.url);
 			}}
 			key={props.title || "Resource" + ": " + props.url + "<" + icon + ">"}
-			style={props.style || {}}>
-			<Text style={{ textAlign: "left", width: "100%" }}>{props.title || "Resource"}</Text>
+			style={props.style || {}}
+		>
+			<Text style={{ textAlign: "left", width: "100%" }}>
+				{props.title || "Resource"}
+			</Text>
 		</Button>
 	);
 }

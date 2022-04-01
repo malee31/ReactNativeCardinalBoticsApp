@@ -59,10 +59,14 @@ export default function Leaderboard({ navigation }) {
 				entry = entry.item;
 				return (
 					<View style={Styles.timeLogRow}>
-						<Text style={{
-							color: entry.signedIn ? "green" : "black",
-							fontSize: 16,
-						}}>{entry.name}: {formatTime(entry.totalTime / 1000)}{Boolean(entry.signedIn) && ` + ${formatTime(entry.timeIn / 1000)}`}</Text>
+						<Text
+							style={{
+								color: entry.signedIn ? "green" : "black",
+								fontSize: 16,
+							}}
+						>
+							{entry.name}: {formatTime(entry.totalTime / 1000)}{Boolean(entry.signedIn) && ` + ${formatTime(entry.timeIn / 1000)}`}
+						</Text>
 					</View>
 				);
 			}}

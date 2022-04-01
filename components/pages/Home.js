@@ -62,7 +62,8 @@ export default function Home({ navigation }) {
 	return (
 		<View style={Styles.screen}>
 			<MenuButton navigation={navigation}/>
-			<Image source={Logo}
+			<Image
+				source={Logo}
 				resizeMode="contain"
 				style={Styles.largeLogoImage}/>
 			<Button

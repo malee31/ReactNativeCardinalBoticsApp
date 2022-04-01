@@ -61,9 +61,11 @@ function DrawerContent(props) {
 					alignItems: "flex-start",
 					justifyContent: "center"
 				}}>
-				<Image source={Favicon}
+				<Image
+					source={Favicon}
 					resizeMode="contain"
-					style={Styles.drawerLogo}/>
+					style={Styles.drawerLogo}
+				/>
 				<View>
 					<Text style={Styles.drawerText}>
 						{!userInfo.loaded ? "Loading..." : (userInfo.loggedIn ? userInfo.name : "Not Logged In")}
@@ -73,7 +75,10 @@ function DrawerContent(props) {
 					</Text>
 				</View>
 			</LinearGradient>
-			<DrawerContentScrollView {...props} style={{ flexGrow: 1 }}>
+			<DrawerContentScrollView
+				{...props}
+				style={{ flexGrow: 1 }}
+			>
 				<DrawerItemList {...props}/>
 			</DrawerContentScrollView>
 		</View>

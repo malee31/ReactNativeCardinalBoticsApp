@@ -25,14 +25,16 @@ export default function CustomModal() {
 				borderColor: "#DDDDDD"
 			}}
 		>
-			<Text style={{
-				paddingVertical: 20,
-				paddingHorizontal: 30,
-				fontSize: 24,
-				paddingBottom: 20,
-				width: "100%",
-				textAlign: "center"
-			}}>
+			<Text
+				style={{
+					paddingVertical: 20,
+					paddingHorizontal: 30,
+					fontSize: 24,
+					paddingBottom: 20,
+					width: "100%",
+					textAlign: "center"
+				}}
+			>
 				{modal.message || "Oh no! The programmers forgot to leave a message here"}
 			</Text>
 			<Button
