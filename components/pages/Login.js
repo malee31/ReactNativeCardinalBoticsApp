@@ -24,6 +24,7 @@ export default function Login({ navigation }) {
 			return modal.showMessage("Cannot switch users while signed in");
 		}
 
+		// TODO: Optionally Promise.race() this message
 		modal.showMessage("Verifying that you exist.");
 		const result = await verifyPassword(newPassword);
 		if(!result.ok || !result.data.verified) {
@@ -47,18 +48,23 @@ export default function Login({ navigation }) {
 	return (
 		<View style={Styles.screen}>
 			<MenuButton navigation={navigation}/>
-			<Image source={Logo}
+			<Image
+				source={Logo}
 				resizeMode="contain"
 				style={Styles.largeLogoImage}/>
 			<TextInput
 				label="Login"
 				value={passwordInput}
 				style={Styles.signInInput}
-				onChange={newText => setPasswordInput(newText.nativeEvent.text)}/>
-			<TouchableHighlight onPress={login}
+				onChange={newText => setPasswordInput(newText.nativeEvent.text)}
+				onSubmitEditing={login}
+			/>
+			<TouchableHighlight
+				onPress={login}
 				activeOpacity={0.7}
 				underlayColor={colors.darkGray}
-				style={Styles.loginButton}>
+				style={Styles.loginButton}
+			>
 				<View>
 					<Text>Submit</Text>
 				</View>
