@@ -24,7 +24,7 @@ const userInfoContext = createContext({
 		loaded: false,
 		loggedIn: false,
 		signedIn: 0,
-		name: "Name Unknown",
+		name: "",
 		password: ""
 	}
 });
@@ -65,14 +65,14 @@ export function UserInfoProvider({ children }) {
 						const user = val.find(entry => entry.name.trim() === updatedData.name.trim());
 						const clockedIn = Date.now() - user.timeIn;
 						if(Boolean(user.signedIn) !== Boolean(userInfo.signedIn)) {
-							console.log("RESYNC");
+							// console.log("RESYNC");
 							if(user.signedIn) {
 								updatedData.signedIn = clockedIn;
 							} else {
 								updatedData.signedIn = 0;
 							}
 						} else if(user.signedIn && Math.abs(userInfo.signedIn - clockedIn) > 2000 /* 2 second desync tolerance */) {
-							console.log(`Resync gap: ${Math.abs(userInfo.data.signedIn - clockedIn)}`);
+							// console.log(`Resync gap: ${Math.abs(userInfo.data.signedIn - clockedIn)}`);
 							updatedData.signedIn = clockedIn;
 						}
 					}

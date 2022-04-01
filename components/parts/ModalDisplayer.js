@@ -1,5 +1,5 @@
-import {Button, Text, View} from 'react-native';
-import { Modal } from "react-native-paper";
+import { Text, View} from 'react-native';
+import { Button, Modal } from "react-native-paper";
 import React from 'react';
 import Styles from "./Styles.js";
 import useModal from "./ModalProvider";
@@ -14,13 +14,37 @@ export default function CustomModal() {
 			visible={modal.show}
 			animationType="slide"
 			onDismiss={dismiss}
+			contentContainerStyle={{
+				maxWidth: "85%",
+				minHeight: "20%",
+				maxHeight: "50%",
+				alignSelf: "center",
+				backgroundColor: 'white',
+				justifyContent: 'space-between',
+				alignItems: 'center',
+				borderRadius: 4,
+				borderColor: "#DDDDDD"
+			}}
 		>
-			<View style={Styles.content}>
-				<Text style={Styles.contentTitle}>
-					{modal.message || "Oh no! The programmers forgot to leave a message here"}
-				</Text>
-				<Button onPress={dismiss} title="Close"/>
-			</View>
+			<Text style={{
+				paddingVertical: 20,
+				paddingHorizontal: 30,
+				fontSize: 24,
+				paddingBottom: 20,
+				width: "100%",
+				textAlign: "center"
+			}}>
+				{modal.message || "Oh no! The programmers forgot to leave a message here"}
+			</Text>
+			<Button
+				mode="contained"
+				onPress={dismiss}
+				style={{
+					width: "100%"
+				}}
+			>
+				Close
+			</Button>
 		</Modal>
 	);
 }

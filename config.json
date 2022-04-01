@@ -11,16 +11,14 @@
 		"signIn": "https://hours.team4159.org/users/signin",
 		"signOut": "https://hours.team4159.org/users/signout"
 	},
-	"serverData": {
-		"flagTime": 43200
-	},
 	"colors": {
 		"primary": "#7D1120",
 		"secondary": "#9C3131",
 		"cardinalWhite": "#FEFEFE",
 		"background": "#FFFFFF",
 		"gray": "#EDEDED",
-		"darkGray": "#B0B0B0"
+		"darkGray": "#B0B0B0",
+		"darkerGray": "#444444"
 	},
 	"icons": {
 		"color": "#B0B0B0",

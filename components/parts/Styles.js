@@ -89,18 +89,6 @@ const styles = StyleSheet.create({
 		width: "100%",
 		paddingHorizontal: "2%"
 	},
-	content: {
-		backgroundColor: 'white',
-		padding: 22,
-		justifyContent: 'center',
-		alignItems: 'center',
-		borderRadius: 4,
-		borderColor: 'rgba(0, 0, 0, 0.1)',
-	},
-	contentTitle: {
-		fontSize: 20,
-		marginBottom: 12,
-	},
 	formButton: {
 		width: "100%",
 		minHeight: 45,

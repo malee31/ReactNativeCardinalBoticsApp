@@ -4,7 +4,8 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { Image, Text, View } from "react-native";
 import Favicon from "../../assets/favicon.png"
 import useUserInfo from "./UserInfoProvider";
-import Styles from "./Styles.js";
+import config from "../../config.json";
+import Styles from "./Styles";
 import React, { useEffect, useState } from "react";
 
 import Leaderboard from "../pages/Leaderboard";
@@ -81,7 +82,11 @@ function Drawer() {
 				backBehavior="history"
 				// defaultStatus={true}
 				screenOptions={{
-					headerShown: false
+					headerShown: false,
+					drawerActiveTintColor: config.colors.primary,
+					drawerActiveBackgroundColor: config.colors.gray,
+					drawerInactiveTintColor: config.colors.darkerGray,
+					drawerInactiveBackgroundColor: config.colors.background
 				}}
 				drawerContent={props =>
 					<DrawerContent {...props}/> /* Oddly required for hooks: https://github.com/react-navigation/react-navigation/issues/7725 */}
