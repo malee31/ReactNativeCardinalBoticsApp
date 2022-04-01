@@ -1,6 +1,6 @@
 import { Calendar, LocaleConfig } from 'react-native-calendars';
 import { ScrollView, Text, View } from 'react-native';
-import config from "../../config.json";
+import { colors, urls } from "../../config.json";
 import React, { useEffect, useState } from "react";
 import moment from 'moment';
 import Styles from "../parts/Styles.js";
@@ -24,7 +24,7 @@ export default function CalendarComponent({ navigation }) {
 	const [loadNum, setLoadNum] = useState(0);
 
 	useEffect(() => {
-		fetch(config.urls.calendar)
+		fetch(urls.calendar)
 			.then(response => response.json())
 			.then(json => json.items)
 			.then(json => {
@@ -103,7 +103,7 @@ export default function CalendarComponent({ navigation }) {
 						setSelectedEvent(day);
 					}}
 					theme={{
-						calendarBackground: config.colors.darkGray
+						calendarBackground: colors.darkGray
 					}}
 				/>
 			</View>

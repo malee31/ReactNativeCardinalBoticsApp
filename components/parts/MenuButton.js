@@ -1,5 +1,5 @@
 import React from "react";
-import config from "../../config.json";
+import { colors } from "../../config.json";
 import { Button } from 'react-native-paper';
 
 export default function MenuButton({ navigation }) {
@@ -7,7 +7,7 @@ export default function MenuButton({ navigation }) {
 		<Button
 			icon="menu"
 			mode="contained"
-			color={config.colors.secondary}
+			color={colors.secondary}
 			style={{
 				position: "absolute",
 				top: 0,

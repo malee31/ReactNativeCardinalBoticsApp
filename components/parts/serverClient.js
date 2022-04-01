@@ -1,4 +1,4 @@
-import config, { serverEndpointBaseURLs as endpoints } from "../../config.json";
+import { serverEndpointBaseURLs as endpoints } from "../../config.json";
 
 export async function verifyPassword(password) {
 	const url = `${endpoints.getUserData}?password=${encodeURIComponent(password)}`;
@@ -86,7 +86,7 @@ export function signOut(password) {
 }
 
 export function getLeaderboard() {
-	return fetch(config.serverEndpointBaseURLs.getData)
+	return fetch(endpoints.getData)
 		.then(res => res.json())
 		.then(data => {
 			// TODO: Update self

@@ -1,6 +1,6 @@
 import { ActivityIndicator, FlatList, Text, View } from 'react-native';
 import LinkButton from "../parts/LinkButton.js";
-import config from "../../config.json";
+import { colors, urls } from "../../config.json";
 import React, { useEffect, useState } from "react";
 import Styles from "../parts/Styles.js";
 import MenuButton from "../parts/MenuButton";
@@ -11,7 +11,7 @@ export default function Forms({ navigation }) {
 	const modal = useModal();
 
 	useEffect(() => {
-		fetch(config.urls.sheet)
+		fetch(urls.sheet)
 			.then(response => response.json())
 			.then(json => json.values)
 			.then(values => {
@@ -27,7 +27,7 @@ export default function Forms({ navigation }) {
 			.catch(err => modal.showMessage(`Unable to load forms: ${err}`));
 	}, []);
 
-	let component = <ActivityIndicator size="large" color={config.colors.primary}/>;
+	let component = <ActivityIndicator size="large" color={colors.primary}/>;
 
 	if(data) {
 		component = <FlatList

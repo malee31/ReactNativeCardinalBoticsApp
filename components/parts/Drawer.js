@@ -4,7 +4,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { Image, Text, View } from "react-native";
 import Favicon from "../../assets/favicon.png"
 import useUserInfo from "./UserInfoProvider";
-import config from "../../config.json";
+import { colors } from "../../config.json";
 import Styles from "./Styles";
 import React, { useEffect, useState } from "react";
 
@@ -54,7 +54,13 @@ function DrawerContent(props) {
 				colors={["#7D1120", "#A6242F", "#FF4D4D"]}
 				start={[0, 0]}
 				end={[1, 1]}
-				style={Styles.drawerHeading}>
+				style={{
+					width: "100%",
+					minHeight: "20%",
+					maxHeight: "25%",
+					alignItems: "flex-start",
+					justifyContent: "center"
+				}}>
 				<Image source={Favicon}
 					resizeMode="contain"
 					style={Styles.drawerLogo}/>
@@ -83,10 +89,10 @@ function Drawer() {
 				// defaultStatus={true}
 				screenOptions={{
 					headerShown: false,
-					drawerActiveTintColor: config.colors.primary,
-					drawerActiveBackgroundColor: config.colors.gray,
-					drawerInactiveTintColor: config.colors.darkerGray,
-					drawerInactiveBackgroundColor: config.colors.background
+					drawerActiveTintColor: colors.primary,
+					drawerActiveBackgroundColor: colors.gray,
+					drawerInactiveTintColor: colors.darkerGray,
+					drawerInactiveBackgroundColor: colors.background
 				}}
 				drawerContent={props =>
 					<DrawerContent {...props}/> /* Oddly required for hooks: https://github.com/react-navigation/react-navigation/issues/7725 */}

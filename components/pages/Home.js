@@ -5,7 +5,7 @@ import useModal from "../parts/ModalProvider";
 import MenuButton from "../parts/MenuButton";
 import { Button } from "react-native-paper";
 import { Image, View } from 'react-native';
-import config from "../../config.json";
+import { colors } from "../../config.json";
 import Styles from "../parts/Styles";
 import React, { useEffect, useState } from "react";
 
@@ -78,7 +78,7 @@ export default function Home({ navigation }) {
 					alignItems: "center",
 					justifyContent: "center",
 					alignSelf: "center",
-					backgroundColor: config.colors.gray,
+					backgroundColor: colors.gray,
 					width: "100%",
 					padding: "5%"
 				}}

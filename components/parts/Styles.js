@@ -1,14 +1,7 @@
 import { StyleSheet } from "react-native";
-import config from "../../config.json";
+import { colors } from "../../config.json";
 
 const styles = StyleSheet.create({
-	drawerHeading: {
-		width: "100%",
-		minHeight: "20%",
-		maxHeight: "25%",
-		alignItems: 'flex-start',
-		justifyContent: 'center'
-	},
 	drawerLogo: {
 		width: "35%",
 		height: "30%",
@@ -34,7 +27,7 @@ const styles = StyleSheet.create({
 		flex: 1,
 		paddingHorizontal: "5%",
 		paddingVertical: "2%",
-		backgroundColor: config.colors.background,
+		backgroundColor: colors.background,
 		alignItems: "center"
 	},
 	largeLogoImage: {
@@ -46,7 +39,7 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 		justifyContent: "center",
 		alignSelf: "center",
-		backgroundColor: config.colors.gray,
+		backgroundColor: colors.gray,
 		width: "70%",
 		padding: "5%",
 		marginVertical: "3%",
@@ -59,7 +52,7 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 		justifyContent: "center",
 		alignSelf: "center",
-		backgroundColor: config.colors.gray,
+		backgroundColor: colors.gray,
 		width: "70%",
 		padding: "2%",
 		marginVertical: "3%",
@@ -74,7 +67,7 @@ const styles = StyleSheet.create({
 		flexDirection: "column",
 		width: "100%",
 		// textAlign: "left",
-		backgroundColor: config.colors.gray,
+		backgroundColor: colors.gray,
 		borderRadius: 10,
 		padding: 5,
 		marginVertical: "1%"
@@ -132,7 +125,7 @@ const styles = StyleSheet.create({
 		alignSelf: 'center',
 		width: "100%",
 		fontSize: 30,
-		color: config.colors.primary,
+		color: colors.primary,
 		marginTop: '5%',
 	},
 	logTime: {

@@ -1,6 +1,6 @@
 import React from "react";
 import * as WebBrowser from 'expo-web-browser';
-import config from "../../config.json";
+import { colors } from "../../config.json";
 import { Button } from 'react-native-paper';
 import { Text } from "react-native";
 
@@ -47,7 +47,7 @@ export default function LinkButton(props) {
 		<Button
 			icon={icon}
 			mode="contained"
-			color={config.colors.secondary}
+			color={colors.secondary}
 			onPress={async() => {
 				await WebBrowser.openBrowserAsync(props.url);
 			}}

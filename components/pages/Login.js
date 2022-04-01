@@ -1,7 +1,7 @@
 import { Image, Text, TouchableHighlight, View } from 'react-native';
 import Logo from "../../assets/cardinalbotics_logo_white_clear.png";
 import { TextInput } from 'react-native-paper';
-import config from "../../config.json";
+import { colors } from "../../config.json";
 import Styles from "../parts/Styles";
 import useUserInfo from "../parts/UserInfoProvider";
 import useModal from "../parts/ModalProvider";
@@ -57,7 +57,7 @@ export default function Login({ navigation }) {
 				onChange={newText => setPasswordInput(newText.nativeEvent.text)}/>
 			<TouchableHighlight onPress={login}
 				activeOpacity={0.7}
-				underlayColor={config.colors.darkGray}
+				underlayColor={colors.darkGray}
 				style={Styles.loginButton}>
 				<View>
 					<Text>Submit</Text>
