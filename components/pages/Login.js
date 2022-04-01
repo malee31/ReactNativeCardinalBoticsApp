@@ -1,4 +1,3 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Image, Text, TouchableHighlight, View } from 'react-native';
 import Logo from "../../assets/cardinalbotics_logo_white_clear.png";
 import { TextInput } from 'react-native-paper';

@@ -3,7 +3,7 @@ import { signIn, signOut } from "../parts/serverClient";
 import useUserInfo from "../parts/UserInfoProvider";
 import useModal from "../parts/ModalProvider";
 import MenuButton from "../parts/MenuButton";
-import { Button, Text } from "react-native-paper";
+import { Button } from "react-native-paper";
 import { Image, View } from 'react-native';
 import config from "../../config.json";
 import Styles from "../parts/Styles";
@@ -88,7 +88,7 @@ export default function Home({ navigation }) {
 					fontWeight: "bold"
 				}}
 			>
-					{!showLoading && (!userInfo.data.loggedIn ? "Log in to get started!" : `Sign ${userInfo.data.signedIn ? "Out" : "In"} as ${displayName}`)}
+				{!showLoading && (!userInfo.data.loggedIn ? "Log in to get started!" : `Sign ${userInfo.data.signedIn ? "Out" : "In"} as ${displayName}`)}
 			</Button>
 		</View>
 	);

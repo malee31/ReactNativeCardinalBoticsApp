@@ -1,7 +1,6 @@
-import { Text, View} from 'react-native';
+import { Text } from 'react-native';
 import { Button, Modal } from "react-native-paper";
 import React from 'react';
-import Styles from "./Styles.js";
 import useModal from "./ModalProvider";
 
 export default function CustomModal() {

@@ -1,13 +1,13 @@
 import React from "react";
 import * as WebBrowser from 'expo-web-browser';
 import config from "../../config.json";
-import {Button} from 'react-native-paper';
-import {Text} from "react-native";
+import { Button } from 'react-native-paper';
+import { Text } from "react-native";
 
 export default function LinkButton(props) {
 	let icon;
 	//Images from https://materialdesignicons.com/
-	switch (props.icon?.toLowerCase().trim()) {
+	switch(props.icon?.toLowerCase().trim()) {
 		case "googledrive":
 			icon = "google-drive";
 			break;
@@ -48,12 +48,12 @@ export default function LinkButton(props) {
 			icon={icon}
 			mode="contained"
 			color={config.colors.secondary}
-			onPress={async () => {
+			onPress={async() => {
 				await WebBrowser.openBrowserAsync(props.url);
 			}}
 			key={props.title || "Resource" + ": " + props.url + "<" + icon + ">"}
 			style={props.style || {}}>
-			<Text style={{textAlign: "left", width: "100%"}}>{props.title || "Resource"}</Text>
+			<Text style={{ textAlign: "left", width: "100%" }}>{props.title || "Resource"}</Text>
 		</Button>
 	);
 }

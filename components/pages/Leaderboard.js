@@ -13,7 +13,7 @@ function formatTime(totalTime) {
 	return `${Math.floor(totalTime / 3600)} hour${Math.floor(totalTime / 3600) !== 1 ? "s" : ""} and ${Math.floor((totalTime % 3600) / 60)} minute${Math.floor((totalTime % 3600) / 60) !== 1 ? "s" : ""}`;
 }
 
-export default function Leaderboard({navigation}) {
+export default function Leaderboard({ navigation }) {
 	const [leaderboardData, setLeaderboardData] = useState([]);
 	const userInfo = useUserInfo(false);
 	let content = <ActivityIndicator size="large" color={config.colors.primary}/>;
@@ -26,7 +26,7 @@ export default function Leaderboard({navigation}) {
 					const user = val.find(entry => entry.name.trim() === userInfo.data.name.trim());
 					const clockedIn = Date.now() - user.timeIn;
 					if(Boolean(user.signedIn) !== Boolean(userInfo.data.signedIn)) {
-						console.log("RESYNC");
+						// console.log("RESYNC");
 						if(user.signedIn) {
 							userInfo.updateData({
 								signedIn: clockedIn
@@ -37,7 +37,7 @@ export default function Leaderboard({navigation}) {
 							});
 						}
 					} else if(user.signedIn && Math.abs(userInfo.data.signedIn - clockedIn) > 2000 /* 2 second desync tolerance */) {
-						console.log(`Resync gap: ${Math.abs(userInfo.data.signedIn - clockedIn)}`);
+						// console.log(`Resync gap: ${Math.abs(userInfo.data.signedIn - clockedIn)}`);
 						userInfo.updateData({
 							signedIn: clockedIn
 						});
