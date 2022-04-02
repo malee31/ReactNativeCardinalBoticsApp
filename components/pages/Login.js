@@ -34,7 +34,8 @@ export default function Login({ navigation }) {
 		userInfo.updateData({
 			loggedIn: true,
 			name: result.data.user.name,
-			password: result.data.user.password
+			password: result.data.user.password,
+			signedIn: result.data.user.signedIn
 		});
 
 		try {

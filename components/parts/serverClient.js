@@ -26,8 +26,11 @@ export async function verifyPassword(password) {
 		result.data.user = {
 			name: jsonResponse.name,
 			password: password,
-			// TODO: Actually sync the time using a different endpoint instead of setting current time
-			signedIn: Boolean(jsonResponse.signedIn) ? Date.now() : 0
+			// Is 0 if signed out. Otherwise, the actual time logged in is fetched or set to the current time if unable to be found
+			signedIn: !Boolean(jsonResponse.signedIn) ? 0 : await getLeaderboard()
+				.then(val => val.find(entry => entry.name.trim() === jsonResponse.name.trim()))
+				.then(additionalUserData => Date.now() - additionalUserData.timeIn)
+				.catch(() => Date.now())
 		};
 	} else if(res.status === 404) {
 		result.messages.push("Sorry, it looks like you don't exist\nOr that's the wrong password...\nBoth possibilities are equally likely");
@@ -35,6 +38,7 @@ export async function verifyPassword(password) {
 		result.messages.push(`Server behaved unexpectedly and gave this error: [${res.status}] ${res.statusText}`);
 	}
 
+	console.log(result);
 	return result;
 }
 
