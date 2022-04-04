@@ -4,15 +4,13 @@ name: Deploy Web
 on:
   workflow_dispatch:
   push:
-    branches: [ deploy-web ]
+    branches: [ master, deploy-web ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-        with:
-          ref: deploy-web
 
       - name: Setup Node
         uses: actions/setup-node@v3
