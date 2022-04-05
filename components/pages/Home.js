@@ -36,7 +36,7 @@ export default function Home({ navigation }) {
 				.then(result => {
 					if(result.ok) {
 						userInfo.updateData({
-							signedIn: Date.now() // TODO: Fetch and use actual time
+							signedIn: result.data.signedIn
 						});
 					} else {
 						modal.showMessage(result.messages.join("\n"));

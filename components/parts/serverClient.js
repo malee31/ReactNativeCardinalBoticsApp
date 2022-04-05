@@ -1,3 +1,7 @@
+/**
+ * Purely a set of functions that interact directly with the server
+ * No additional validation should be done here prior to sending a request to the server (See serverClientWrapper.js)
+ */
 import { serverEndpointBaseURLs as endpoints } from "../../config.json";
 
 export async function verifyPassword(password) {
@@ -27,7 +31,7 @@ export async function verifyPassword(password) {
 			name: jsonResponse.name,
 			password: password,
 			// Is 0 if signed out. Otherwise, the actual time logged in is fetched or set to the current time if unable to be found
-			signedIn: !Boolean(jsonResponse.signedIn) ? 0 : await getLeaderboard()
+			signedIn: !jsonResponse.signedIn ? 0 : await getLeaderboard()
 				.then(val => val.find(entry => entry.name.trim() === jsonResponse.name.trim()))
 				.then(additionalUserData => Date.now() - additionalUserData.timeIn)
 				.catch(() => Date.now())
@@ -38,7 +42,6 @@ export async function verifyPassword(password) {
 		result.messages.push(`Server behaved unexpectedly and gave this error: [${res.status}] ${res.statusText}`);
 	}
 
-	console.log(result);
 	return result;
 }
 
@@ -75,7 +78,11 @@ async function signInOut(password, signInMode) {
 	} else if(!res.ok) {
 		result.messages.push(`Unable to sign ${signIn ? "in" : "out"}: [${res.status}] ${res.statusText}`);
 	} else {
-		result.ok = true;
+		const verified = await verifyPassword(password);
+		result.ok = verified.ok && verified.data.verified;
+		if(result.ok) {
+			result.data = verified.data.user;
+		}
 	}
 
 	return result;
@@ -93,7 +100,6 @@ export function getLeaderboard() {
 	return fetch(endpoints.getData)
 		.then(res => res.json())
 		.then(data => {
-			// TODO: Update self
 			// Sorted by sign in status, total time, then username
 			return data
 				.sort((a, b) => {
