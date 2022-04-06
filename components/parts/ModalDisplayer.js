@@ -15,24 +15,23 @@ export default function CustomModal() {
 			onDismiss={dismiss}
 			contentContainerStyle={{
 				maxWidth: "85%",
-				minHeight: "20%",
+				minHeight: "15%",
 				maxHeight: "50%",
 				alignSelf: "center",
-				backgroundColor: 'white',
-				justifyContent: 'space-between',
-				alignItems: 'center',
+				backgroundColor: "white",
+				justifyContent: "space-between",
+				alignItems: "stretch",
 				borderRadius: 4,
 				borderColor: "#DDDDDD"
 			}}
 		>
 			<Text
 				style={{
-					paddingVertical: 20,
-					paddingHorizontal: 30,
+					paddingVertical: 10,
+					paddingHorizontal: 15,
 					fontSize: 24,
-					paddingBottom: 20,
-					width: "100%",
-					textAlign: "center"
+					textAlign: "center",
+					flex: 1
 				}}
 			>
 				{modal.message || "Oh no! The programmers forgot to leave a message here"}
@@ -40,9 +39,6 @@ export default function CustomModal() {
 			<Button
 				mode="contained"
 				onPress={dismiss}
-				style={{
-					width: "100%"
-				}}
 			>
 				Close
 			</Button>
