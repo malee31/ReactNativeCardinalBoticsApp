@@ -12,17 +12,17 @@ function formatTime(totalTime) {
 
 export default function Leaderboard({ navigation }) {
 	const [leaderboardData, setLeaderboardData] = useState([]);
-	const userInfo = useUserInfo(false);
+	const userWritable = useUserInfo(false);
 	let content = <ActivityIndicator size="large" color={colors.primary}/>;
 
-	const update = () => { updateSelf(userInfo).then(setLeaderboardData) };
+	const update = () => { updateSelf(userWritable).then(setLeaderboardData) };
 
 	useEffect(() => {
 		update();
 		// TODO: Sync more accurately using websockets
 		const timer = setInterval(update, 30 * 1000); // 30-second interval
 		return () => clearInterval(timer);
-	}, [userInfo.data]);
+	}, [userWritable.userInfo]);
 
 	if(leaderboardData) {
 		content = <FlatList

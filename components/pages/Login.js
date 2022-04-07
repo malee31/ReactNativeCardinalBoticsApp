@@ -10,13 +10,13 @@ import MenuButton from "../parts/MenuButton";
 import { login } from "../parts/serverClientWrapper";
 
 export default function Login({ navigation }) {
-	const userInfo = useUserInfo(false);
+	const userWritable = useUserInfo(false);
 	const [passwordInput, setPasswordInput] = useState("");
 	const modal = useModal();
 
 	const handleLogin = () => {
 		modal.showMessage("Verifying that you exist.");
-		login(userInfo, passwordInput)
+		login(userWritable, passwordInput)
 			.then(modal.showMessage)
 			.catch(err => modal.showMessage(err.message));
 	}

@@ -5,7 +5,7 @@ import { getLeaderboard, verifyPassword } from "./serverClient";
 /**
  * @typedef UserInfoWritable
  * @property {function} updateData Method that takes in an object and merges it with the current UserInfo object. Will always cause a rerender.
- * @property {UserInfo} data Readable data about the user
+ * @property {UserInfo} userInfo Readable data about the user
  */
 
 /**
@@ -46,7 +46,7 @@ export function UserInfoProvider({ children }) {
 				...newUserInfo
 			});
 		},
-		data: userInfo
+		userInfo: userInfo
 	};
 
 	useEffect(() => {
@@ -72,7 +72,7 @@ export function UserInfoProvider({ children }) {
 								updatedData.signedIn = 0;
 							}
 						} else if(user.signedIn && Math.abs(userInfo.signedIn - clockedIn) > 2000 /* 2 second desync tolerance */) {
-							// console.log(`Resync gap: ${Math.abs(userInfo.data.signedIn - clockedIn)}`);
+							// console.log(`Resync gap: ${Math.abs(userInfo.signedIn - clockedIn)}`);
 							updatedData.signedIn = clockedIn;
 						}
 					}
@@ -96,5 +96,5 @@ export function UserInfoProvider({ children }) {
  */
 export default function useUserInfo(readOnly = true) {
 	const userContextValue = useContext(userInfoContext);
-	return !readOnly ? userContextValue : userContextValue.data;
+	return !readOnly ? userContextValue : userContextValue.userInfo;
 }

@@ -1,11 +1,11 @@
 import { getLeaderboard, verifyPassword } from "./serverClient";
 import { savePassword } from "./storageManager";
 
-export async function login(userInfo, password) {
+export async function login(userWritable, password) {
 	const newPassword = password.trim();
 	if(newPassword.length === 0) {
 		throw new RangeError("Password cannot be empty");
-	} else if(userInfo.data.signedIn) {
+	} else if(userWritable.userInfo.signedIn) {
 		throw new Error("Cannot switch users while signed in");
 	}
 
@@ -14,7 +14,7 @@ export async function login(userInfo, password) {
 		throw new Error(result.messages.join("\n"));
 	}
 
-	userInfo.updateData({
+	userWritable.updateData({
 		loggedIn: true,
 		name: result.data.user.name,
 		password: result.data.user.password,
@@ -29,18 +29,18 @@ export async function login(userInfo, password) {
 	return `Success. You're now logged in as ${result.data.user.name.trim()} using ${result.data.user.password}`;
 }
 
-export async function updateSelf(userInfo) {
-	if(!userInfo.data.password) {
+export async function updateSelf(userWritable) {
+	if(!userWritable.userInfo.password) {
 		return;
 	}
 
 	const leaderboard = await getLeaderboard();
-	const user = leaderboard.find(entry => entry.name.trim() === userInfo.data.name.trim());
+	const user = leaderboard.find(entry => entry.name.trim() === userWritable.userInfo.name.trim());
 	const clockedIn = Date.now() - user.timeIn;
 	// Resync with server if needed. Has a 2-second margin of error tolerance
-	if(Math.abs(userInfo.data.signedIn - clockedIn) > 2000) {
+	if(Math.abs(userWritable.userInfo.signedIn - clockedIn) > 2000) {
 		// console.log("Resynchronized clock-in time with server");
-		userInfo.updateData({
+		userWritable.updateData({
 			signedIn: user.signedIn ? clockedIn : 0
 		});
 	}

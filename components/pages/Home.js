@@ -9,33 +9,32 @@ import { colors } from "../../config.json";
 import Styles from "../parts/Styles";
 import React, { useEffect, useState } from "react";
 
-
 export default function Home({ navigation }) {
 	const modal = useModal();
-	const userInfo = useUserInfo(false);
-	const displayName = userInfo.data.name.trim();
+	const userWritable = useUserInfo(false);
+	const displayName = userWritable.userInfo.name.trim();
 	const [loading, setLoading] = useState(false);
-	const showLoading = loading || !userInfo.data.loaded;
+	const showLoading = loading || !userWritable.userInfo.loaded;
 
 	useEffect(() => {
-		if(userInfo.data.loaded && !userInfo.data.password) {
+		if(userWritable.userInfo.loaded && !userWritable.userInfo.password) {
 			modal.showMessage("Looks like it's your first time here!\nLog in to get started!");
 			navigation.navigate("Login");
 		}
-	}, [userInfo.data.loaded]);
+	}, [userWritable.userInfo.loaded]);
 
 	const toggleSignIn = () => {
-		if(!userInfo.data.password) {
+		if(!userWritable.userInfo.password) {
 			modal.showMessage("You have to log in first!");
 			navigation.navigate("Login");
 			return;
 		}
 		setLoading(true);
-		if(!userInfo.data.signedIn) {
-			signIn(userInfo.data.password)
+		if(!userWritable.userInfo.signedIn) {
+			signIn(userWritable.userInfo.password)
 				.then(result => {
 					if(result.ok) {
-						userInfo.updateData({
+						userWritable.updateData({
 							signedIn: result.data.signedIn
 						});
 					} else {
@@ -44,10 +43,10 @@ export default function Home({ navigation }) {
 					setLoading(false);
 				});
 		} else {
-			signOut(userInfo.data.password)
+			signOut(userWritable.userInfo.password)
 				.then(result => {
 					if(result.ok) {
-						userInfo.updateData({
+						userWritable.updateData({
 							signedIn: 0
 						});
 						modal.showMessage("Successfully Signed Out");
@@ -84,12 +83,12 @@ export default function Home({ navigation }) {
 					padding: "5%"
 				}}
 				labelStyle={{
-					color: showLoading || !userInfo.data.loggedIn ? "gray" : (userInfo.data.signedIn ? "red" : "green"),
+					color: showLoading || !userWritable.userInfo.loggedIn ? "gray" : (userWritable.userInfo.signedIn ? "red" : "green"),
 					fontSize: 30,
 					fontWeight: "bold"
 				}}
 			>
-				{!showLoading && (!userInfo.data.loggedIn ? "Log in to get started!" : `Sign ${userInfo.data.signedIn ? "Out" : "In"} as ${displayName}`)}
+				{!showLoading && (!userWritable.userInfo.loggedIn ? "Log in to get started!" : `Sign ${userWritable.userInfo.signedIn ? "Out" : "In"} as ${displayName}`)}
 			</Button>
 		</View>
 	);
