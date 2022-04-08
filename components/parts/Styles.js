@@ -21,27 +21,10 @@ const styles = StyleSheet.create({
 		textAlign: "left",
 		marginHorizontal: 15
 	},
-	screen: {
-		width: "100%",
-		height: "100%",
-		flex: 1,
-		padding: "5%",
-		backgroundColor: colors.background,
-		alignItems: "center"
-	},
 	largeLogoImage: {
 		width: "100%",
 		height: "50%",
 		alignSelf: "center",
-	},
-	signInButton: {
-		alignItems: "center",
-		justifyContent: "center",
-		alignSelf: "center",
-		backgroundColor: colors.gray,
-		width: "70%",
-		padding: "5%",
-		marginVertical: "3%",
 	},
 	signInInput: {
 		color: "#7D1120",
@@ -56,30 +39,13 @@ const styles = StyleSheet.create({
 		padding: "2%",
 		marginVertical: "3%",
 	},
-	signInText: {
-		fontSize: 30
-	},
-	whatchuDoing: {
-		color: "#7D1120",
-	},
 	timeLogRow: {
 		flexDirection: "column",
 		width: "100%",
-		// textAlign: "left",
 		backgroundColor: colors.gray,
 		borderRadius: 10,
 		padding: 5,
 		marginVertical: "1%"
-	},
-	timeLogRowHeader: {
-		flexDirection: "row",
-		justifyContent: "space-between",
-		alignItems: "center",
-		width: "100%"
-	},
-	timeLogRowDid: {
-		width: "100%",
-		paddingHorizontal: "2%"
 	},
 	formButton: {
 		width: "100%",
@@ -90,9 +56,6 @@ const styles = StyleSheet.create({
 		paddingHorizontal: "4%",
 		marginVertical: 4
 	},
-	formBtn: {
-		marginVertical: 2
-	},
 	formText: {
 		flex: 1,
 		width: "30%",
@@ -100,12 +63,6 @@ const styles = StyleSheet.create({
 		paddingHorizontal: 5,
 		justifyContent: "center",
 		alignContent: "center"
-	},
-	calendarScreen: {
-		paddingHorizontal: 0
-	},
-	calendarView: {
-		minHeight: "45%"
 	},
 	scroll: {
 		maxHeight: "55%",
@@ -126,17 +83,6 @@ const styles = StyleSheet.create({
 		fontSize: 30,
 		color: colors.primary,
 		marginTop: '5%',
-	},
-	logTime: {
-		fontWeight: "bold",
-	},
-	resourceButton: {
-		width: "100%",
-		minHeight: 40,
-		flex: 1,
-		justifyContent: "center",
-		alignItems: "flex-start",
-		marginVertical: 10
 	}
 });
 

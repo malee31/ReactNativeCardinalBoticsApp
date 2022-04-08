@@ -2,9 +2,9 @@ import { ActivityIndicator, FlatList, Text, View } from 'react-native';
 import Styles from "../parts/Styles.js";
 import { colors } from "../../config.json";
 import React, { useEffect, useState } from "react";
-import MenuButton from "../parts/MenuButton";
-import useUserInfo from "../parts/UserInfoProvider";
-import { updateSelf } from "../parts/serverClientWrapper";
+import useUserInfo from "../parts/ContextProviders/UserInfoProvider";
+import { updateSelf } from "../parts/utils/serverClientWrapper";
+import Screen from "../parts/StyledParts/ScreenWrapper";
 
 function formatTime(totalTime) {
 	return `${Math.floor(totalTime / 3600)} hour${Math.floor(totalTime / 3600) !== 1 ? "s" : ""} and ${Math.floor((totalTime % 3600) / 60)} minute${Math.floor((totalTime % 3600) / 60) !== 1 ? "s" : ""}`;
@@ -48,9 +48,8 @@ export default function Leaderboard({ navigation }) {
 	}
 
 	return (
-		<View style={Styles.screen}>
-			<MenuButton navigation={navigation}/>
+		<Screen navigation={navigation}>
 			{content}
-		</View>
+		</Screen>
 	);
 }

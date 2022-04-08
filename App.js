@@ -1,6 +1,6 @@
 import { DefaultTheme, Provider as PaperProvider } from "react-native-paper";
-import { UserInfoProvider } from "./components/parts/UserInfoProvider";
-import { ModalProvider } from "./components/parts/ModalProvider";
+import { UserInfoProvider } from "./components/parts/ContextProviders/UserInfoProvider";
+import { ModalProvider } from "./components/parts/ContextProviders/ModalProvider";
 import Modal from "./components/parts/ModalDisplayer";
 import Drawer from "./components/parts/Drawer";
 import { StatusBar } from "expo-status-bar";

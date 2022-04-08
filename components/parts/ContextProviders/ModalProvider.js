@@ -29,9 +29,7 @@ export function ModalProvider({ children }) {
 			return;
 		}
 
-		const newData = {
-			show: show
-		};
+		const newData = { show: show };
 
 		if(!show) {
 			newData.message = "";

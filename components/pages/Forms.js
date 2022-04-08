@@ -1,10 +1,10 @@
 import { ActivityIndicator, FlatList, Text, View } from 'react-native';
-import LinkButton from "../parts/LinkButton.js";
+import LinkButton from "../parts/StyledParts/LinkButton.js";
 import { colors, urls } from "../../config.json";
 import React, { useEffect, useState } from "react";
 import Styles from "../parts/Styles.js";
-import MenuButton from "../parts/MenuButton";
-import useModal from "../parts/ModalProvider";
+import useModal from "../parts/ContextProviders/ModalProvider";
+import Screen from "../parts/StyledParts/ScreenWrapper";
 
 export default function Forms({ navigation }) {
 	const [data, setData] = useState([]);
@@ -54,10 +54,7 @@ export default function Forms({ navigation }) {
 								Due {entry[4]}
 							</Text>
 						)}
-						<LinkButton
-							style={[Styles.resourceButton, Styles.formBtn]}
-							title={entry[1]} url={entry[2]}
-						/>
+						<LinkButton title={entry[1]} url={entry[2]}/>
 					</View>
 				);
 			}}
@@ -65,9 +62,8 @@ export default function Forms({ navigation }) {
 	}
 
 	return (
-		<View style={Styles.screen}>
-			<MenuButton navigation={navigation}/>
+		<Screen navigation={navigation}>
 			{component}
-		</View>
+		</Screen>
 	);
 }

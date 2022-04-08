@@ -3,11 +3,11 @@ import Logo from "../../assets/cardinalbotics_logo_white_clear.png";
 import { TextInput } from 'react-native-paper';
 import { colors } from "../../config.json";
 import Styles from "../parts/Styles";
-import useUserInfo from "../parts/UserInfoProvider";
-import useModal from "../parts/ModalProvider";
+import useUserInfo from "../parts/ContextProviders/UserInfoProvider";
+import useModal from "../parts/ContextProviders/ModalProvider";
 import React, { useState } from "react";
-import MenuButton from "../parts/MenuButton";
-import { login } from "../parts/serverClientWrapper";
+import { login } from "../parts/utils/serverClientWrapper";
+import Screen from "../parts/StyledParts/ScreenWrapper";
 
 export default function Login({ navigation }) {
 	const userWritable = useUserInfo(false);
@@ -22,8 +22,7 @@ export default function Login({ navigation }) {
 	}
 
 	return (
-		<View style={Styles.screen}>
-			<MenuButton navigation={navigation}/>
+		<Screen navigation={navigation}>
 			<Image
 				source={Logo}
 				resizeMode="contain"
@@ -45,6 +44,6 @@ export default function Login({ navigation }) {
 					<Text>Submit</Text>
 				</View>
 			</TouchableHighlight>
-		</View>
+		</Screen>
 	);
 }

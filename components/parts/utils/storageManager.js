@@ -22,6 +22,6 @@ export async function savePassword(password) {
  * Fetches password saved in storage if it exists
  * @return {Promise<string|null>} Returns the password or null if it does not exist
  */
-export async function getPassword() {
+export function getPassword() {
 	return AsyncStorage.getItem("password");
 }

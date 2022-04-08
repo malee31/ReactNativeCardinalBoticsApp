@@ -1,10 +1,9 @@
-import { ActivityIndicator, FlatList, View } from 'react-native';
-import LinkButton from "../parts/LinkButton.js";
+import { ActivityIndicator, FlatList } from 'react-native';
+import LinkButton from "../parts/StyledParts/LinkButton.js";
 import { colors, urls } from "../../config.json";
 import React, { useEffect, useState } from "react";
-import Styles from "../parts/Styles.js";
-import useModal from "../parts/ModalProvider";
-import MenuButton from "../parts/MenuButton";
+import useModal from "../parts/ContextProviders/ModalProvider";
+import Screen from "../parts/StyledParts/ScreenWrapper";
 
 
 export default function Resources({ navigation }) {
@@ -31,7 +30,6 @@ export default function Resources({ navigation }) {
 						title={entry[0]}
 						url={entry[1]}
 						icon={entry[2]}
-						style={Styles.resourceButton}
 					/>
 				);
 			}}
@@ -39,9 +37,8 @@ export default function Resources({ navigation }) {
 	}
 
 	return (
-		<View style={Styles.screen}>
-			<MenuButton navigation={navigation}/>
+		<Screen navigation={navigation}>
 			{component}
-		</View>
+		</Screen>
 	);
 }

@@ -1,13 +1,13 @@
 import Logo from "../../assets/cardinalbotics_logo_white_clear.png";
-import { signIn, signOut } from "../parts/serverClient";
-import useUserInfo from "../parts/UserInfoProvider";
-import useModal from "../parts/ModalProvider";
-import MenuButton from "../parts/MenuButton";
+import { signIn, signOut } from "../parts/utils/serverClient";
+import useUserInfo from "../parts/ContextProviders/UserInfoProvider";
+import useModal from "../parts/ContextProviders/ModalProvider";
 import { Button } from "react-native-paper";
-import { Image, View } from 'react-native';
+import { Image } from 'react-native';
 import { colors } from "../../config.json";
 import Styles from "../parts/Styles";
 import React, { useEffect, useState } from "react";
+import Screen from "../parts/StyledParts/ScreenWrapper";
 
 export default function Home({ navigation }) {
 	const modal = useModal();
@@ -59,8 +59,7 @@ export default function Home({ navigation }) {
 	};
 
 	return (
-		<View style={Styles.screen}>
-			<MenuButton navigation={navigation}/>
+		<Screen navigation={navigation}>
 			<Image
 				source={Logo}
 				resizeMode="contain"
@@ -90,6 +89,6 @@ export default function Home({ navigation }) {
 			>
 				{!showLoading && (!userWritable.userInfo.loggedIn ? "Log in to get started!" : `Sign ${userWritable.userInfo.signedIn ? "Out" : "In"} as ${displayName}`)}
 			</Button>
-		</View>
+		</Screen>
 	);
 }

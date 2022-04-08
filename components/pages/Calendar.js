@@ -4,7 +4,7 @@ import { colors, urls } from "../../config.json";
 import React, { useEffect, useState } from "react";
 import moment from 'moment';
 import Styles from "../parts/Styles.js";
-import MenuButton from "../parts/MenuButton";
+import Screen from "../parts/StyledParts/ScreenWrapper";
 
 LocaleConfig.locales['en'] = {
 	formatAccessibilityLabel: 'dddd d \'of\' MMMM \'of\' yyyy',
@@ -89,9 +89,8 @@ export default function CalendarComponent({ navigation }) {
 	}
 
 	return (
-		<View style={[Styles.screen, Styles.calendarScreen]}>
-			<MenuButton navigation={navigation}/>
-			<View style={Styles.calendarView}>
+		<Screen navigation={navigation} additionalStyles={{ paddingHorizontal: 0 }}>
+			<View style={{ minHeight: "45%" }}>
 				<Calendar
 					key={`CalendarReload: ${loadNum}`}
 					enableSwipeMonths={true}
@@ -99,9 +98,7 @@ export default function CalendarComponent({ navigation }) {
 					markedDates={
 						marked
 					}
-					onDayPress={day => {
-						setSelectedEvent(day);
-					}}
+					onDayPress={day => setSelectedEvent(day)}
 					theme={{
 						calendarBackground: colors.darkGray
 					}}
@@ -112,6 +109,6 @@ export default function CalendarComponent({ navigation }) {
 					{handleCalendarClick()}
 				</Text>
 			</ScrollView>
-		</View>
+		</Screen>
 	);
 };

@@ -3,7 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Image, Text, View } from "react-native";
 import Favicon from "../../assets/favicon.png"
-import useUserInfo from "./UserInfoProvider";
+import useUserInfo from "./ContextProviders/UserInfoProvider";
 import { colors } from "../../config.json";
 import Styles from "./Styles";
 import React, { useEffect, useState } from "react";
@@ -14,7 +14,7 @@ import Resources from "../pages/Resources";
 import Login from "../pages/Login";
 import Forms from "../pages/Forms";
 import Home from "../pages/Home";
-import Icons from "./AllIconsSVG";
+import Icons from "./utils/AllIconsSVG";
 
 const DrawerNavigator = createDrawerNavigator();
 
@@ -100,7 +100,8 @@ function Drawer() {
 					drawerInactiveBackgroundColor: colors.background
 				}}
 				drawerContent={props =>
-					<DrawerContent {...props}/> /* Oddly required for hooks: https://github.com/react-navigation/react-navigation/issues/7725 */}
+					<DrawerContent {...props}/> /* Oddly required for hooks: https://github.com/react-navigation/react-navigation/issues/7725 */
+				}
 			>
 				<DrawerNavigator.Screen
 					name="Home"

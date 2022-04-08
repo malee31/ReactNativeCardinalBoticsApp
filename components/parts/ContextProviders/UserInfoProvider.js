@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { getPassword } from "./storageManager";
-import { getLeaderboard, verifyPassword } from "./serverClient";
+import { getPassword } from "../utils/storageManager";
+import { getLeaderboard, verifyPassword } from "../utils/serverClient";
 
 /**
  * @typedef UserInfoWritable
