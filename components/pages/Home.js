@@ -1,13 +1,11 @@
-import Logo from "../../assets/cardinalbotics_logo_white_clear.png";
 import { signIn, signOut } from "../parts/utils/serverClient";
 import useUserInfo from "../parts/ContextProviders/UserInfoProvider";
 import useModal from "../parts/ContextProviders/ModalProvider";
 import { Button } from "react-native-paper";
-import { Image } from 'react-native';
 import { colors } from "../../config.json";
-import Styles from "../parts/Styles";
 import React, { useEffect, useState } from "react";
 import Screen from "../parts/StyledParts/ScreenWrapper";
+import LargeLogo from "../parts/StyledParts/LargeLogo";
 
 export default function Home({ navigation }) {
 	const modal = useModal();
@@ -60,10 +58,7 @@ export default function Home({ navigation }) {
 
 	return (
 		<Screen navigation={navigation}>
-			<Image
-				source={Logo}
-				resizeMode="contain"
-				style={Styles.largeLogoImage}/>
+			<LargeLogo/>
 			<Button
 				onPress={toggleSignIn}
 				compact={true}

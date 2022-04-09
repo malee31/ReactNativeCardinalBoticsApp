@@ -1,7 +1,7 @@
 import { StyleSheet, Text } from 'react-native';
 import { Button, Modal } from "react-native-paper";
 import React from 'react';
-import useModal from "./ContextProviders/ModalProvider";
+import useModal from "../ContextProviders/ModalProvider";
 
 const modalStyles = StyleSheet.create({
 	container: {

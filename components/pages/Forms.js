@@ -1,10 +1,25 @@
-import { ActivityIndicator, FlatList, Text, View } from 'react-native';
+import { ActivityIndicator, FlatList, StyleSheet, Text, View } from 'react-native';
 import LinkButton from "../parts/StyledParts/LinkButton.js";
 import { colors, urls } from "../../config.json";
 import React, { useEffect, useState } from "react";
-import Styles from "../parts/Styles.js";
 import useModal from "../parts/ContextProviders/ModalProvider";
 import Screen from "../parts/StyledParts/ScreenWrapper";
+
+const formStyles = StyleSheet.create({
+	button: {
+		width: "100%",
+		minHeight: 45,
+		flex: 1,
+		justifyContent: 'space-around',
+		alignItems: "flex-start",
+		paddingHorizontal: "4%",
+		marginVertical: 4
+	}, text: {
+		flex: 1, width: "30%", fontSize: 16, paddingHorizontal: 5, justifyContent: "center", alignContent: "center"
+	}, title: {
+		textAlign: 'center', alignSelf: 'center', width: "100%", fontSize: 30, color: colors.primary, marginTop: '5%'
+	}
+});
 
 export default function Forms({ navigation }) {
 	const [data, setData] = useState([]);
@@ -36,34 +51,26 @@ export default function Forms({ navigation }) {
 			renderItem={entry => {
 				entry = entry.item;
 				if(typeof entry == "string") {
-					return (
-						<View style={Styles.formButton}>
-							<Text style={Styles.title}>
+					return (<View style={formStyles.button}>
+							<Text style={formStyles.title}>
 								{entry}
 							</Text>
-						</View>
-					);
+						</View>);
 				}
 
 				const trimmed = entry[4].trim();
 
-				return (
-					<View style={Styles.formButton}>
-						{trimmed && trimmed.toLowerCase() !== "n/a" && (
-							<Text style={Styles.formText}>
+				return (<View style={formStyles.button}>
+						{trimmed && trimmed.toLowerCase() !== "n/a" && (<Text style={formStyles.text}>
 								Due {entry[4]}
-							</Text>
-						)}
+							</Text>)}
 						<LinkButton title={entry[1]} url={entry[2]}/>
-					</View>
-				);
+					</View>);
 			}}
 		/>;
 	}
 
-	return (
-		<Screen navigation={navigation}>
+	return (<Screen navigation={navigation}>
 			{component}
-		</Screen>
-	);
+		</Screen>);
 }

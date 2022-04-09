@@ -1,9 +1,8 @@
 import { Calendar, LocaleConfig } from 'react-native-calendars';
-import { ScrollView, Text, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { colors, urls } from "../../config.json";
 import React, { useEffect, useState } from "react";
 import moment from 'moment';
-import Styles from "../parts/Styles.js";
 import Screen from "../parts/StyledParts/ScreenWrapper";
 
 LocaleConfig.locales['en'] = {
@@ -15,6 +14,21 @@ LocaleConfig.locales['en'] = {
 };
 
 LocaleConfig.defaultLocale = 'en';
+
+const calendarStyles = StyleSheet.create({
+	scroll: {
+		maxHeight: "55%",
+		padding: 15
+	},
+	text: {
+		padding: 10,
+		fontSize: 20,
+		width: "100%",
+		flex: 1,
+		textAlign: 'center',
+		alignSelf: "center"
+	}
+});
 
 export default function CalendarComponent({ navigation }) {
 	const [data, setData] = useState([]);
@@ -104,8 +118,8 @@ export default function CalendarComponent({ navigation }) {
 					}}
 				/>
 			</View>
-			<ScrollView style={Styles.scroll}>
-				<Text style={Styles.text}>
+			<ScrollView style={calendarStyles.scroll}>
+				<Text style={calendarStyles.text}>
 					{handleCalendarClick()}
 				</Text>
 			</ScrollView>

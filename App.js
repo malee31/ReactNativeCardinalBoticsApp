@@ -1,8 +1,8 @@
 import { DefaultTheme, Provider as PaperProvider } from "react-native-paper";
 import { UserInfoProvider } from "./components/parts/ContextProviders/UserInfoProvider";
 import { ModalProvider } from "./components/parts/ContextProviders/ModalProvider";
-import Modal from "./components/parts/ModalDisplayer";
-import Drawer from "./components/parts/Drawer";
+import Modal from "./components/parts/StyledParts/ModalDisplayer";
+import Drawer from "./components/parts/StyledParts/Drawer";
 import { StatusBar } from "expo-status-bar";
 import "react-native-gesture-handler";
 import config from "./config.json";

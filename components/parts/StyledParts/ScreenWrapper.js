@@ -1,5 +1,5 @@
 import React from "react";
-import { View, StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 import MenuButton from "./MenuButton";
 import { colors } from "../../../config.json";
 

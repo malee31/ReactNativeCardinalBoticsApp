@@ -1,10 +1,20 @@
-import { ActivityIndicator, FlatList, Text, View } from 'react-native';
-import Styles from "../parts/Styles.js";
-import { colors } from "../../config.json";
-import React, { useEffect, useState } from "react";
+import { ActivityIndicator, FlatList, StyleSheet, Text, View } from 'react-native';
 import useUserInfo from "../parts/ContextProviders/UserInfoProvider";
 import { updateSelf } from "../parts/utils/serverClientWrapper";
 import Screen from "../parts/StyledParts/ScreenWrapper";
+import React, { useEffect, useState } from "react";
+import { colors } from "../../config.json";
+
+const { memberListStyles } = StyleSheet.create({
+	memberListStyles: {
+		flexDirection: "column",
+		width: "100%",
+		backgroundColor: colors.gray,
+		borderRadius: 10,
+		padding: 5,
+		marginVertical: "1%"
+	},
+});
 
 function formatTime(totalTime) {
 	return `${Math.floor(totalTime / 3600)} hour${Math.floor(totalTime / 3600) !== 1 ? "s" : ""} and ${Math.floor((totalTime % 3600) / 60)} minute${Math.floor((totalTime % 3600) / 60) !== 1 ? "s" : ""}`;
@@ -32,7 +42,7 @@ export default function Leaderboard({ navigation }) {
 			renderItem={entry => {
 				entry = entry.item;
 				return (
-					<View style={Styles.timeLogRow}>
+					<View style={memberListStyles}>
 						<Text
 							style={{
 								color: entry.signedIn ? "green" : "black",

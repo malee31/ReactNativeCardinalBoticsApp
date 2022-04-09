@@ -1,20 +1,41 @@
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Image, Text, View } from "react-native";
-import Favicon from "../../assets/favicon.png"
-import useUserInfo from "./ContextProviders/UserInfoProvider";
-import { colors } from "../../config.json";
-import Styles from "./Styles";
+import { Image, StyleSheet, Text, View } from "react-native";
+import Favicon from "../../../assets/favicon.png"
+import useUserInfo from "../ContextProviders/UserInfoProvider";
+import { colors } from "../../../config.json";
 import React, { useEffect, useState } from "react";
 
-import Leaderboard from "../pages/Leaderboard";
-import Resources from "../pages/Resources";
+import Leaderboard from "../../pages/Leaderboard";
+import Resources from "../../pages/Resources";
 // import Calendar from "../pages/Calendar";
-import Login from "../pages/Login";
-import Forms from "../pages/Forms";
-import Home from "../pages/Home";
-import Icons from "./utils/AllIconsSVG";
+import Login from "../../pages/Login";
+import Forms from "../../pages/Forms";
+import Home from "../../pages/Home";
+import Icons from "../utils/AllIconsSVG";
+
+const drawerStyles = StyleSheet.create({
+	logo: {
+		width: "35%",
+		height: "30%",
+		maxHeight: "35%",
+		borderRadius: 25
+	},
+	text: {
+		fontSize: 18,
+		color: colors.cardinalWhite,
+		textAlign: "left",
+		marginTop: 10,
+		marginHorizontal: 15
+	},
+	timeIn: {
+		fontSize: 16,
+		color: colors.cardinalWhite,
+		textAlign: "left",
+		marginHorizontal: 15
+	}
+});
 
 const DrawerNavigator = createDrawerNavigator();
 
@@ -64,13 +85,13 @@ function DrawerContent(props) {
 				<Image
 					source={Favicon}
 					resizeMode="contain"
-					style={Styles.drawerLogo}
+					style={drawerStyles.logo}
 				/>
 				<View>
-					<Text style={Styles.drawerText}>
+					<Text style={drawerStyles.text}>
 						{!userInfo.loaded ? "Loading..." : (userInfo.loggedIn ? userInfo.name : "Not Logged In")}
 					</Text>
-					<Text style={Styles.drawerTimeIn}>
+					<Text style={drawerStyles.timeIn}>
 						{!userInfo.loaded ? "Loading..." : (!userInfo.signedIn ? "No Sessions Active" : formatTimeIn(timeIn))}
 					</Text>
 				</View>

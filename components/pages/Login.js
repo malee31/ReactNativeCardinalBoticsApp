@@ -1,13 +1,28 @@
-import { Image, Text, TouchableHighlight, View } from 'react-native';
-import Logo from "../../assets/cardinalbotics_logo_white_clear.png";
-import { TextInput } from 'react-native-paper';
-import { colors } from "../../config.json";
-import Styles from "../parts/Styles";
+import { StyleSheet, Text, TouchableHighlight, View } from 'react-native';
 import useUserInfo from "../parts/ContextProviders/UserInfoProvider";
 import useModal from "../parts/ContextProviders/ModalProvider";
-import React, { useState } from "react";
 import { login } from "../parts/utils/serverClientWrapper";
 import Screen from "../parts/StyledParts/ScreenWrapper";
+import LargeLogo from "../parts/StyledParts/LargeLogo";
+import { TextInput } from 'react-native-paper';
+import { colors } from "../../config.json";
+import React, { useState } from "react";
+
+const loginStyles = StyleSheet.create({
+	loginInput: {
+		color: "#7D1120",
+		width: "70%",
+	},
+	loginButton: {
+		alignItems: "center",
+		justifyContent: "center",
+		alignSelf: "center",
+		backgroundColor: colors.gray,
+		width: "70%",
+		padding: "2%",
+		marginVertical: "3%",
+	},
+});
 
 export default function Login({ navigation }) {
 	const userWritable = useUserInfo(false);
@@ -23,14 +38,11 @@ export default function Login({ navigation }) {
 
 	return (
 		<Screen navigation={navigation}>
-			<Image
-				source={Logo}
-				resizeMode="contain"
-				style={Styles.largeLogoImage}/>
+			<LargeLogo/>
 			<TextInput
 				label="Login"
 				value={passwordInput}
-				style={Styles.signInInput}
+				style={loginStyles.loginInput}
 				onChange={newText => setPasswordInput(newText.nativeEvent.text)}
 				onSubmitEditing={handleLogin}
 			/>
@@ -38,7 +50,7 @@ export default function Login({ navigation }) {
 				onPress={handleLogin}
 				activeOpacity={0.7}
 				underlayColor={colors.darkGray}
-				style={Styles.loginButton}
+				style={loginStyles.loginButton}
 			>
 				<View>
 					<Text>Submit</Text>
