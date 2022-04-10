@@ -9,7 +9,6 @@ import React, { useEffect, useState } from "react";
 
 import Leaderboard from "../../pages/Leaderboard";
 import Resources from "../../pages/Resources";
-// import Calendar from "../pages/Calendar";
 import Login from "../../pages/Login";
 import Forms from "../../pages/Forms";
 import Home from "../../pages/Home";
@@ -157,13 +156,6 @@ function Drawer() {
 						drawerLabel: "Other Members"
 					}}
 				/>
-				{/*<DrawerNavigator.Screen*/}
-				{/*	name="Calendar"*/}
-				{/*	component={Calendar}*/}
-				{/*	options={{*/}
-				{/*		drawerIcon: Icons.Calendar*/}
-				{/*	}}*/}
-				{/*/>*/}
 				<DrawerNavigator.Screen
 					name="Resources"
 					component={Resources}
