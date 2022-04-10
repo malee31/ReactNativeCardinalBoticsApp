@@ -1,10 +1,10 @@
-import { StyleSheet, Text, TouchableHighlight, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 import useUserInfo from "../parts/ContextProviders/UserInfoProvider";
 import useModal from "../parts/ContextProviders/ModalProvider";
 import { login } from "../parts/utils/serverClientWrapper";
 import Screen from "../parts/StyledParts/ScreenWrapper";
 import LargeLogo from "../parts/StyledParts/LargeLogo";
-import { TextInput } from 'react-native-paper';
+import { Button, TextInput } from 'react-native-paper';
 import { colors } from "../../config.json";
 import React, { useState } from "react";
 
@@ -14,14 +14,22 @@ const loginStyles = StyleSheet.create({
 		width: "70%",
 	},
 	loginButton: {
+		width: "70%",
+		backgroundColor: colors.gray,
+		marginVertical: 5,
+	},
+	loginButtonContent: {
 		alignItems: "center",
 		justifyContent: "center",
 		alignSelf: "center",
-		backgroundColor: colors.gray,
-		width: "70%",
-		padding: "2%",
-		marginVertical: "3%",
+		justifySelf: "center",
+		padding: 10
 	},
+	loginButtonText: {
+		color: colors.darkerGray,
+		fontSize: 20,
+		fontWeight: "bold",
+	}
 });
 
 export default function Login({ navigation }) {
@@ -46,16 +54,16 @@ export default function Login({ navigation }) {
 				onChange={newText => setPasswordInput(newText.nativeEvent.text)}
 				onSubmitEditing={handleLogin}
 			/>
-			<TouchableHighlight
+			<Button
 				onPress={handleLogin}
-				activeOpacity={0.7}
-				underlayColor={colors.darkGray}
+				compact={true}
+				mode="contained"
 				style={loginStyles.loginButton}
+				contentStyle={loginStyles.loginButtonContent}
+				labelStyle={loginStyles.loginButtonText}
 			>
-				<View>
-					<Text>Submit</Text>
-				</View>
-			</TouchableHighlight>
+				Submit
+			</Button>
 		</Screen>
 	);
 }

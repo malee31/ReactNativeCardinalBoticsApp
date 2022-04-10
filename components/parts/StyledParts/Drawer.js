@@ -16,17 +16,28 @@ import Home from "../../pages/Home";
 import Icons from "../utils/AllIconsSVG";
 
 const drawerStyles = StyleSheet.create({
+	header: {
+		width: "100%",
+		minHeight: "10%",
+		paddingHorizontal: "2%",
+		paddingVertical: "5%",
+		flexDirection: "row",
+		alignItems: "center",
+		justifyContent: "flex-start",
+		backgroundColor: "red"
+	},
 	logo: {
-		width: "35%",
-		height: "30%",
-		maxHeight: "35%",
-		borderRadius: 25
+		width: "20%",
+		height: "100%",
+		borderRadius: 5
+	},
+	textContainer: {
+		width: "80%"
 	},
 	text: {
 		fontSize: 18,
 		color: colors.cardinalWhite,
 		textAlign: "left",
-		marginTop: 10,
 		marginHorizontal: 15
 	},
 	timeIn: {
@@ -52,7 +63,7 @@ function formatTimeIn(elapsedSeconds) {
 	return `Signed in for: \n${plural(hours, "hour")} ${plural(minutes, "minute")} ${plural(seconds, "second")}`;
 }
 
-function DrawerContent(props) {
+function DrawerHeader() {
 	const userInfo = useUserInfo();
 	const [timeIn, setTimeIn] = useState(0);
 
@@ -70,32 +81,32 @@ function DrawerContent(props) {
 	}, [userInfo.signedIn]);
 
 	return (
+		<LinearGradient
+			colors={["#7D1120", "#A6242F", "#FF4D4D"]}
+			start={[0, 0]}
+			end={[1, 1]}
+			style={drawerStyles.header}>
+			<Image
+				source={Favicon}
+				resizeMode="contain"
+				style={drawerStyles.logo}
+			/>
+			<View style={drawerStyles.textContainer}>
+				<Text style={drawerStyles.text}>
+					{!userInfo.loaded ? "Loading..." : (userInfo.loggedIn ? userInfo.name : "Not Logged In")}
+				</Text>
+				<Text style={drawerStyles.timeIn}>
+					{!userInfo.loaded ? "Loading..." : (!userInfo.signedIn ? "No Sessions Active" : formatTimeIn(timeIn))}
+				</Text>
+			</View>
+		</LinearGradient>
+	);
+}
+
+function DrawerContent(props) {
+	return (
 		<View style={{ flex: 1 }}>
-			<LinearGradient
-				colors={["#7D1120", "#A6242F", "#FF4D4D"]}
-				start={[0, 0]}
-				end={[1, 1]}
-				style={{
-					width: "100%",
-					minHeight: "20%",
-					maxHeight: "25%",
-					alignItems: "flex-start",
-					justifyContent: "center"
-				}}>
-				<Image
-					source={Favicon}
-					resizeMode="contain"
-					style={drawerStyles.logo}
-				/>
-				<View>
-					<Text style={drawerStyles.text}>
-						{!userInfo.loaded ? "Loading..." : (userInfo.loggedIn ? userInfo.name : "Not Logged In")}
-					</Text>
-					<Text style={drawerStyles.timeIn}>
-						{!userInfo.loaded ? "Loading..." : (!userInfo.signedIn ? "No Sessions Active" : formatTimeIn(timeIn))}
-					</Text>
-				</View>
-			</LinearGradient>
+			<DrawerHeader/>
 			<DrawerContentScrollView
 				{...props}
 				style={{ flexGrow: 1 }}

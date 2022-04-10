@@ -52,25 +52,25 @@ export default function Forms({ navigation }) {
 				entry = entry.item;
 				if(typeof entry == "string") {
 					return (<View style={formStyles.button}>
-							<Text style={formStyles.title}>
-								{entry}
-							</Text>
-						</View>);
+						<Text style={formStyles.title}>
+							{entry}
+						</Text>
+					</View>);
 				}
 
 				const trimmed = entry[4].trim();
 
 				return (<View style={formStyles.button}>
-						{trimmed && trimmed.toLowerCase() !== "n/a" && (<Text style={formStyles.text}>
-								Due {entry[4]}
-							</Text>)}
-						<LinkButton title={entry[1]} url={entry[2]}/>
-					</View>);
+					{trimmed && trimmed.toLowerCase() !== "n/a" && (<Text style={formStyles.text}>
+						Due {entry[4]}
+					</Text>)}
+					<LinkButton title={entry[1]} url={entry[2]}/>
+				</View>);
 			}}
 		/>;
 	}
 
 	return (<Screen navigation={navigation}>
-			{component}
-		</Screen>);
+		{component}
+	</Screen>);
 }
