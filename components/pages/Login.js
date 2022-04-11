@@ -22,7 +22,6 @@ const loginStyles = StyleSheet.create({
 		alignItems: "center",
 		justifyContent: "center",
 		alignSelf: "center",
-		justifySelf: "center",
 		padding: 10
 	},
 	loginButtonText: {
@@ -51,6 +50,7 @@ export default function Login({ navigation }) {
 				label="Login"
 				value={passwordInput}
 				style={loginStyles.loginInput}
+				secureTextEntry={true}
 				onChange={newText => setPasswordInput(newText.nativeEvent.text)}
 				onSubmitEditing={handleLogin}
 			/>

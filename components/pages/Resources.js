@@ -1,10 +1,15 @@
-import { ActivityIndicator, FlatList } from 'react-native';
+import { ActivityIndicator, FlatList, StyleSheet } from 'react-native';
 import LinkButton from "../parts/StyledParts/LinkButton.js";
 import { colors, urls } from "../../config.json";
 import React, { useEffect, useState } from "react";
 import useModal from "../parts/ContextProviders/ModalProvider";
 import Screen from "../parts/StyledParts/ScreenWrapper";
 
+const { listStyle } = StyleSheet.create({
+	listStyle: {
+		width: "100%"
+	}
+});
 
 export default function Resources({ navigation }) {
 	const [data, setData] = useState([]);
@@ -21,6 +26,7 @@ export default function Resources({ navigation }) {
 
 	if(data) {
 		component = <FlatList
+			style={listStyle}
 			data={data}
 			keyExtractor={item => item[0] + ": " + item[1]}
 			renderItem={(entry) => {

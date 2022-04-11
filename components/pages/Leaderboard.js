@@ -5,14 +5,17 @@ import Screen from "../parts/StyledParts/ScreenWrapper";
 import React, { useEffect, useState } from "react";
 import { colors } from "../../config.json";
 
-const { memberListStyles } = StyleSheet.create({
-	memberListStyles: {
+const leaderboardStyles = StyleSheet.create({
+	list: {
+		width: "100%"
+	},
+	member: {
 		flexDirection: "column",
 		width: "100%",
 		backgroundColor: colors.gray,
 		borderRadius: 10,
 		padding: 5,
-		marginVertical: "1%"
+		marginVertical: 5
 	},
 });
 
@@ -36,13 +39,14 @@ export default function Leaderboard({ navigation }) {
 
 	if(leaderboardData) {
 		content = <FlatList
+			style={leaderboardStyles.list}
 			scrollEventThrottle={16}
 			data={leaderboardData}
 			keyExtractor={item => item.id.toString()}
 			renderItem={entry => {
 				entry = entry.item;
 				return (
-					<View style={memberListStyles}>
+					<View style={leaderboardStyles.member}>
 						<Text
 							style={{
 								color: entry.signedIn ? "green" : "black",

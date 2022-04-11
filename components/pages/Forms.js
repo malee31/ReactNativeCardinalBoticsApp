@@ -6,6 +6,9 @@ import useModal from "../parts/ContextProviders/ModalProvider";
 import Screen from "../parts/StyledParts/ScreenWrapper";
 
 const formStyles = StyleSheet.create({
+	list: {
+		width: "100%"
+	},
 	button: {
 		width: "100%",
 		minHeight: 45,
@@ -14,9 +17,11 @@ const formStyles = StyleSheet.create({
 		alignItems: "flex-start",
 		paddingHorizontal: "4%",
 		marginVertical: 4
-	}, text: {
+	},
+	text: {
 		flex: 1, width: "30%", fontSize: 16, paddingHorizontal: 5, justifyContent: "center", alignContent: "center"
-	}, title: {
+	},
+	title: {
 		textAlign: 'center', alignSelf: 'center', width: "100%", fontSize: 30, color: colors.primary, marginTop: '5%'
 	}
 });
@@ -46,6 +51,7 @@ export default function Forms({ navigation }) {
 
 	if(data) {
 		component = <FlatList
+			style={formStyles.list}
 			data={data}
 			keyExtractor={item => item[1] + ": " + item[2]}
 			renderItem={entry => {
@@ -70,7 +76,9 @@ export default function Forms({ navigation }) {
 		/>;
 	}
 
-	return (<Screen navigation={navigation}>
-		{component}
-	</Screen>);
+	return (
+		<Screen navigation={navigation}>
+			{component}
+		</Screen>
+	);
 }
