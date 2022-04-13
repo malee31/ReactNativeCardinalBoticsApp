@@ -9,3 +9,6 @@ After entering it in, the password will be verified and saved to the device used
 You can then open the home page through the menu where you can sign in or out.<br>
 After your first time using the app, opening the app will start you on the homepage instead of the login page and your password will be used from your device's storage.<br>
 There are other pages available on the menu so feel free to explore them and use them as you see fit!
+
+# Demo
+![CardinalBotics App Demo GIF](https://github.com/malee31/ReactNativeCardinalBoticsApp/blob/master/assets/CardinalBoticsApp_Demo.gif)
