@@ -9,6 +9,7 @@ const { defaultScreenStyle } = StyleSheet.create({
 		height: "100%",
 		flex: 1,
 		padding: "5%",
+		paddingTop: 48,
 		backgroundColor: colors.background,
 		alignItems: "center"
 	}

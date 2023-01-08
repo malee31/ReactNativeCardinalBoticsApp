@@ -8,11 +8,14 @@ const { menuButtonStyle } = StyleSheet.create({
 		position: "absolute",
 		top: 0,
 		left: 0,
-		width: 36,
-		height: 36,
+		width: 48,
+		height: 48,
 		borderRadius: 0,
 		borderBottomRightRadius: 4,
-		zIndex: 1
+		zIndex: 1,
+		// backgroundColor: "red",
+		margin: 0,
+		padding: 4,
 	}
 });
 
@@ -21,7 +24,7 @@ export default function MenuButton({ navigation }) {
 		<IconButton
 			accessibilityLabel="Menu"
 			icon="menu"
-			size={32}
+			size={44}
 			color={colors.secondary}
 			style={menuButtonStyle}
 			onPress={navigation.toggleDrawer}
