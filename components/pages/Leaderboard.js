@@ -1,8 +1,8 @@
-import { ActivityIndicator, FlatList, StyleSheet, Text, View } from 'react-native';
+import React, { useEffect, useState } from "react";
+import { ActivityIndicator, FlatList, StyleSheet, Text, View } from "react-native";
+import Screen from "../parts/StyledParts/ScreenWrapper";
 import useUserInfo from "../parts/ContextProviders/UserInfoProvider";
 import { updateSelf } from "../parts/utils/serverClientWrapper";
-import Screen from "../parts/StyledParts/ScreenWrapper";
-import React, { useEffect, useState } from "react";
 import { colors } from "../../config.json";
 
 const leaderboardStyles = StyleSheet.create({

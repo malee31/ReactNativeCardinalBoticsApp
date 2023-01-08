@@ -1,9 +1,9 @@
-import { ActivityIndicator, FlatList, StyleSheet } from 'react-native';
-import LinkButton from "../parts/StyledParts/LinkButton.js";
-import { colors, urls } from "../../config.json";
 import React, { useEffect, useState } from "react";
-import useModal from "../parts/ContextProviders/ModalProvider";
+import { ActivityIndicator, FlatList, StyleSheet } from "react-native";
 import Screen from "../parts/StyledParts/ScreenWrapper";
+import LinkButton from "../parts/StyledParts/LinkButton.js";
+import useModal from "../parts/ContextProviders/ModalProvider";
+import { colors, urls } from "../../config.json";
 
 const { listStyle } = StyleSheet.create({
 	listStyle: {

@@ -1,9 +1,9 @@
-import { ActivityIndicator, FlatList, StyleSheet, Text, View } from 'react-native';
-import LinkButton from "../parts/StyledParts/LinkButton.js";
-import { colors, urls } from "../../config.json";
 import React, { useEffect, useState } from "react";
-import useModal from "../parts/ContextProviders/ModalProvider";
+import { ActivityIndicator, FlatList, StyleSheet, Text, View } from "react-native";
+import LinkButton from "../parts/StyledParts/LinkButton.js";
 import Screen from "../parts/StyledParts/ScreenWrapper";
+import useModal from "../parts/ContextProviders/ModalProvider";
+import { colors, urls } from "../../config.json";
 
 const formStyles = StyleSheet.create({
 	list: {
@@ -13,16 +13,26 @@ const formStyles = StyleSheet.create({
 		width: "100%",
 		minHeight: 45,
 		flex: 1,
-		justifyContent: 'space-around',
+		justifyContent: "space-around",
 		alignItems: "flex-start",
 		paddingHorizontal: "4%",
 		marginVertical: 4
 	},
 	text: {
-		flex: 1, width: "30%", fontSize: 16, paddingHorizontal: 5, justifyContent: "center", alignContent: "center"
+		flex: 1,
+		width: "30%",
+		fontSize: 16,
+		paddingHorizontal: 5,
+		justifyContent: "center",
+		alignContent: "center"
 	},
 	title: {
-		textAlign: 'center', alignSelf: 'center', width: "100%", fontSize: 30, color: colors.primary, marginTop: '5%'
+		width: "100%",
+		alignSelf: "center",
+		textAlign: "center",
+		fontSize: 30,
+		color: colors.primary,
+		marginTop: "5%"
 	}
 });
 

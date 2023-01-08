@@ -1,11 +1,9 @@
-import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList } from '@react-navigation/drawer';
-import { NavigationContainer } from '@react-navigation/native';
-import { LinearGradient } from 'expo-linear-gradient';
-import { Image, StyleSheet, Text, View } from "react-native";
-import Favicon from "../../../assets/favicon.png"
-import useUserInfo from "../ContextProviders/UserInfoProvider";
-import { colors } from "../../../config.json";
 import React, { useEffect, useState } from "react";
+import { Image, StyleSheet, Text, View } from "react-native";
+import { NavigationContainer } from "@react-navigation/native";
+import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList } from "@react-navigation/drawer";
+import { LinearGradient } from "expo-linear-gradient";
+import useUserInfo from "../ContextProviders/UserInfoProvider";
 
 import Leaderboard from "../../pages/Leaderboard";
 import Resources from "../../pages/Resources";
@@ -13,6 +11,9 @@ import Login from "../../pages/Login";
 import Forms from "../../pages/Forms";
 import Home from "../../pages/Home";
 import Icons from "../utils/AllIconsSVG";
+
+import Favicon from "../../../assets/favicon.png"
+import { colors } from "../../../config.json";
 
 const drawerStyles = StyleSheet.create({
 	header: {
