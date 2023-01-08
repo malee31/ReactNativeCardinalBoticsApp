@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
+import { View } from "react-native";
+import { Button } from "react-native-paper";
 import { signIn, signOut } from "../parts/utils/serverClient";
 import useUserInfo from "../parts/ContextProviders/UserInfoProvider";
 import useModal from "../parts/ContextProviders/ModalProvider";
-import { Button } from "react-native-paper";
-import { colors } from "../../config.json";
 import Screen from "../parts/StyledParts/ScreenWrapper";
 import LargeLogo from "../parts/StyledParts/LargeLogo";
+import { colors } from "../../config.json";
 
 export default function Home({ navigation }) {
 	const modal = useModal();
@@ -59,31 +60,53 @@ export default function Home({ navigation }) {
 	return (
 		<Screen navigation={navigation}>
 			<LargeLogo/>
-			<Button
-				onPress={toggleSignIn}
-				compact={true}
-				mode="contained"
-				loading={showLoading}
-				disabled={showLoading}
+			<View
 				style={{
-					width: "70%"
-				}}
-				contentStyle={{
-					alignItems: "center",
-					justifyContent: "center",
-					alignSelf: "center",
-					backgroundColor: colors.gray,
 					width: "100%",
-					padding: "5%"
-				}}
-				labelStyle={{
-					color: showLoading || !userWritable.userInfo.loggedIn ? "gray" : (userWritable.userInfo.signedIn ? "red" : "green"),
-					fontSize: 30,
-					fontWeight: "bold"
+					marginTop: 16,
+					alignItems: "center",
+					paddingHorizontal: 8,
+					overflow: "visible"
 				}}
 			>
-				{!showLoading && (!userWritable.userInfo.loggedIn ? "Log in to get started!" : `Sign ${userWritable.userInfo.signedIn ? "Out" : "In"} as ${displayName}`)}
-			</Button>
+				<Button
+					onPress={toggleSignIn}
+					compact={true}
+					mode="contained"
+					loading={showLoading}
+					disabled={showLoading}
+					style={{
+						maxWidth: "100%",
+						maxHeight: 160,
+						justifyContent: "center",
+						alignItems: "center",
+						backgroundColor: colors.lighterGray,
+						borderRadius: 8,
+						borderColor: colors.lighterGray,
+						shadowColor: colors.darkerGray,
+						shadowOffsetY: 8,
+						shadowRadius: 16,
+						elevation: 3,
+						overflowX: "hidden"
+					}}
+					contentStyle={{
+						width: 600,
+						height: 96,
+						paddingHorizontal: 16,
+						paddingVertical: 8,
+						borderColor: colors.lighterGray,
+					}}
+					labelStyle={{
+						color: showLoading || !userWritable.userInfo.loggedIn ? "gray" : (userWritable.userInfo.signedIn ? "red" : "green"),
+						fontSize: "120%",
+						borderColor: colors.lighterGray,
+						fontWeight: "bold",
+						maxWidth: "100%"
+					}}
+				>
+					{!showLoading && (!userWritable.userInfo.loggedIn ? "Log in to get started!" : `Sign ${userWritable.userInfo.signedIn ? "Out" : "In"} as ${displayName}`)}
+				</Button>
+			</View>
 		</Screen>
 	);
 }
