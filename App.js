@@ -4,7 +4,7 @@ import { ModalProvider } from "./components/parts/ContextProviders/ModalProvider
 import Modal from "./components/parts/StyledParts/ModalDisplayer";
 import Drawer from "./components/parts/StyledParts/Drawer";
 import { StatusBar } from "expo-status-bar";
-import "react-native-gesture-handler";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import config from "./config.json";
 import React from "react";
 
@@ -19,13 +19,16 @@ export default function App() {
 		}
 	};
 
+
 	return (
 		<UserInfoProvider>
 			<ModalProvider>
 				<PaperProvider theme={paperTheme} style={{ flex: 1 }}>
-					<StatusBar animated hidden style="dark"/>
-					<Drawer/>
-					<Modal/>
+					<GestureHandlerRootView style={{ flex: 1 }}>
+						<StatusBar animated hidden style="dark"/>
+						<Drawer/>
+						<Modal/>
+					</GestureHandlerRootView>
 				</PaperProvider>
 			</ModalProvider>
 		</UserInfoProvider>

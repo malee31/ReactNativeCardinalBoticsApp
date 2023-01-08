@@ -1,9 +1,9 @@
+import React, { useEffect, useState } from "react";
 import { signIn, signOut } from "../parts/utils/serverClient";
 import useUserInfo from "../parts/ContextProviders/UserInfoProvider";
 import useModal from "../parts/ContextProviders/ModalProvider";
 import { Button } from "react-native-paper";
 import { colors } from "../../config.json";
-import React, { useEffect, useState } from "react";
 import Screen from "../parts/StyledParts/ScreenWrapper";
 import LargeLogo from "../parts/StyledParts/LargeLogo";
 
