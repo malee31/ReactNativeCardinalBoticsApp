@@ -98,7 +98,7 @@ export default function Home({ navigation }) {
 					}}
 					labelStyle={{
 						color: showLoading || !userWritable.userInfo.loggedIn ? "gray" : (userWritable.userInfo.signedIn ? "red" : "green"),
-						fontSize: "120%",
+						fontSize: 24,
 						borderColor: colors.lighterGray,
 						fontWeight: "bold",
 						maxWidth: "100%"
