@@ -32,7 +32,9 @@ const loginStyles = StyleSheet.create({
 		borderRadius: 5,
 
 		shadowColor: colors.darkerGray,
-		shadowOffsetY: 4,
+		shadowOffset: {
+			height: 4
+		},
 		shadowRadius: 4,
 		elevation: 3,
 	},

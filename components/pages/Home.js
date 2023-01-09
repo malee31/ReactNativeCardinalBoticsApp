@@ -84,7 +84,9 @@ export default function Home({ navigation }) {
 						borderRadius: 8,
 						borderColor: colors.lighterGray,
 						shadowColor: colors.darkerGray,
-						shadowOffsetY: 8,
+						shadowOffsetY: {
+							height: 8
+						},
 						shadowRadius: 16,
 						elevation: 3,
 						overflowX: "hidden"
