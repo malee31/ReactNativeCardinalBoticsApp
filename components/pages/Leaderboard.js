@@ -35,7 +35,7 @@ export default function Leaderboard({ navigation }) {
 		// TODO: Sync more accurately using websockets
 		const timer = setInterval(update, 30 * 1000); // 30-second interval
 		return () => clearInterval(timer);
-	}, [userWritable.userInfo]);
+	}, [userWritable.userInfo.password]);
 
 	if(leaderboardData) {
 		content = <FlatList
