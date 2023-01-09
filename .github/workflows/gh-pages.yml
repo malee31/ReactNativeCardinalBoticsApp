@@ -4,7 +4,7 @@ name: Deploy Web
 on:
   workflow_dispatch:
   push:
-    branches: [ master, deploy-web ]
+    branches: [ deploy-web ]
 
 jobs:
   build:
@@ -16,7 +16,7 @@ jobs:
         uses: actions/setup-node@v3
 
       - name: Install Dependencies
-        run: npm install
+        run: npm install --legacy-peer-deps
 
       - name: Setup Expo
         uses: expo/expo-github-action@v7

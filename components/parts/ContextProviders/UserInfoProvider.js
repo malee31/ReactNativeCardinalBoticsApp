@@ -20,7 +20,7 @@ import { getLeaderboard, verifyPassword } from "../utils/serverClient";
 // Note: Default value is never used
 const userInfoContext = createContext({
 	updateData: () => {},
-	data: {
+	userInfo: {
 		loaded: false,
 		loggedIn: false,
 		signedIn: 0,
