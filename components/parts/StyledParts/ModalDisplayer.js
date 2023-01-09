@@ -1,26 +1,34 @@
 import React from "react";
-import { StyleSheet, Text } from "react-native";
+import { StyleSheet, View, ScrollView, Text } from "react-native";
 import { Button, Modal } from "react-native-paper";
 import useModal from "../ContextProviders/ModalProvider";
 
 const modalStyles = StyleSheet.create({
 	container: {
-		maxWidth: "85%",
-		minHeight: "15%",
+		width: "90%",
+		maxWidth: 600,
+		height: 160,
 		maxHeight: "50%",
+		padding: 0,
 		alignSelf: "center",
-		backgroundColor: "white",
 		justifyContent: "space-between",
 		alignItems: "stretch",
-		borderRadius: 4,
-		borderColor: "#DDDDDD"
+		backgroundColor: "white",
+		borderRadius: 4
+	},
+	scrollContainer: {
+		marginBottom: 8,
+		justifyContent: "center",
+		flex: 1
+	},
+	textContainer: {
+		paddingHorizontal: 16,
+		paddingVertical: 12,
+		flexGrow: 0
 	},
 	text: {
-		paddingVertical: 10,
-		paddingHorizontal: 15,
-		fontSize: 24,
 		textAlign: "center",
-		flex: 1
+		fontSize: 24
 	}
 });
 
@@ -36,14 +44,25 @@ export default function CustomModal() {
 			onDismiss={dismiss}
 			contentContainerStyle={modalStyles.container}
 		>
-			<Text
-				style={modalStyles.text}
-			>
-				{modal.message || "Oh no! The programmers forgot to leave a message here"}
-			</Text>
+			<View style={modalStyles.scrollContainer}>
+				<ScrollView
+					style={modalStyles.textContainer}
+					contentContainerStyle={modalStyles.textContainerContent}
+					bounces={false}
+					pinchGestureEnabled={false}
+				>
+					<Text
+						style={modalStyles.text}
+					>
+						{modal.message || "Oh no! The programmers forgot to leave a message here"}
+					</Text>
+				</ScrollView>
+			</View>
+
 			<Button
 				mode="contained"
 				onPress={dismiss}
+				style={{ justifySelf: "flex-end" }}
 			>
 				Close
 			</Button>

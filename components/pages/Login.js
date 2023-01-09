@@ -57,7 +57,7 @@ export default function Login({ navigation }) {
 	const modal = useModal();
 
 	const handleLogin = () => {
-		modal.showMessage("Verifying that you exist.");
+		modal.showMessage("Verifying that you exist...");
 		login(userWritable, passwordInput)
 			.then(modal.showMessage)
 			.catch(err => modal.showMessage(err.message));
