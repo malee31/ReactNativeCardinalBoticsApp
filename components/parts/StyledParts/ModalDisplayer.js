@@ -7,7 +7,7 @@ const modalStyles = StyleSheet.create({
 	container: {
 		width: "90%",
 		maxWidth: 600,
-		height: 160,
+		height: 172,
 		maxHeight: "50%",
 		padding: 0,
 		alignSelf: "center",
