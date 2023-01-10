@@ -1,27 +1,23 @@
 import React, { useEffect, useState } from "react";
-import { ActivityIndicator, FlatList, StyleSheet, Text, View } from "react-native";
+import { ActivityIndicator, FlatList, StyleSheet } from "react-native";
 import Screen from "../parts/StyledParts/ScreenWrapper";
+import LeaderboardEntry from "../parts/StyledParts/LeaderboardEntry";
 import useUserInfo from "../parts/ContextProviders/UserInfoProvider";
 import { updateSelf } from "../parts/utils/serverClientWrapper";
 import { colors } from "../../config.json";
 
 const leaderboardStyles = StyleSheet.create({
 	list: {
-		width: "100%"
-	},
-	member: {
-		flexDirection: "column",
 		width: "100%",
-		backgroundColor: colors.gray,
-		borderRadius: 10,
-		padding: 5,
-		marginVertical: 5
+		paddingHorizontal: 8
 	},
+	listContent: {
+		alignSelf: "center",
+		alignItems: "stretch",
+		width: "100%",
+		maxWidth: 600
+	}
 });
-
-function formatTime(totalTime) {
-	return `${Math.floor(totalTime / 3600)} hour${Math.floor(totalTime / 3600) !== 1 ? "s" : ""} and ${Math.floor((totalTime % 3600) / 60)} minute${Math.floor((totalTime % 3600) / 60) !== 1 ? "s" : ""}`;
-}
 
 export default function Leaderboard({ navigation }) {
 	const [leaderboardData, setLeaderboardData] = useState([]);
@@ -40,22 +36,18 @@ export default function Leaderboard({ navigation }) {
 	if(leaderboardData) {
 		content = <FlatList
 			style={leaderboardStyles.list}
+			contentContainerStyle={leaderboardStyles.listContent}
 			scrollEventThrottle={16}
-			data={leaderboardData}
+			data={leaderboardData.sort((a, b) => {
+				if(a.signedIn !== b.signedIn) return b.signedIn - a.signedIn;
+
+				return a.name.localeCompare(b.name)
+			})}
 			keyExtractor={item => item.id.toString()}
 			renderItem={entry => {
 				entry = entry.item;
 				return (
-					<View style={leaderboardStyles.member}>
-						<Text
-							style={{
-								color: entry.signedIn ? "green" : "black",
-								fontSize: 16
-							}}
-						>
-							{entry.name}: {formatTime(entry.totalTime / 1000)}{Boolean(entry.signedIn) && ` + ${formatTime(entry.timeIn / 1000)}`}
-						</Text>
-					</View>
+					<LeaderboardEntry entry={entry}/>
 				);
 			}}
 		/>;

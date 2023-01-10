@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, View, ScrollView, Text } from "react-native";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { Button, Modal } from "react-native-paper";
 import useModal from "../ContextProviders/ModalProvider";
 
