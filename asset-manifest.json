@@ -1,11 +1,11 @@
 {
   "files": {
-    "app.js": "/ReactNativeCardinalBoticsApp/static/js/app.3c94f274.chunk.js",
-    "app.js.map": "/ReactNativeCardinalBoticsApp/static/js/app.3c94f274.chunk.js.map",
+    "app.js": "/ReactNativeCardinalBoticsApp/static/js/app.e38702a2.chunk.js",
+    "app.js.map": "/ReactNativeCardinalBoticsApp/static/js/app.e38702a2.chunk.js.map",
     "runtime~app.js": "/ReactNativeCardinalBoticsApp/static/js/runtime~app.491cac01.js",
     "runtime~app.js.map": "/ReactNativeCardinalBoticsApp/static/js/runtime~app.491cac01.js.map",
-    "static/js/2.cb82b0bb.chunk.js": "/ReactNativeCardinalBoticsApp/static/js/2.cb82b0bb.chunk.js",
-    "static/js/2.cb82b0bb.chunk.js.map": "/ReactNativeCardinalBoticsApp/static/js/2.cb82b0bb.chunk.js.map",
+    "static/js/2.c07dfbc0.chunk.js": "/ReactNativeCardinalBoticsApp/static/js/2.c07dfbc0.chunk.js",
+    "static/js/2.c07dfbc0.chunk.js.map": "/ReactNativeCardinalBoticsApp/static/js/2.c07dfbc0.chunk.js.map",
     "fonts/MaterialCommunityIcons.ttf": "/ReactNativeCardinalBoticsApp/./fonts/MaterialCommunityIcons.ttf",
     "favicon-16.png": "/ReactNativeCardinalBoticsApp/favicon-16.png",
     "favicon-32.png": "/ReactNativeCardinalBoticsApp/favicon-32.png",
@@ -13,13 +13,13 @@
     "index.html": "/ReactNativeCardinalBoticsApp/index.html",
     "manifest.json": "/ReactNativeCardinalBoticsApp/manifest.json",
     "serve.json": "/ReactNativeCardinalBoticsApp/serve.json",
-    "static/js/2.cb82b0bb.chunk.js.LICENSE.txt": "/ReactNativeCardinalBoticsApp/static/js/2.cb82b0bb.chunk.js.LICENSE.txt",
+    "static/js/2.c07dfbc0.chunk.js.LICENSE.txt": "/ReactNativeCardinalBoticsApp/static/js/2.c07dfbc0.chunk.js.LICENSE.txt",
     "static/media/cardinalbotics_logo_white_clear.png": "/ReactNativeCardinalBoticsApp/static/media/cardinalbotics_logo_white_clear.28ac1cbe.png",
     "static/media/favicon.png": "/ReactNativeCardinalBoticsApp/static/media/favicon.f13dfa17.png"
   },
   "entrypoints": [
     "static/js/runtime~app.491cac01.js",
-    "static/js/2.cb82b0bb.chunk.js",
-    "static/js/app.3c94f274.chunk.js"
+    "static/js/2.c07dfbc0.chunk.js",
+    "static/js/app.e38702a2.chunk.js"
   ]
 }
