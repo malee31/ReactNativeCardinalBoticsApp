@@ -50,6 +50,19 @@ const drawerStyles = StyleSheet.create({
 
 const DrawerNavigator = createDrawerNavigator();
 
+const linking = {
+	prefixes: ["cardinalbotics-app://"],
+	config: {
+		screens: {
+			Home: "/",
+			Login: "login",
+			Leaderboard: "/leaderboard",
+			Resources: "/resources",
+			Forms: "/forms"
+		}
+	}
+};
+
 /**
  * Takes in time in milliseconds and converts it to a readable format
  * @param {number} elapsedSeconds Number of seconds signed in
@@ -119,7 +132,7 @@ function DrawerContent(props) {
 
 function Drawer() {
 	return (
-		<NavigationContainer>
+		<NavigationContainer linking={linking}>
 			<DrawerNavigator.Navigator
 				initialRouteName="Home"
 				backBehavior="history"
