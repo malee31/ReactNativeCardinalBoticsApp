@@ -1,7 +1,7 @@
 {
   "files": {
-    "app.js": "/ReactNativeCardinalBoticsApp/static/js/app.e38702a2.chunk.js",
-    "app.js.map": "/ReactNativeCardinalBoticsApp/static/js/app.e38702a2.chunk.js.map",
+    "app.js": "/ReactNativeCardinalBoticsApp/static/js/app.3047ae6e.chunk.js",
+    "app.js.map": "/ReactNativeCardinalBoticsApp/static/js/app.3047ae6e.chunk.js.map",
     "runtime~app.js": "/ReactNativeCardinalBoticsApp/static/js/runtime~app.491cac01.js",
     "runtime~app.js.map": "/ReactNativeCardinalBoticsApp/static/js/runtime~app.491cac01.js.map",
     "static/js/2.c07dfbc0.chunk.js": "/ReactNativeCardinalBoticsApp/static/js/2.c07dfbc0.chunk.js",
@@ -20,6 +20,6 @@
   "entrypoints": [
     "static/js/runtime~app.491cac01.js",
     "static/js/2.c07dfbc0.chunk.js",
-    "static/js/app.e38702a2.chunk.js"
+    "static/js/app.3047ae6e.chunk.js"
   ]
 }
