@@ -1,76 +1,81 @@
 {
-	"expo": {
-		"name": "CardinalHours App",
-		"description": "Team4159 CardinalBotics Sign-In App",
-		"slug": "ReactNative-CardinalBoticsApp",
-		"privacy": "unlisted",
-		"sdkVersion": "44.0.0",
-		"version": "2.2.0",
-		"platforms": [
-			"ios",
-			"android",
-			"web"
-		],
-		"icon": "./assets/icon.png",
-		"orientation": "portrait",
-		"primaryColor": "#7D1120",
-		"backgroundColor": "#FFFFFF",
-		"splash": {
-			"image": "./assets/favicon.png",
-			"resizeMode": "contain",
-			"backgroundColor": "#7D1120",
-			"userInterfaceStyle": "automatic"
-		},
-		"notification": {
-			"icon": "./assets/icon.png",
-			"color": "#000000",
-			"iosDisplayInForeground": false,
-			"androidCollapsedTitle": "collapse"
-		},
-		"updates": {
-			"fallbackToCacheTimeout": 0
-		},
-		"assetBundlePatterns": [
-			"**/*"
-		],
-		"android": {
-			"package": "com.team4159.cardinalboticsapp",
-			"versionCode": 3,
-			"adaptiveIcon": {
-				"foregroundImage": "./assets/adaptable_icon_foreground.png",
-				"backgroundColor": "#7D1120"
-			}
-		},
-		"androidStatusBar": {
-			"barStyle": "dark-content",
-			"hidden": true,
-			"translucent": true
-		},
-		"androidNavigationBar": {
-			"barStyle": "dark-content"
-		},
-		"ios": {
-			"bundleIdentifier": "com.team4159.cardinalboticsapp",
-			"supportsTablet": true,
-			"buildNumber": "2.2.0"
-		},
-		"web": {
-			"favicon": "./assets/favicon.png",
-			"name": "CardinalHours Web",
-			"shortName": "CardinalHours",
-			"startUrl": "/",
-			"lang": "en-US",
-			"scope": "/",
-			"themeColor": "#FFFFFF",
-			"description": "Team4159 CardinalBotics Sign-In Web App",
-			"orientation": "portrait",
-			"backgroundColor": "#FFFFFF",
-			"splash": {
-				"image": "./assets/favicon.png",
-				"resizeMode": "contain",
-				"backgroundColor": "#7D1120",
-				"userInterfaceStyle": "automatic"
-			}
-		}
-	}
+  "expo": {
+    "name": "CardinalHours App",
+    "description": "Team4159 CardinalBotics Sign-In App",
+    "slug": "ReactNative-CardinalBoticsApp",
+    "privacy": "unlisted",
+    "sdkVersion": "44.0.0",
+    "version": "2.2.0",
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
+    "icon": "./assets/icon.png",
+    "orientation": "portrait",
+    "primaryColor": "#7D1120",
+    "backgroundColor": "#FFFFFF",
+    "splash": {
+      "image": "./assets/favicon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#7D1120",
+      "userInterfaceStyle": "automatic"
+    },
+    "notification": {
+      "icon": "./assets/icon.png",
+      "color": "#000000",
+      "iosDisplayInForeground": false,
+      "androidCollapsedTitle": "collapse"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "android": {
+      "package": "com.team4159.cardinalboticsapp",
+      "versionCode": 3,
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptable_icon_foreground.png",
+        "backgroundColor": "#7D1120"
+      }
+    },
+    "androidStatusBar": {
+      "barStyle": "dark-content",
+      "hidden": true,
+      "translucent": true
+    },
+    "androidNavigationBar": {
+      "barStyle": "dark-content"
+    },
+    "ios": {
+      "bundleIdentifier": "com.team4159.cardinalboticsapp",
+      "supportsTablet": true,
+      "buildNumber": "2.2.0"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png",
+      "name": "CardinalHours Web",
+      "shortName": "CardinalHours",
+      "startUrl": "/",
+      "lang": "en-US",
+      "scope": "/",
+      "themeColor": "#FFFFFF",
+      "description": "Team4159 CardinalBotics Sign-In Web App",
+      "orientation": "portrait",
+      "backgroundColor": "#FFFFFF",
+      "splash": {
+        "image": "./assets/favicon.png",
+        "resizeMode": "contain",
+        "backgroundColor": "#7D1120",
+        "userInterfaceStyle": "automatic"
+      }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "9ce752ec-a876-496e-b880-d911e7fd678e"
+      }
+    }
+  }
 }
