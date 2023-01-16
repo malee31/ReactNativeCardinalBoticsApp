@@ -50,15 +50,16 @@ const drawerStyles = StyleSheet.create({
 
 const DrawerNavigator = createDrawerNavigator();
 
+const HOMEPAGE = "/ReactNativeCardinalBoticsApp";
 const linking = {
-	prefixes: ["cardinalbotics-app://"],
+	prefixes: ["cardinalbotics-hours-app://"],
 	config: {
 		screens: {
-			Home: "/",
-			Login: "login",
-			Leaderboard: "/leaderboard",
-			Resources: "/resources",
-			Forms: "/forms"
+			Home: `${HOMEPAGE}/`,
+			Login: `${HOMEPAGE}/login`,
+			Leaderboard: `${HOMEPAGE}/leaderboard`,
+			Resources: `${HOMEPAGE}/resources`,
+			Forms: `${HOMEPAGE}/forms`
 		}
 	}
 };

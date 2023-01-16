@@ -1,6 +1,6 @@
 import React from "react";
 import { Image, StyleSheet } from "react-native";
-import Logo from "../../../assets/cardinalbotics_logo_white_clear.png";
+import Logo from "../../../assets/cardinalbotics_logo_red_transparent.png";
 
 const { logoStyle } = StyleSheet.create({
 	logoStyle: {

@@ -1,12 +1,14 @@
+import React from "react";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { DefaultTheme, Provider as PaperProvider } from "react-native-paper";
+import { StatusBar } from "expo-status-bar";
 import { UserInfoProvider } from "./components/parts/ContextProviders/UserInfoProvider";
 import { ModalProvider } from "./components/parts/ContextProviders/ModalProvider";
 import Modal from "./components/parts/StyledParts/ModalDisplayer";
 import Drawer from "./components/parts/StyledParts/Drawer";
-import { StatusBar } from "expo-status-bar";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
 import config from "./config.json";
-import React from "react";
+
+import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
 
 export default function App() {
 	const paperTheme = {
@@ -34,3 +36,8 @@ export default function App() {
 		</UserInfoProvider>
 	);
 }
+
+// If you want your app to work offline and load faster, you can change
+// unregister() to register() below. Note this comes with some pitfalls.
+// Learn more about service workers: https://cra.link/PWA
+serviceWorkerRegistration.register();
