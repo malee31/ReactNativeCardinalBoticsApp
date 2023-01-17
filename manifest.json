@@ -6,7 +6,7 @@
   "name": "CardinalHours Web",
   "scope": "/ReactNativeCardinalBoticsApp",
   "short_name": "CardinalHours",
-  "start_url": "/ReactNativeCardinalBoticsApp",
+  "start_url": "/ReactNativeCardinalBoticsApp/",
   "theme_color": "#FFFFFF",
   "orientation": "portrait",
   "related_applications": [
