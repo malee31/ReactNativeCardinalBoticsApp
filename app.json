@@ -58,7 +58,7 @@
       "favicon": "./assets/favicon.png",
       "name": "CardinalHours Web",
       "shortName": "CardinalHours",
-      "startUrl": "/ReactNativeCardinalBoticsApp",
+      "startUrl": "/ReactNativeCardinalBoticsApp/",
       "lang": "en-US",
       "scope": "/ReactNativeCardinalBoticsApp",
       "themeColor": "#FFFFFF",
