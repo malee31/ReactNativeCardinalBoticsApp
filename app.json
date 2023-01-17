@@ -35,7 +35,7 @@
     ],
     "android": {
       "package": "com.team4159.cardinalboticsapp",
-      "versionCode": 3,
+      "versionCode": 2,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptable_icon_foreground.png",
         "backgroundColor": "#7D1120"
@@ -58,9 +58,9 @@
       "favicon": "./assets/favicon.png",
       "name": "CardinalHours Web",
       "shortName": "CardinalHours",
-      "startUrl": "/",
+      "startUrl": "/ReactNativeCardinalBoticsApp",
       "lang": "en-US",
-      "scope": "/",
+      "scope": "/ReactNativeCardinalBoticsApp",
       "themeColor": "#FFFFFF",
       "description": "Team4159 CardinalBotics Sign-In Web App",
       "orientation": "portrait",
