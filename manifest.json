@@ -4,7 +4,7 @@
   "display": "standalone",
   "lang": "en-US",
   "name": "CardinalHours Web",
-  "scope": "/ReactNativeCardinalBoticsApp",
+  "scope": "/ReactNativeCardinalBoticsApp/",
   "short_name": "CardinalHours",
   "start_url": "/ReactNativeCardinalBoticsApp/",
   "theme_color": "#FFFFFF",
