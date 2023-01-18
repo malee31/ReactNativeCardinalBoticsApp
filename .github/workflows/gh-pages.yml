@@ -19,7 +19,7 @@ jobs:
         uses: actions/setup-node@v3
 
       - name: Install Dependencies
-        run: npm install --legacy-peer-deps
+        run: npm install --legacy-peer-deps --save-dev
 
       - name: Setup Expo
         uses: expo/expo-github-action@v7
