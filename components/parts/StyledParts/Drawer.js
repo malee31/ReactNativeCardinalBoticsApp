@@ -29,7 +29,8 @@ const drawerStyles = StyleSheet.create({
 	logo: {
 		width: "20%",
 		height: "100%",
-		borderRadius: 5
+		borderRadius: 5,
+		aspectRatio: 1
 	},
 	textContainer: {
 		width: "80%"

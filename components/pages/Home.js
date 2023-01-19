@@ -100,6 +100,7 @@ export default function Home({ navigation }) {
 					}}
 					labelStyle={{
 						color: showLoading || !userWritable.userInfo.loggedIn ? "gray" : (userWritable.userInfo.signedIn ? "red" : "green"),
+						overflow: "visible",
 						fontSize: 24,
 						borderColor: colors.lighterGray,
 						fontWeight: "bold",

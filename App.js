@@ -1,5 +1,5 @@
+import "react-native-gesture-handler";
 import React from "react";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { DefaultTheme, Provider as PaperProvider } from "react-native-paper";
 import { StatusBar } from "expo-status-bar";
 import { UserInfoProvider } from "./components/parts/ContextProviders/UserInfoProvider";
@@ -26,11 +26,9 @@ export default function App() {
 		<UserInfoProvider>
 			<ModalProvider>
 				<PaperProvider theme={paperTheme} style={{ flex: 1 }}>
-					<GestureHandlerRootView style={{ flex: 1 }}>
-						<StatusBar animated hidden style="dark"/>
-						<Drawer/>
-						<Modal/>
-					</GestureHandlerRootView>
+					<StatusBar animated hidden style="dark"/>
+					<Drawer/>
+					<Modal/>
 				</PaperProvider>
 			</ModalProvider>
 		</UserInfoProvider>

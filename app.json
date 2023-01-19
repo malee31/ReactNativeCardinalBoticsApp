@@ -4,8 +4,7 @@
     "description": "Team4159 CardinalBotics Sign-In App",
     "slug": "ReactNative-CardinalBoticsApp",
     "privacy": "unlisted",
-    "sdkVersion": "44.0.0",
-    "version": "2.2.0",
+    "version": "3.0.0",
     "platforms": [
       "ios",
       "android",
@@ -35,7 +34,7 @@
     ],
     "android": {
       "package": "com.team4159.cardinalboticsapp",
-      "versionCode": 2,
+      "versionCode": 3,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptable_icon_foreground.png",
         "backgroundColor": "#7D1120"
@@ -52,7 +51,7 @@
     "ios": {
       "bundleIdentifier": "com.team4159.cardinalboticsapp",
       "supportsTablet": true,
-      "buildNumber": "2.2.0"
+      "buildNumber": "3.0.0"
     },
     "web": {
       "favicon": "./assets/favicon.png",
