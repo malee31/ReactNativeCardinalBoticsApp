@@ -29,6 +29,7 @@ const loginStyles = StyleSheet.create({
 		width: "100%",
 		backgroundColor: colors.lightGray,
 		marginVertical: 5,
+		paddingVertical: 6,
 		borderRadius: 5,
 
 		shadowColor: colors.darkerGray,

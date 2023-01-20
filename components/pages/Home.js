@@ -80,7 +80,7 @@ export default function Home({ navigation }) {
 						maxHeight: 160,
 						justifyContent: "center",
 						alignItems: "center",
-						backgroundColor: colors.lighterGray,
+						backgroundColor: colors.semiLighterGray,
 						borderRadius: 8,
 						borderColor: colors.lighterGray,
 						shadowColor: colors.darkerGray,
@@ -101,6 +101,7 @@ export default function Home({ navigation }) {
 					labelStyle={{
 						color: showLoading || !userWritable.userInfo.loggedIn ? "gray" : (userWritable.userInfo.signedIn ? "red" : "green"),
 						overflow: "visible",
+						paddingVertical: 6,
 						fontSize: 24,
 						borderColor: colors.lighterGray,
 						fontWeight: "bold",
