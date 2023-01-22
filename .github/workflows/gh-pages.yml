@@ -28,7 +28,7 @@ jobs:
           packager: npm
 
       - name: Build Web App with Expo
-        run: npx expo build:web
+        run: npx expo export:web
 
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4.2.5
