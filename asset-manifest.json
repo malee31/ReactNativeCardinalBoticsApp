@@ -1,11 +1,11 @@
 {
   "files": {
-    "app.js": "/ReactNativeCardinalBoticsApp/static/js/app.fbcc769f.chunk.js",
-    "app.js.map": "/ReactNativeCardinalBoticsApp/static/js/app.fbcc769f.chunk.js.map",
+    "app.js": "/ReactNativeCardinalBoticsApp/static/js/app.73537e48.chunk.js",
+    "app.js.map": "/ReactNativeCardinalBoticsApp/static/js/app.73537e48.chunk.js.map",
     "runtime~app.js": "/ReactNativeCardinalBoticsApp/static/js/runtime~app.491cac01.js",
     "runtime~app.js.map": "/ReactNativeCardinalBoticsApp/static/js/runtime~app.491cac01.js.map",
-    "static/js/2.7410eefc.chunk.js": "/ReactNativeCardinalBoticsApp/static/js/2.7410eefc.chunk.js",
-    "static/js/2.7410eefc.chunk.js.map": "/ReactNativeCardinalBoticsApp/static/js/2.7410eefc.chunk.js.map",
+    "static/js/2.3ac3dc0c.chunk.js": "/ReactNativeCardinalBoticsApp/static/js/2.3ac3dc0c.chunk.js",
+    "static/js/2.3ac3dc0c.chunk.js.map": "/ReactNativeCardinalBoticsApp/static/js/2.3ac3dc0c.chunk.js.map",
     "fonts/MaterialCommunityIcons.ttf": "/ReactNativeCardinalBoticsApp/./fonts/MaterialCommunityIcons.ttf",
     "favicon-16.png": "/ReactNativeCardinalBoticsApp/favicon-16.png",
     "favicon-32.png": "/ReactNativeCardinalBoticsApp/favicon-32.png",
@@ -14,13 +14,13 @@
     "manifest.json": "/ReactNativeCardinalBoticsApp/manifest.json",
     "serve.json": "/ReactNativeCardinalBoticsApp/serve.json",
     "service-worker.js.map": "/ReactNativeCardinalBoticsApp/service-worker.js.map",
-    "static/js/2.7410eefc.chunk.js.LICENSE.txt": "/ReactNativeCardinalBoticsApp/static/js/2.7410eefc.chunk.js.LICENSE.txt",
+    "static/js/2.3ac3dc0c.chunk.js.LICENSE.txt": "/ReactNativeCardinalBoticsApp/static/js/2.3ac3dc0c.chunk.js.LICENSE.txt",
     "static/media/cardinalbotics_logo_red_transparent.png": "/ReactNativeCardinalBoticsApp/static/media/cardinalbotics_logo_red_transparent.28ac1cbe.png",
     "static/media/favicon.png": "/ReactNativeCardinalBoticsApp/static/media/favicon.d9409a15.png"
   },
   "entrypoints": [
     "static/js/runtime~app.491cac01.js",
-    "static/js/2.7410eefc.chunk.js",
-    "static/js/app.fbcc769f.chunk.js"
+    "static/js/2.3ac3dc0c.chunk.js",
+    "static/js/app.73537e48.chunk.js"
   ]
 }
