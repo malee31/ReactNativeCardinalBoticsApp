@@ -34,9 +34,11 @@ const loginStyles = StyleSheet.create({
 
 		shadowColor: colors.darkerGray,
 		shadowOffset: {
+			width:0,
 			height: 4
 		},
 		shadowRadius: 4,
+		shadowOpacity: 0.25,
 		elevation: 3,
 	},
 	loginButtonContent: {

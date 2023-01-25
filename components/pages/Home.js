@@ -85,9 +85,11 @@ export default function Home({ navigation }) {
 						borderColor: colors.lighterGray,
 						shadowColor: colors.darkerGray,
 						shadowOffsetY: {
+							width: 0,
 							height: 8
 						},
 						shadowRadius: 16,
+						shadowOpacity: 0.25,
 						elevation: 3,
 						overflowX: "hidden"
 					}}
