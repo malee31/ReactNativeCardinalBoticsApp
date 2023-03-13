@@ -1,12 +1,22 @@
 import React, { useEffect, useState } from "react";
-import { ActivityIndicator, FlatList, StyleSheet } from "react-native";
+import { ActivityIndicator, FlatList, StyleSheet, Text, View } from "react-native";
 import Screen from "../parts/StyledParts/ScreenWrapper";
 import LeaderboardEntry from "../parts/StyledParts/LeaderboardEntry";
 import useUserInfo from "../parts/ContextProviders/UserInfoProvider";
 import { updateSelf } from "../parts/utils/serverClientWrapper";
 import { colors } from "../../config.json";
+import { Button } from "react-native-paper";
 
 const leaderboardStyles = StyleSheet.create({
+	semiCenteredOuter: {
+		height: "100%",
+		paddingBottom: 30
+	},
+	semiCenteredInner: {
+		height: "100%",
+		display: "flex",
+		justifyContent: "center"
+	},
 	list: {
 		width: "100%",
 		paddingHorizontal: 8
@@ -23,8 +33,26 @@ export default function Leaderboard({ navigation }) {
 	const [leaderboardData, setLeaderboardData] = useState([]);
 	const userWritable = useUserInfo(false);
 	let content = <ActivityIndicator size="large" color={colors.primary}/>;
+	if(userWritable.userInfo.loaded && !userWritable.userInfo.loggedIn) {
+		content = (
+			<View style={leaderboardStyles.semiCenteredOuter}>
+				<View style={leaderboardStyles.semiCenteredInner}>
+					<Text>Remember to login first!</Text>
+					<Button
+						mode="elevated"
+						onPress={() => setTimeout(() => navigation.navigate("Login"), 250)}
+						style={{ marginTop: 12, backgroundColor: "#F0EFEF" }}
+					>
+						Login
+					</Button>
+				</View>
+			</View>
+		);
+	}
 
-	const update = () => { updateSelf(userWritable).then(setLeaderboardData) };
+	const update = () => {
+		updateSelf(userWritable).then(setLeaderboardData)
+	};
 
 	useEffect(() => {
 		update();

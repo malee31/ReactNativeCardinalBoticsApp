@@ -2,6 +2,7 @@ import React from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { Button, Modal } from "react-native-paper";
 import useModal from "../ContextProviders/ModalProvider";
+import { colors } from "../../../config.json";
 
 const modalStyles = StyleSheet.create({
 	container: {
@@ -29,6 +30,16 @@ const modalStyles = StyleSheet.create({
 	text: {
 		textAlign: "center",
 		fontSize: 24
+	},
+	dismissButton: {
+		justifySelf: "flex-end",
+		borderRadius: 0,
+		borderBottomLeftRadius: 4,
+		borderBottomRightRadius: 4
+	},
+	dismissButtonLabel: {
+		paddingVertical: 2,
+		width: "100%",
 	}
 });
 
@@ -47,7 +58,7 @@ export default function CustomModal() {
 			<View style={modalStyles.scrollContainer}>
 				<ScrollView
 					style={modalStyles.textContainer}
-					contentContainerStyle={modalStyles.textContainerContent}
+					// contentContainerStyle={modalStyles.textContainerContent}
 					bounces={false}
 					pinchGestureEnabled={false}
 				>
@@ -62,7 +73,8 @@ export default function CustomModal() {
 			<Button
 				mode="contained"
 				onPress={dismiss}
-				style={{ justifySelf: "flex-end" }}
+				style={modalStyles.dismissButton}
+				labelStyle={modalStyles.dismissButtonLabel}
 			>
 				Close
 			</Button>

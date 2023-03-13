@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { View } from "react-native";
-import { Button } from "react-native-paper";
+import { ActivityIndicator, Button } from "react-native-paper";
 import { signIn, signOut } from "../parts/utils/serverClient";
 import useUserInfo from "../parts/ContextProviders/UserInfoProvider";
 import useModal from "../parts/ContextProviders/ModalProvider";
@@ -69,14 +69,24 @@ export default function Home({ navigation }) {
 					overflow: "visible"
 				}}
 			>
+				{showLoading && (
+					<View
+						style={{
+							marginTop: 16,
+							paddingVertical: 12,
+						}}
+					>
+						<ActivityIndicator size="large"/>
+					</View>
+				)}
 				<Button
 					onPress={toggleSignIn}
 					compact={true}
 					mode="contained"
-					loading={showLoading}
 					disabled={showLoading}
 					style={{
-						maxWidth: "100%",
+						display: showLoading ? "none" : "flex",
+						width: "100%",
 						maxHeight: 160,
 						justifyContent: "center",
 						alignItems: "center",
@@ -94,7 +104,10 @@ export default function Home({ navigation }) {
 						overflowX: "hidden"
 					}}
 					contentStyle={{
+						display: "flex",
+						alignItems: "center",
 						width: 600,
+						maxWidth: "96%",
 						height: 96,
 						paddingHorizontal: 16,
 						paddingVertical: 8,
@@ -105,12 +118,13 @@ export default function Home({ navigation }) {
 						overflow: "visible",
 						paddingVertical: 6,
 						fontSize: 24,
+						textAlign: "center",
 						borderColor: colors.lighterGray,
 						fontWeight: "bold",
-						maxWidth: "100%"
+						width: "100%"
 					}}
 				>
-					{!showLoading && (!userWritable.userInfo.loggedIn ? "Log in to get started!" : `Sign ${userWritable.userInfo.signedIn ? "Out" : "In"} as ${displayName}`)}
+					{!showLoading ? (!userWritable.userInfo.loggedIn ? "Log in to get started!" : `Sign ${userWritable.userInfo.signedIn ? "Out" : "In"} as ${displayName}`) : ""}
 				</Button>
 			</View>
 		</Screen>

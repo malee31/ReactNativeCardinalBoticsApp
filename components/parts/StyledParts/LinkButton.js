@@ -5,15 +5,16 @@ import * as WebBrowser from "expo-web-browser";
 import { colors } from "../../../config.json";
 
 // Images and icon names from https://materialdesignicons.com/
+// Newer Alternative: https://pictogrammers.com/library/mdi/
 const iconStringMap = {
-	"googledrive": "google-drive",
+	"googledrive": "folder-account",
 	"roster": "clipboard-account",
 	"calendar": "calendar",
 	"forms": "format-list-bulleted-square",
 	"website": "web",
-	"photo": "google-photos",
+	"photo": "image",
 	"youtube": "youtube-tv",
-	"training": "teach",
+	"training": "human-male-board",
 	"grant": "currency-usd",
 	"money": "currency-usd",
 	"irc": "book",
