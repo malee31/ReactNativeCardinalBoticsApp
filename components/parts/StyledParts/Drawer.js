@@ -138,6 +138,7 @@ function Drawer() {
 	return (
 		<NavigationContainer linking={linking}>
 			<DrawerNavigator.Navigator
+				useLegacyImplementation={false}
 				initialRouteName="Home"
 				backBehavior="history"
 				// defaultStatus={true}

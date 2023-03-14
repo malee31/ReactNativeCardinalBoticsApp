@@ -6,6 +6,7 @@ import useModal from "../parts/ContextProviders/ModalProvider";
 import config from "../../config.json";
 
 const colors = config.colors;
+const urls = config.urls;
 
 const formStyles = StyleSheet.create({
 	list: {
