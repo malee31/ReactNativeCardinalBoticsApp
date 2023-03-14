@@ -1,26 +1,21 @@
 {
   "files": {
-    "app.js": "/ReactNativeCardinalBoticsApp/static/js/app.a8413b03.chunk.js",
-    "app.js.map": "/ReactNativeCardinalBoticsApp/static/js/app.a8413b03.chunk.js.map",
-    "runtime~app.js": "/ReactNativeCardinalBoticsApp/static/js/runtime~app.491cac01.js",
-    "runtime~app.js.map": "/ReactNativeCardinalBoticsApp/static/js/runtime~app.491cac01.js.map",
-    "static/js/2.3ac3dc0c.chunk.js": "/ReactNativeCardinalBoticsApp/static/js/2.3ac3dc0c.chunk.js",
-    "static/js/2.3ac3dc0c.chunk.js.map": "/ReactNativeCardinalBoticsApp/static/js/2.3ac3dc0c.chunk.js.map",
-    "fonts/MaterialCommunityIcons.ttf": "/ReactNativeCardinalBoticsApp/./fonts/MaterialCommunityIcons.ttf",
-    "favicon-16.png": "/ReactNativeCardinalBoticsApp/favicon-16.png",
-    "favicon-32.png": "/ReactNativeCardinalBoticsApp/favicon-32.png",
+    "main.js": "/ReactNativeCardinalBoticsApp/static/js/main.d4510a6d.js",
+    "static/js/101.65217de1.js": "/ReactNativeCardinalBoticsApp/static/js/101.65217de1.js",
+    "static/media/MaterialCommunityIcons.ttf": "/ReactNativeCardinalBoticsApp/static/media/MaterialCommunityIcons.5d42b4e60858731e7b65.ttf",
+    "static/media/favicon.png": "/ReactNativeCardinalBoticsApp/static/media/favicon.d9409a15db3d4d1892e5.png",
+    "static/media/cardinalbotics_logo_red_transparent.png": "/ReactNativeCardinalBoticsApp/static/media/cardinalbotics_logo_red_transparent.28ac1cbefc2e36bcfeb9.png",
     "favicon.ico": "/ReactNativeCardinalBoticsApp/favicon.ico",
     "index.html": "/ReactNativeCardinalBoticsApp/index.html",
+    "favicon-32.png": "/ReactNativeCardinalBoticsApp/favicon-32.png",
     "manifest.json": "/ReactNativeCardinalBoticsApp/manifest.json",
+    "favicon-16.png": "/ReactNativeCardinalBoticsApp/favicon-16.png",
     "serve.json": "/ReactNativeCardinalBoticsApp/serve.json",
-    "service-worker.js.map": "/ReactNativeCardinalBoticsApp/service-worker.js.map",
-    "static/js/2.3ac3dc0c.chunk.js.LICENSE.txt": "/ReactNativeCardinalBoticsApp/static/js/2.3ac3dc0c.chunk.js.LICENSE.txt",
-    "static/media/cardinalbotics_logo_red_transparent.png": "/ReactNativeCardinalBoticsApp/static/media/cardinalbotics_logo_red_transparent.28ac1cbe.png",
-    "static/media/favicon.png": "/ReactNativeCardinalBoticsApp/static/media/favicon.d9409a15.png"
+    "main.d4510a6d.js.map": "/ReactNativeCardinalBoticsApp/static/js/main.d4510a6d.js.map",
+    "101.65217de1.js.map": "/ReactNativeCardinalBoticsApp/static/js/101.65217de1.js.map"
   },
   "entrypoints": [
-    "static/js/runtime~app.491cac01.js",
-    "static/js/2.3ac3dc0c.chunk.js",
-    "static/js/app.a8413b03.chunk.js"
+    "static/js/101.65217de1.js",
+    "static/js/main.d4510a6d.js"
   ]
 }
