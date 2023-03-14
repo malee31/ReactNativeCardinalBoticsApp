@@ -12,8 +12,10 @@ import Forms from "../../pages/Forms";
 import Home from "../../pages/Home";
 import Icons from "../utils/AllIconsSVG";
 
-import Favicon from "../../../assets/favicon.png"
-import { colors } from "../../../config.json";
+import Favicon from "../../../assets/favicon.png";
+import config from "../../../config.json";
+
+const colors = config.colors;
 
 const drawerStyles = StyleSheet.create({
 	header: {

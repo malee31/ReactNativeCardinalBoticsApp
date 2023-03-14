@@ -2,7 +2,6 @@ import React from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { Button, Modal } from "react-native-paper";
 import useModal from "../ContextProviders/ModalProvider";
-import { colors } from "../../../config.json";
 
 const modalStyles = StyleSheet.create({
 	container: {

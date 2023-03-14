@@ -3,7 +3,10 @@ import { ActivityIndicator, FlatList, StyleSheet } from "react-native";
 import Screen from "../parts/StyledParts/ScreenWrapper";
 import LinkButton from "../parts/StyledParts/LinkButton.js";
 import useModal from "../parts/ContextProviders/ModalProvider";
-import { colors, urls } from "../../config.json";
+import config from "../../config.json";
+
+const colors = config.colors;
+const urls = config.urls;
 
 const { listStyle } = StyleSheet.create({
 	listStyle: {

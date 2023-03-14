@@ -4,8 +4,10 @@ import Screen from "../parts/StyledParts/ScreenWrapper";
 import LeaderboardEntry from "../parts/StyledParts/LeaderboardEntry";
 import useUserInfo from "../parts/ContextProviders/UserInfoProvider";
 import { updateSelf } from "../parts/utils/serverClientWrapper";
-import { colors } from "../../config.json";
 import { Button } from "react-native-paper";
+import config from "../../config.json";
+
+const colors = config.colors;
 
 const leaderboardStyles = StyleSheet.create({
 	semiCenteredOuter: {

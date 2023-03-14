@@ -2,7 +2,8 @@
  * Purely a set of functions that interact directly with the server
  * No additional validation should be done here prior to sending a request to the server (See serverClientWrapper.js)
  */
-import { serverEndpointBaseURLs as endpoints } from "../../../config.json";
+import config from "../../../config.json";
+const endpoints = config.serverEndpointBaseURLs;
 
 export async function verifyPassword(password) {
 	const url = `${endpoints.getUserData}?password=${encodeURIComponent(password)}`;

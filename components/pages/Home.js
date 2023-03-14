@@ -6,7 +6,9 @@ import useUserInfo from "../parts/ContextProviders/UserInfoProvider";
 import useModal from "../parts/ContextProviders/ModalProvider";
 import Screen from "../parts/StyledParts/ScreenWrapper";
 import LargeLogo from "../parts/StyledParts/LargeLogo";
-import { colors } from "../../config.json";
+import config from "../../config.json";
+
+const colors = config.colors;
 
 export default function Home({ navigation }) {
 	const modal = useModal();
@@ -63,6 +65,7 @@ export default function Home({ navigation }) {
 			<View
 				style={{
 					width: "100%",
+					maxWidth: 600,
 					marginTop: 16,
 					alignItems: "center",
 					paddingHorizontal: 8,
@@ -106,8 +109,7 @@ export default function Home({ navigation }) {
 					contentStyle={{
 						display: "flex",
 						alignItems: "center",
-						width: 600,
-						maxWidth: "96%",
+						width: "100%",
 						height: 96,
 						paddingHorizontal: 16,
 						paddingVertical: 8,

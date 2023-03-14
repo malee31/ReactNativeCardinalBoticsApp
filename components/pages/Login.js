@@ -6,7 +6,9 @@ import LargeLogo from "../parts/StyledParts/LargeLogo";
 import useUserInfo from "../parts/ContextProviders/UserInfoProvider";
 import useModal from "../parts/ContextProviders/ModalProvider";
 import { login } from "../parts/utils/serverClientWrapper";
-import { colors } from "../../config.json";
+import config from "../../config.json";
+
+const colors = config.colors;
 
 const loginStyles = StyleSheet.create({
 	formContainer: {
@@ -34,7 +36,7 @@ const loginStyles = StyleSheet.create({
 
 		shadowColor: colors.darkerGray,
 		shadowOffset: {
-			width:0,
+			width: 0,
 			height: 4
 		},
 		shadowRadius: 4,

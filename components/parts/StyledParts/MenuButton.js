@@ -1,7 +1,9 @@
 import React from "react";
 import { StyleSheet } from "react-native";
 import { IconButton } from "react-native-paper";
-import { colors } from "../../../config.json";
+import config from "../../../config.json";
+
+const colors = config.colors;
 
 const { menuButtonStyle } = StyleSheet.create({
 	menuButtonStyle: {

@@ -2,7 +2,9 @@ import React from "react";
 import { StyleSheet } from "react-native";
 import { Button } from "react-native-paper";
 import * as WebBrowser from "expo-web-browser";
-import { colors } from "../../../config.json";
+import config from "../../../config.json";
+
+const colors = config.colors;
 
 // Images and icon names from https://materialdesignicons.com/
 // Newer Alternative: https://pictogrammers.com/library/mdi/

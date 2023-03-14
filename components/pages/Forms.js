@@ -3,7 +3,9 @@ import { ActivityIndicator, FlatList, StyleSheet, Text, View } from "react-nativ
 import LinkButton from "../parts/StyledParts/LinkButton.js";
 import Screen from "../parts/StyledParts/ScreenWrapper";
 import useModal from "../parts/ContextProviders/ModalProvider";
-import { colors, urls } from "../../config.json";
+import config from "../../config.json";
+
+const colors = config.colors;
 
 const formStyles = StyleSheet.create({
 	list: {

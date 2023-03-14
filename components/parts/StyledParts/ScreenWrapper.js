@@ -1,7 +1,9 @@
 import React from "react";
 import { PanResponder, Platform, StyleSheet, View } from "react-native";
 import MenuButton from "./MenuButton";
-import { colors } from "../../../config.json";
+import config from "../../../config.json";
+
+const colors = config.colors;
 
 const { defaultScreenStyle } = StyleSheet.create({
 	defaultScreenStyle: {
