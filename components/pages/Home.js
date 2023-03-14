@@ -19,14 +19,12 @@ export default function Home({ navigation }) {
 
 	useEffect(() => {
 		if(userWritable.userInfo.loaded && !userWritable.userInfo.password) {
-			modal.showMessage("Looks like it's your first time here!\nLog in to get started!");
 			navigation.navigate("Login");
 		}
 	}, [userWritable.userInfo.loaded]);
 
 	const toggleSignIn = () => {
 		if(!userWritable.userInfo.password) {
-			modal.showMessage("You have to log in first!");
 			navigation.navigate("Login");
 			return;
 		}
