@@ -3,6 +3,7 @@
  * No additional validation should be done here prior to sending a request to the server (See serverClientWrapper.js)
  */
 import config from "../../../config.json";
+
 const endpoints = config.serverEndpointBaseURLs;
 
 export async function verifyPassword(password) {
@@ -123,4 +124,26 @@ export function getLeaderboard() {
 			console.log(`Failed to update basic data. F. ${JSON.stringify(err)}`);
 			return [];
 		});
+}
+
+export function addUser(newUserObject) {
+	return fetch(endpoints.admin.addUser, {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json"
+		},
+		body: JSON.stringify(newUserObject)
+	})
+		.then(res => res.text());
+}
+
+export function addSession(newSession) {
+	return fetch(endpoints.admin.addSession, {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json"
+		},
+		body: JSON.stringify(newSession)
+	})
+		.then(res => res.text());
 }

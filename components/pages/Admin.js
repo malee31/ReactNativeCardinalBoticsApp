@@ -1,8 +1,11 @@
 import { StyleSheet, View, Text } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Screen from "../parts/StyledParts/ScreenWrapper";
-import { TextInput } from "react-native-paper";
+import { Button, TextInput } from "react-native-paper";
 import config from "../../config.json";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import useModal from "../parts/ContextProviders/ModalProvider";
+import { addSession, addUser } from "../parts/utils/serverClient";
 
 const colors = config.colors;
 
@@ -29,23 +32,44 @@ const adminStyles = StyleSheet.create({
 });
 
 export default function Admin() {
-	const [adminPassword, setAdminPassword] = useState("");
-	const [newUser, setNewUser] = useState({
+	// Used to get a reference time. Gets stale the longer the app is open but that is fine
+	const dateRef = useRef(new Date());
+	const defaultUser = {
 		firstName: "",
 		lastName: "",
 		password: ""
-	});
+	};
+
+	const dateClone = new Date(dateRef.current);
+	dateClone.setTime(dateClone.getTime() - 60 * 60 * 1000);
+	const defaultAmend = {
+		password: "",
+		startTime: dateClone.toLocaleString(),
+		endTime: dateRef.current.toLocaleString()
+	};
+
+	const modal = useModal();
+	const [adminPassword, setAdminPassword] = useState("");
+	useEffect(() => {
+		AsyncStorage.getItem("admin_password")
+			.then(val => setAdminPassword(val || ""))
+			.catch(err => modal.showMessage(`Unable to load admin password: ${err.message}`));
+	}, []);
+	const setAndSaveAdminPassword = newAdminPassword => {
+		// Fire-and-forget
+		AsyncStorage.setItem("admin_password", newAdminPassword)
+			.catch(err => modal.showMessage(`Unable to save admin password: ${err.message}`));
+		setAdminPassword(newAdminPassword);
+	}
+
+	const [newUser, setNewUser] = useState(defaultUser);
 	const updateUser = (key, val) => {
 		setNewUser(oldUser => ({
 			...oldUser,
 			[key]: val
 		}));
 	};
-	const [amend, setAmend] = useState({
-		password: "",
-		startTime: "",
-		endTime: ""
-	});
+	const [amend, setAmend] = useState(defaultAmend);
 	const updateAmend = (key, val) => {
 		setAmend(oldAmend => ({
 			...oldAmend,
@@ -55,9 +79,39 @@ export default function Admin() {
 
 	if(adminPassword !== CORRECT_PASSWORD) {
 		return (
-			<AdminPasswordNeeded setAdminPassword={setAdminPassword}/>
+			<AdminPasswordNeeded setAdminPassword={setAndSaveAdminPassword}/>
 		);
 	}
+
+	const onUserAdd = () => {
+		if(newUser.password && newUser.firstName && newUser.lastName) {
+			addUser(newUser)
+				.then(modal.showMessage)
+				.catch(err => modal.showMessage(err));
+			setNewUser(defaultUser);
+		} else {
+			modal.showMessage("All fields for adding a new user must be filled!");
+		}
+	};
+	const onSessionAdd = () => {
+		if(amend.password && amend.startTime && amend.endTime) {
+			addSession({
+				password: amend.password,
+				startTime: (new Date(amend.startTime)).getTime(),
+				endTime: (new Date(amend.endTime)).getTime()
+			})
+				.then(modal.showMessage)
+				.catch(err => modal.showMessage(err));
+			setAmend(defaultAmend);
+		} else {
+			modal.showMessage("All fields for adding a new session must be filled!");
+		}
+	};
+	const onExitAdmin = () => {
+		setAdminPassword("");
+		AsyncStorage.removeItem("admin_password")
+			.catch(err => modal.showMessage(err));
+	};
 
 	return (
 		<Screen>
@@ -66,49 +120,76 @@ export default function Admin() {
 					Register Users
 				</Text>
 				<TextInput
+					mode="outlined"
 					label="First Name"
 					value={newUser.firstName}
 					style={adminStyles.adminInput}
 					onChange={newText => updateUser("firstName", newText.nativeEvent.text)}
 				/>
 				<TextInput
+					mode="outlined"
 					label="Last Name"
 					value={newUser.lastName}
 					style={adminStyles.adminInput}
 					onChange={newText => updateUser("lastName", newText.nativeEvent.text)}
 				/>
 				<TextInput
+					mode="outlined"
 					label="Password"
 					secureTextEntry={true}
 					value={newUser.password}
 					style={adminStyles.adminInput}
-					onChange={newText => !isNaN(Number(newText.nativeEvent.value)) && updateUser("password", newText.nativeEvent.text)}
+					onChange={newText => updateUser("password", newText.nativeEvent.text)}
 				/>
+				<Button
+					mode="elevated"
+					style={{ marginBottom: 4 }}
+					onPress={onUserAdd}
+				>
+					Register User
+				</Button>
 
 				<Text style={adminStyles.adminHeader}>
-					Amend Hours
+					Insert Hours
 				</Text>
 				<TextInput
+					mode="outlined"
 					label="Password for Amended User"
 					secureTextEntry={true}
 					value={amend.password}
 					style={adminStyles.adminInput}
-					onChange={newText => !isNaN(Number(newText.nativeEvent.value)) && updateAmend("password", newText.nativeEvent.text)}
+					onChange={newText => updateAmend("password", newText.nativeEvent.text)}
 				/>
+				<Text>Validation is a WIP. Try to keep the format consistent</Text>
 				<TextInput
+					mode="outlined"
 					label="Amended Start Time"
-					secureTextEntry={true}
 					value={amend.startTime}
 					style={adminStyles.adminInput}
 					onChange={newText => updateAmend("startTime", newText.nativeEvent.text)}
 				/>
 				<TextInput
+					mode="outlined"
 					label="Amended End Time"
-					secureTextEntry={true}
 					value={amend.endTime}
 					style={adminStyles.adminInput}
 					onChange={newText => updateAmend("endTime", newText.nativeEvent.text)}
 				/>
+				<Button
+					mode="elevated"
+					style={{ marginBottom: 4 }}
+					onPress={onSessionAdd}
+				>
+					Add Session
+				</Button>
+
+				<Button
+					mode="outlined"
+					style={{ marginVertical: 16 }}
+					onPress={onExitAdmin}
+				>
+					Exit Admin Controls
+				</Button>
 
 			</View>
 		</Screen>
@@ -154,4 +235,8 @@ function AdminPasswordNeeded({ setAdminPassword }) {
 			</View>
 		</Screen>
 	);
+}
+
+function DateInput() {
+
 }

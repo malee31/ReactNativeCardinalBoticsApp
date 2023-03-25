@@ -8,7 +8,11 @@
 		"getData": "https://hours.team4159.org/users/getusers",
 		"getUserData": "https://hours.team4159.org/users/getuserdata",
 		"signIn": "https://hours.team4159.org/users/signin",
-		"signOut": "https://hours.team4159.org/users/signout"
+		"signOut": "https://hours.team4159.org/users/signout",
+		"admin": {
+			"addUser": "https://hours.team4159.org/users/adduser",
+			"addSession": "https://hours.team4159.org/users/addsession"
+		}
 	},
 	"colors": {
 		"primary": "#7D1120",
