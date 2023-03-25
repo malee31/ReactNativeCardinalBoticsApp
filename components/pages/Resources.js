@@ -46,7 +46,7 @@ export default function Resources({ navigation }) {
 	}
 
 	return (
-		<Screen navigation={navigation}>
+		<Screen>
 			{component}
 		</Screen>
 	);

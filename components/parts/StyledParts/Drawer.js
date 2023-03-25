@@ -10,8 +10,9 @@ import Resources from "../../pages/Resources";
 import Login from "../../pages/Login";
 import Forms from "../../pages/Forms";
 import Home from "../../pages/Home";
-import Icons from "../utils/AllIconsSVG";
+import Admin from "../../pages/Admin";
 
+import Icons from "../utils/AllIconsSVG";
 import Favicon from "../../../assets/favicon.png";
 import config from "../../../config.json";
 
@@ -62,7 +63,8 @@ const linking = {
 			Login: `${HOMEPAGE}/login`,
 			Leaderboard: `${HOMEPAGE}/leaderboard`,
 			Resources: `${HOMEPAGE}/resources`,
-			Forms: `${HOMEPAGE}/forms`
+			Forms: `${HOMEPAGE}/forms`,
+			Admin: `${HOMEPAGE}/admin`
 		}
 	}
 };
@@ -187,6 +189,13 @@ function Drawer() {
 					component={Forms}
 					options={{
 						drawerIcon: Icons.Forms
+					}}
+				/>
+				<DrawerNavigator.Screen
+					name="Admin"
+					component={Admin}
+					options={{
+						drawerIcon: Icons.Admin
 					}}
 				/>
 			</DrawerNavigator.Navigator>

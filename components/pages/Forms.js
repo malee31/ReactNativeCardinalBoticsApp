@@ -90,7 +90,7 @@ export default function Forms({ navigation }) {
 	}
 
 	return (
-		<Screen navigation={navigation}>
+		<Screen>
 			{component}
 		</Screen>
 	);

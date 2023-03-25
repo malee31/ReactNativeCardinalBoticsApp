@@ -2,6 +2,7 @@ import React from "react";
 import { StyleSheet } from "react-native";
 import { IconButton } from "react-native-paper";
 import config from "../../../config.json";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const colors = config.colors;
 
@@ -22,13 +23,15 @@ const { menuButtonStyle } = StyleSheet.create({
 });
 
 export default function MenuButton({ navigation }) {
+	const insets = useSafeAreaInsets();
+
 	return (
 		<IconButton
 			accessibilityLabel="Menu"
 			icon="menu"
 			size={44}
 			color={colors.secondary}
-			style={menuButtonStyle}
+			style={[menuButtonStyle, { marginTop: insets.top }]}
 			onPress={navigation.toggleDrawer}
 		/>
 	);

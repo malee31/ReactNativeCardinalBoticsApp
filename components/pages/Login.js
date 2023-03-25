@@ -68,31 +68,32 @@ export default function Login({ navigation }) {
 			.catch(err => modal.showMessage(err.message));
 	}
 
-	return (<Screen navigation={navigation}>
-		<LargeLogo/>
-		<View
-			style={loginStyles.formContainer}
-		>
-			<View style={loginStyles.loginInputContainer}>
-				<TextInput
-					label="Login"
-					value={passwordInput}
-					style={loginStyles.loginInput}
-					secureTextEntry={true}
-					onChange={newText => setPasswordInput(newText.nativeEvent.text)}
-					onSubmitEditing={handleLogin}
-				/>
-			</View>
-			<Button
-				onPress={handleLogin}
-				compact={true}
-				mode="contained"
-				style={loginStyles.loginButton}
-				contentStyle={loginStyles.loginButtonContent}
-				labelStyle={loginStyles.loginButtonText}
+	return (
+		<Screen>
+			<LargeLogo/>
+			<View
+				style={loginStyles.formContainer}
 			>
-				Submit
-			</Button>
-		</View>
-	</Screen>);
+				<View style={loginStyles.loginInputContainer}>
+					<TextInput
+						label="Login"
+						value={passwordInput}
+						style={loginStyles.loginInput}
+						secureTextEntry={true}
+						onChange={newText => setPasswordInput(newText.nativeEvent.text)}
+						onSubmitEditing={handleLogin}
+					/>
+				</View>
+				<Button
+					onPress={handleLogin}
+					compact={true}
+					mode="contained"
+					style={loginStyles.loginButton}
+					contentStyle={loginStyles.loginButtonContent}
+					labelStyle={loginStyles.loginButtonText}
+				>
+					Submit
+				</Button>
+			</View>
+		</Screen>);
 }

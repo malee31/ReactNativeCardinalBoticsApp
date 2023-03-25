@@ -2,6 +2,7 @@ import React from "react";
 import { PanResponder, Platform, StyleSheet, View } from "react-native";
 import MenuButton from "./MenuButton";
 import config from "../../../config.json";
+import { useNavigation } from "@react-navigation/native";
 
 const colors = config.colors;
 
@@ -17,7 +18,8 @@ const { defaultScreenStyle } = StyleSheet.create({
 	}
 });
 
-export default function Screen({ navigation, children, additionalStyles }) {
+export default function Screen({ children, additionalStyles }) {
+	const navigation = useNavigation();
 	const screenStyle = StyleSheet.compose(defaultScreenStyle, additionalStyles);
 	const panResponder = React.useRef(
 		PanResponder.create({

@@ -7,6 +7,7 @@ import useModal from "../parts/ContextProviders/ModalProvider";
 import Screen from "../parts/StyledParts/ScreenWrapper";
 import LargeLogo from "../parts/StyledParts/LargeLogo";
 import config from "../../config.json";
+import { useNavigation } from "@react-navigation/native";
 
 const colors = config.colors;
 
@@ -58,7 +59,7 @@ export default function Home({ navigation }) {
 	};
 
 	return (
-		<Screen navigation={navigation}>
+		<Screen>
 			<LargeLogo/>
 			<View
 				style={{

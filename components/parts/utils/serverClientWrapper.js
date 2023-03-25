@@ -1,3 +1,7 @@
+/**
+ * Sets of functions that go around server calls to implement additional side effects.
+ * May contain
+ */
 import { getLeaderboard, verifyPassword } from "./serverClient";
 import { savePassword } from "./storageManager";
 

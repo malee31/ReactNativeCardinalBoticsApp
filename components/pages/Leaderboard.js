@@ -84,7 +84,7 @@ export default function Leaderboard({ navigation }) {
 	}
 
 	return (
-		<Screen navigation={navigation}>
+		<Screen>
 			{content}
 		</Screen>
 	);
