@@ -97,8 +97,8 @@ export default function Admin() {
 		if(amend.password && amend.startTime && amend.endTime) {
 			addSession({
 				password: amend.password,
-				startTime: (new Date(amend.startTime)).getTime(),
-				endTime: (new Date(amend.endTime)).getTime()
+				startTime: Number(amend.startTime),
+				endTime: Number(amend.endTime)
 			})
 				.then(modal.showMessage)
 				.catch(err => modal.showMessage(err));
@@ -152,6 +152,7 @@ export default function Admin() {
 				<Text style={adminStyles.adminHeader}>
 					Insert Hours
 				</Text>
+				<Text>The date range format is very lax (Use " - " or " to " to separate start and end)</Text>
 				<TextInput
 					mode="outlined"
 					label="Password for Amended User"
@@ -160,25 +161,13 @@ export default function Admin() {
 					style={adminStyles.adminInput}
 					onChange={newText => updateAmend("password", newText.nativeEvent.text)}
 				/>
-				<DateInput/>
-				<Text>Validation is a WIP. Try to keep the format consistent</Text>
-				<TextInput
-					mode="outlined"
-					label="Amended Start Time"
-					value={amend.startTime}
-					style={adminStyles.adminInput}
-					onChange={newText => updateAmend("startTime", newText.nativeEvent.text)}
-				/>
-				<TextInput
-					mode="outlined"
-					label="Amended End Time"
-					value={amend.endTime}
-					style={adminStyles.adminInput}
-					onChange={newText => updateAmend("endTime", newText.nativeEvent.text)}
+				<DateInput
+					setStart={newStart => updateAmend("startTime", newStart)}
+					setEnd={newEnd => updateAmend("endTime", newEnd)}
 				/>
 				<Button
 					mode="elevated"
-					style={{ marginBottom: 4 }}
+					style={{ marginVertical: 8 }}
 					onPress={onSessionAdd}
 				>
 					Add Session
@@ -263,16 +252,41 @@ function DateInput({ setStart, setEnd }) {
 
 	const start = parseDatePart(startParts);
 	const end = parseDatePart(endParts);
+	// Inherit omitted fields from each other
+	Object.keys(start).forEach(key => {
+		if(start[key] === undefined) {
+			if(end[key] !== undefined) {
+				start[key] = end[key];
+			}
+			return;
+		}
+		if(end[key] !== undefined) return;
+		end[key] = start[key];
+	})
 
-	const parsedStart = "";
-	const parsedEnd = "";
-	console.log(dateParts)
+	const startDate = partToDate(dateRef, start);
+	const endDate = partToDate(dateRef, end);
+	const dateStringOpts = {
+		weekday: "long",
+		year: "numeric",
+		month: "short",
+		day: "numeric",
+		hour: "numeric",
+		minute: "numeric",
+		second: "numeric",
+	};
+	const parsedStart = startDate.toLocaleString("en-US", dateStringOpts);
+	const parsedEnd = endDate.toLocaleString("en-US", dateStringOpts);
+
+	useEffect(() => {
+		setStart(startDate.getTime());
+	}, [parsedStart]);
+	useEffect(() => {
+		setEnd(endDate.getTime());
+	}, [parsedEnd]);
 
 	return (
 		<>
-			<Text>
-				{JSON.stringify(start)} to {JSON.stringify(end)}
-			</Text>
 			<TextInput
 				mode="outlined"
 				value={timeRangeInput}
@@ -280,6 +294,13 @@ function DateInput({ setStart, setEnd }) {
 				onChange={newText => setTimeRangeInput(newText.nativeEvent.text)}
 				style={adminStyles.adminInput}
 			/>
+
+			<Text>
+				Start: {parsedStart}
+			</Text>
+			<Text>
+				Ends: {parsedEnd}
+			</Text>
 		</>
 	);
 }
@@ -294,11 +315,13 @@ function parseDatePart(parts) {
 		second: undefined,
 		milliseconds: undefined
 	};
+	const ignored = [];
 
 	for(let partIndex = 0; partIndex < parts.length; partIndex++) {
 		const part = parts[partIndex];
 		const nextPart = partIndex + 1 !== parts.length ? parts[partIndex + 1] : null;
 		let partStr = part.lower;
+		if(partStr === "") continue;
 
 		// Parse like a date: (1/1/1999, 1/1, 1999/1/1, 1/1999, and '-' equivalents)
 		// Leading years must be in 4-digit form but trailing years can be in short form
@@ -320,10 +343,16 @@ function parseDatePart(parts) {
 				result.month = Math.min(12, Number(sections.shift()));
 			}
 			if(sections.length) {
+				// TODO: Add NaN guards
 				result.day = Math.min(31, Number(sections.shift()));
 			}
 			if(sections.length) {
 				result.year = Number(sections.shift());
+				if(result.year < 100) {
+					// Note: Assume current century
+					const currentYear = new Date().getFullYear();
+					result.year += currentYear - (currentYear % 100);
+				}
 			}
 			continue;
 		}
@@ -332,7 +361,7 @@ function parseDatePart(parts) {
 		if((/^\d+(st|nd|th|rd)$/).test(partStr)) {
 			const dayStr = partStr.match(/^\d+/)[0];
 			if(Number(dayStr) < 31) {
-				result.day = Number(dayStr);
+				// result.day = Number(dayStr);
 			}
 			continue;
 		}
@@ -345,7 +374,7 @@ function parseDatePart(parts) {
 
 		// Parse month names
 		// Index-sensitive array of months
-		const months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+		const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 		const monthIndex = months.findIndex(month => partStr.length >= 3 && month.toLowerCase().startsWith(partStr));
 		if(monthIndex !== -1) {
 			result.month = monthIndex + 1;
@@ -357,6 +386,9 @@ function parseDatePart(parts) {
 		if(!isNaN(Number(partStr))) {
 			if(nextPart && (/^[ap]m$/).test(nextPart.lower)) {
 				result.hour = Number(partStr);
+				result.minute = 0;
+				result.second = 0;
+				result.milliseconds = 0;
 				continue;
 			}
 			result.day = Number(partStr);
@@ -395,17 +427,34 @@ function parseDatePart(parts) {
 			continue;
 		}
 
-		// Just an hour and a am/pm
+		// Just an hour with am/pm
 		if((/^\d+[ap]m$/g).test(partStr)) {
 			result.hour = Number(partStr.match(/^\d+/));
 			if(partStr.endsWith("pm")) {
 				result.hour = (result.hour % 12) + 12;
 			}
+			result.minute = 0;
+			result.second = 0;
+			result.milliseconds = 0;
 			continue;
 		}
 
 		console.log(`Unknown part in date: ${part.raw}`);
+		ignored.push(part.raw);
 	}
+
+	if(ignored.length) console.log(`Ignored the following parts: ${ignored.join(", ")}`);
+	return result;
+}
+
+function partToDate(referenceDate, partObj) {
+	const result = new Date(referenceDate);
+	if(partObj.year !== undefined) result.setFullYear(partObj.year);
+	if(partObj.month !== undefined) result.setMonth(partObj.month - 1);  // 0-indexed
+	if(partObj.day !== undefined) result.setDate(partObj.day);
+	if(partObj.hour !== undefined) result.setHours(partObj.hour);
+	if(partObj.minute !== undefined) result.setMinutes(partObj.minute);
+	if(partObj.second !== undefined) result.setSeconds(partObj.second);
 
 	return result;
 }
