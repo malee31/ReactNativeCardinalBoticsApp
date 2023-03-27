@@ -31,7 +31,9 @@ jobs:
         run: npx expo export:web
 
       - name: Modify build
-        run: cp assets/web-privacy-policy.html web-build/privacy-policy.html
+        run: |
+          cp assets/web-privacy-policy.html web-build/privacy-policy.html
+          cp web-build/index.html web-build/404.html
 
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4.2.5
