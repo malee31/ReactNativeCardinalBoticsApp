@@ -44,6 +44,7 @@ export default function Leaderboard({ navigation }) {
 						mode="elevated"
 						onPress={() => setTimeout(() => navigation.navigate("Login"), 250)}
 						style={{ marginTop: 12, backgroundColor: "#F0EFEF" }}
+						labelStyle={{ minWidth: 60 }}
 					>
 						Login
 					</Button>

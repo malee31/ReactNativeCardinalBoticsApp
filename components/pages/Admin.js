@@ -1,4 +1,4 @@
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View, Text, Keyboard } from "react-native";
 import React, { useEffect, useRef, useState } from "react";
 import Screen from "../parts/StyledParts/ScreenWrapper";
 import { Button, TextInput } from "react-native-paper";
@@ -17,7 +17,9 @@ const adminStyles = StyleSheet.create({
 	adminContainer: {
 		width: "100%",
 		maxWidth: 600,
+		height: "100%",
 		alignItems: "center",
+		justifyContent: "center",
 		paddingHorizontal: 8
 	},
 	adminHeader: {
@@ -189,8 +191,10 @@ function AdminPasswordNeeded({ setAdminPassword }) {
 	const [adminInput, setAdminInput] = useState("");
 	const [error, setError] = useState("");
 	const confirmAdminPassword = () => {
+		Keyboard.dismiss();
 		if(adminInput === CORRECT_PASSWORD) {
 			setAdminPassword(adminInput);
+			setError("");
 			return;
 		}
 
@@ -215,12 +219,19 @@ function AdminPasswordNeeded({ setAdminPassword }) {
 				{Boolean(error) && (
 					<Text
 						style={{
-							color: "red"
+							color: "red",
+							marginBottom: 8
 						}}
 					>
 						{error}
 					</Text>
 				)}
+				<Button
+					mode="elevated"
+					onPress={confirmAdminPassword}
+				>
+					Use Admin Password
+				</Button>
 			</View>
 		</Screen>
 	);

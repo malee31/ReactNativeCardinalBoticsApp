@@ -122,7 +122,8 @@ export default function Home({ navigation }) {
 						textAlign: "center",
 						borderColor: colors.lighterGray,
 						fontWeight: "bold",
-						width: "100%"
+						width: "100%",
+						minWidth: 400
 					}}
 				>
 					{!showLoading ? (!userWritable.userInfo.loggedIn ? "Log in to get started!" : `Sign ${userWritable.userInfo.signedIn ? "Out" : "In"} as ${displayName}`) : ""}

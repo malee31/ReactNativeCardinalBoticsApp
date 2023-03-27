@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Keyboard } from "react-native";
 import { Button, TextInput } from "react-native-paper";
 import Screen from "../parts/StyledParts/ScreenWrapper";
 import LargeLogo from "../parts/StyledParts/LargeLogo";
@@ -7,6 +7,8 @@ import useUserInfo from "../parts/ContextProviders/UserInfoProvider";
 import useModal from "../parts/ContextProviders/ModalProvider";
 import { login } from "../parts/utils/serverClientWrapper";
 import config from "../../config.json";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useNavigation } from "@react-navigation/native";
 
 const colors = config.colors;
 
@@ -56,15 +58,21 @@ const loginStyles = StyleSheet.create({
 	}
 });
 
-export default function Login({ navigation }) {
+export default function Login() {
+	const navigation = useNavigation();
 	const userWritable = useUserInfo(false);
 	const [passwordInput, setPasswordInput] = useState("");
 	const modal = useModal();
 
 	const handleLogin = () => {
 		modal.showMessage("Verifying that you exist...");
+		Keyboard.dismiss();
 		login(userWritable, passwordInput)
-			.then(modal.showMessage)
+			.then(message => {
+				modal.showMessage(message);
+				// noinspection JSCheckFunctionSignatures
+				navigation.navigate("Home");
+			})
 			.catch(err => modal.showMessage(err.message));
 	}
 
