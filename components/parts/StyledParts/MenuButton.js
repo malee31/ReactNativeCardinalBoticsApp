@@ -3,6 +3,7 @@ import { StyleSheet } from "react-native";
 import { IconButton } from "react-native-paper";
 import config from "../../../config.json";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useNavigation } from "@react-navigation/native";
 
 const colors = config.colors;
 
@@ -22,7 +23,8 @@ const { menuButtonStyle } = StyleSheet.create({
 	}
 });
 
-export default function MenuButton({ navigation }) {
+export default function MenuButton() {
+	const navigation = useNavigation();
 	const insets = useSafeAreaInsets();
 
 	return (

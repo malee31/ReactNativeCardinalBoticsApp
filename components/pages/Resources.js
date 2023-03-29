@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { ActivityIndicator, FlatList, StyleSheet } from "react-native";
-import Screen from "../parts/StyledParts/ScreenWrapper";
+import Screen from "../parts/StyledParts/ScreenWrappers";
 import LinkButton from "../parts/StyledParts/LinkButton.js";
 import useModal from "../parts/ContextProviders/ModalProvider";
 import config from "../../config.json";
@@ -14,7 +14,7 @@ const { listStyle } = StyleSheet.create({
 	}
 });
 
-export default function Resources({ navigation }) {
+export default function Resources() {
 	const [data, setData] = useState([]);
 	const modal = useModal();
 

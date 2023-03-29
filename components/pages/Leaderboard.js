@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { ActivityIndicator, FlatList, StyleSheet, Text, View } from "react-native";
-import Screen from "../parts/StyledParts/ScreenWrapper";
+import Screen, { screenPadding } from "../parts/StyledParts/ScreenWrappers";
 import LeaderboardEntry from "../parts/StyledParts/LeaderboardEntry";
 import useUserInfo from "../parts/ContextProviders/UserInfoProvider";
 import { updateSelf } from "../parts/utils/serverClientWrapper";
@@ -10,6 +10,9 @@ import config from "../../config.json";
 const colors = config.colors;
 
 const leaderboardStyles = StyleSheet.create({
+	indicator: {
+		marginTop: screenPadding.paddingTop
+	},
 	semiCenteredOuter: {
 		height: "100%",
 		paddingBottom: 30
@@ -21,7 +24,8 @@ const leaderboardStyles = StyleSheet.create({
 	},
 	list: {
 		width: "100%",
-		paddingHorizontal: 8
+		paddingHorizontal: 16,
+		marginTop: screenPadding.paddingTop
 	},
 	listContent: {
 		alignSelf: "center",
@@ -34,7 +38,7 @@ const leaderboardStyles = StyleSheet.create({
 export default function Leaderboard({ navigation }) {
 	const [leaderboardData, setLeaderboardData] = useState([]);
 	const userWritable = useUserInfo(false);
-	let content = <ActivityIndicator size="large" color={colors.primary}/>;
+	let content = <ActivityIndicator size="large" color={colors.primary} style={leaderboardStyles.indicator}/>;
 	if(userWritable.userInfo.loaded && !userWritable.userInfo.loggedIn) {
 		content = (
 			<View style={leaderboardStyles.semiCenteredOuter}>
@@ -85,7 +89,7 @@ export default function Leaderboard({ navigation }) {
 	}
 
 	return (
-		<Screen>
+		<Screen disablePadding={true}>
 			{content}
 		</Screen>
 	);

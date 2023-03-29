@@ -4,10 +4,9 @@ import { ActivityIndicator, Button } from "react-native-paper";
 import { signIn, signOut } from "../parts/utils/serverClient";
 import useUserInfo from "../parts/ContextProviders/UserInfoProvider";
 import useModal from "../parts/ContextProviders/ModalProvider";
-import Screen from "../parts/StyledParts/ScreenWrapper";
+import Screen from "../parts/StyledParts/ScreenWrappers";
 import LargeLogo from "../parts/StyledParts/LargeLogo";
 import config from "../../config.json";
-import { useNavigation } from "@react-navigation/native";
 
 const colors = config.colors;
 

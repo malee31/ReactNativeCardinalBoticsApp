@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { ActivityIndicator, FlatList, StyleSheet, Text, View } from "react-native";
 import LinkButton from "../parts/StyledParts/LinkButton.js";
-import Screen from "../parts/StyledParts/ScreenWrapper";
+import { ScreenScrollable } from "../parts/StyledParts/ScreenWrappers";
 import useModal from "../parts/ContextProviders/ModalProvider";
 import config from "../../config.json";
 
@@ -39,7 +39,7 @@ const formStyles = StyleSheet.create({
 	}
 });
 
-export default function Forms({ navigation }) {
+export default function Forms() {
 	const [data, setData] = useState([]);
 	const modal = useModal();
 
@@ -70,28 +70,34 @@ export default function Forms({ navigation }) {
 			renderItem={entry => {
 				entry = entry.item;
 				if(typeof entry == "string") {
-					return (<View style={formStyles.button}>
-						<Text style={formStyles.title}>
-							{entry}
-						</Text>
-					</View>);
+					return (
+						<View style={formStyles.button}>
+							<Text style={formStyles.title}>
+								{entry}
+							</Text>
+						</View>
+					);
 				}
 
 				const trimmed = entry[4].trim();
 
-				return (<View style={formStyles.button}>
-					{trimmed && trimmed.toLowerCase() !== "n/a" && (<Text style={formStyles.text}>
-						Due {entry[4]}
-					</Text>)}
-					<LinkButton title={entry[1]} url={entry[2]}/>
-				</View>);
+				return (
+					<View style={formStyles.button}>
+						{trimmed && trimmed.toLowerCase() !== "n/a" && (
+							<Text style={formStyles.text}>
+								Due {entry[4]}
+							</Text>
+						)}
+						<LinkButton title={entry[1]} url={entry[2]}/>
+					</View>
+				);
 			}}
 		/>;
 	}
 
 	return (
-		<Screen>
+		<ScreenScrollable>
 			{component}
-		</Screen>
+		</ScreenScrollable>
 	);
 }
