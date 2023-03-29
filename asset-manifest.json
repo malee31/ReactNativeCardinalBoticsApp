@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.js": "/ReactNativeCardinalBoticsApp/static/js/main.d35dbf96.js",
+    "main.js": "/ReactNativeCardinalBoticsApp/static/js/main.b162983f.js",
     "static/js/101.898bcb1b.js": "/ReactNativeCardinalBoticsApp/static/js/101.898bcb1b.js",
     "static/media/MaterialCommunityIcons.ttf": "/ReactNativeCardinalBoticsApp/static/media/MaterialCommunityIcons.5d42b4e60858731e7b65.ttf",
     "static/media/favicon.png": "/ReactNativeCardinalBoticsApp/static/media/favicon.d9409a15db3d4d1892e5.png",
@@ -11,11 +11,11 @@
     "manifest.json": "/ReactNativeCardinalBoticsApp/manifest.json",
     "favicon-16.png": "/ReactNativeCardinalBoticsApp/favicon-16.png",
     "serve.json": "/ReactNativeCardinalBoticsApp/serve.json",
-    "main.d35dbf96.js.map": "/ReactNativeCardinalBoticsApp/static/js/main.d35dbf96.js.map",
+    "main.b162983f.js.map": "/ReactNativeCardinalBoticsApp/static/js/main.b162983f.js.map",
     "101.898bcb1b.js.map": "/ReactNativeCardinalBoticsApp/static/js/101.898bcb1b.js.map"
   },
   "entrypoints": [
     "static/js/101.898bcb1b.js",
-    "static/js/main.d35dbf96.js"
+    "static/js/main.b162983f.js"
   ]
 }
