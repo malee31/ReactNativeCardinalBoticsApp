@@ -1,4 +1,4 @@
-import { StyleSheet, View, Text, Keyboard } from "react-native";
+import { StyleSheet, ScrollView, View, Text, Keyboard } from "react-native";
 import React, { useEffect, useRef, useState } from "react";
 import Screen from "../parts/StyledParts/ScreenWrapper";
 import { Button, TextInput } from "react-native-paper";
@@ -116,73 +116,75 @@ export default function Admin() {
 	};
 
 	return (
-		<Screen>
-			<View style={adminStyles.adminContainer}>
-				<Text style={adminStyles.adminHeader}>
-					Register Users
-				</Text>
-				<TextInput
-					mode="outlined"
-					label="First Name"
-					value={newUser.firstName}
-					style={adminStyles.adminInput}
-					onChange={newText => updateUser("firstName", newText.nativeEvent.text)}
-				/>
-				<TextInput
-					mode="outlined"
-					label="Last Name"
-					value={newUser.lastName}
-					style={adminStyles.adminInput}
-					onChange={newText => updateUser("lastName", newText.nativeEvent.text)}
-				/>
-				<TextInput
-					mode="outlined"
-					label="Password"
-					secureTextEntry={true}
-					value={newUser.password}
-					style={adminStyles.adminInput}
-					onChange={newText => updateUser("password", newText.nativeEvent.text)}
-				/>
-				<Button
-					mode="elevated"
-					style={{ marginBottom: 4 }}
-					onPress={onUserAdd}
-				>
-					Register User
-				</Button>
+		<Screen additionalStyles={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+			<ScrollView style={{ flexGrow: 0 }}>
+				<View style={adminStyles.adminContainer}>
+					<Text style={adminStyles.adminHeader}>
+						Register Users
+					</Text>
+					<TextInput
+						mode="outlined"
+						label="First Name"
+						value={newUser.firstName}
+						style={adminStyles.adminInput}
+						onChange={newText => updateUser("firstName", newText.nativeEvent.text)}
+					/>
+					<TextInput
+						mode="outlined"
+						label="Last Name"
+						value={newUser.lastName}
+						style={adminStyles.adminInput}
+						onChange={newText => updateUser("lastName", newText.nativeEvent.text)}
+					/>
+					<TextInput
+						mode="outlined"
+						label="Password"
+						secureTextEntry={true}
+						value={newUser.password}
+						style={adminStyles.adminInput}
+						onChange={newText => updateUser("password", newText.nativeEvent.text)}
+					/>
+					<Button
+						mode="elevated"
+						style={{ marginBottom: 4 }}
+						onPress={onUserAdd}
+					>
+						Register User
+					</Button>
 
-				<Text style={adminStyles.adminHeader}>
-					Insert Hours
-				</Text>
-				<Text>The date range format is very lax (Use " - " or " to " to separate start and end)</Text>
-				<TextInput
-					mode="outlined"
-					label="Password for Amended User"
-					secureTextEntry={true}
-					value={amend.password}
-					style={adminStyles.adminInput}
-					onChange={newText => updateAmend("password", newText.nativeEvent.text)}
-				/>
-				<DateInput
-					setStart={newStart => updateAmend("startTime", newStart)}
-					setEnd={newEnd => updateAmend("endTime", newEnd)}
-				/>
-				<Button
-					mode="elevated"
-					style={{ marginVertical: 8 }}
-					onPress={onSessionAdd}
-				>
-					Add Session
-				</Button>
+					<Text style={adminStyles.adminHeader}>
+						Insert Hours
+					</Text>
+					<Text>The date range format is very lax (Use " - " or " to " to separate start and end)</Text>
+					<TextInput
+						mode="outlined"
+						label="Password for Amended User"
+						secureTextEntry={true}
+						value={amend.password}
+						style={adminStyles.adminInput}
+						onChange={newText => updateAmend("password", newText.nativeEvent.text)}
+					/>
+					<DateInput
+						setStart={newStart => updateAmend("startTime", newStart)}
+						setEnd={newEnd => updateAmend("endTime", newEnd)}
+					/>
+					<Button
+						mode="elevated"
+						style={{ marginVertical: 8 }}
+						onPress={onSessionAdd}
+					>
+						Add Session
+					</Button>
 
-				<Button
-					mode="outlined"
-					style={{ marginVertical: 16 }}
-					onPress={onExitAdmin}
-				>
-					Exit Admin Controls
-				</Button>
-			</View>
+					<Button
+						mode="outlined"
+						style={{ marginVertical: 16 }}
+						onPress={onExitAdmin}
+					>
+						Exit Admin Controls
+					</Button>
+				</View>
+			</ScrollView>
 		</Screen>
 	);
 }
