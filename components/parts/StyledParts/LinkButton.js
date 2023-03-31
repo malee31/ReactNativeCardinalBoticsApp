@@ -1,7 +1,7 @@
 import React from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { Button } from "react-native-paper";
-import * as WebBrowser from "expo-web-browser";
+import { openBrowserAsync } from "expo-web-browser";
 import config from "../../../config.json";
 
 const colors = config.colors;
@@ -24,29 +24,32 @@ const iconStringMap = {
 	"default": "cogs"
 };
 
-const { linkButtonStyle } = StyleSheet.create({
-	linkButtonStyle: {
+const linkButtonStyles = StyleSheet.create({
+	wrapper: {
 		width: "100%",
 		minHeight: 40,
-		flex: 1,
-		justifyContent: "center",
-		alignItems: "flex-start",
-		marginVertical: 2
+		marginVertical: 2,
+	},
+	linkText: {
+		width: "100%",
+		textAlign: "left"
 	}
 });
 
 export default function LinkButton({ icon = "", title, url }) {
 	const iconString = iconStringMap[icon.toLowerCase().trim()] || iconStringMap["default"];
 	return (
-		<Button
-			icon={iconString}
-			mode="contained"
-			color={colors.secondary}
-			onPress={() => WebBrowser.openBrowserAsync(url)}
-			key={title || "Resource" + ": " + url + "<" + icon + ">"}
-			style={linkButtonStyle}
-		>
-			{title || "Resource"}
-		</Button>
+		<View style={linkButtonStyles.wrapper}>
+			<Button
+				icon={iconString}
+				mode="contained"
+				buttonColor={colors.secondary}
+				onPress={() => openBrowserAsync(url)}
+				key={title || `Resource: ${url}<${icon}>`}
+				labelStyle={linkButtonStyles.linkText}
+			>
+				{title || "Resource"}
+			</Button>
+		</View>
 	);
 }
