@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { ActivityIndicator, FlatList, StyleSheet } from "react-native";
-import Screen from "../parts/StyledParts/ScreenWrappers";
+import Screen, { screenPadding } from "../parts/StyledParts/ScreenWrappers";
 import LinkButton from "../parts/StyledParts/LinkButton.js";
 import useModal from "../parts/ContextProviders/ModalProvider";
 import config from "../../config.json";
@@ -8,9 +8,17 @@ import config from "../../config.json";
 const colors = config.colors;
 const urls = config.urls;
 
-const { listStyle } = StyleSheet.create({
-	listStyle: {
-		width: "100%"
+const resourceStyles = StyleSheet.create({
+	list: {
+		width: "100%",
+		paddingHorizontal: 16,
+		marginTop: screenPadding.paddingTop
+	},
+	listContent: {
+		alignSelf: "center",
+		alignItems: "stretch",
+		width: "100%",
+		maxWidth: 600
 	}
 });
 
@@ -29,7 +37,8 @@ export default function Resources() {
 
 	if(data) {
 		component = <FlatList
-			style={listStyle}
+			style={resourceStyles.list}
+			contentContainerStyle={resourceStyles.listContent}
 			data={data}
 			keyExtractor={item => item[0] + ": " + item[1]}
 			renderItem={(entry) => {

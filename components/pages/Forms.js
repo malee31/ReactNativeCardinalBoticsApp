@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { ActivityIndicator, FlatList, StyleSheet, Text, View } from "react-native";
 import LinkButton from "../parts/StyledParts/LinkButton.js";
-import { ScreenScrollable } from "../parts/StyledParts/ScreenWrappers";
+import Screen, { screenPadding, ScreenScrollable } from "../parts/StyledParts/ScreenWrappers";
 import useModal from "../parts/ContextProviders/ModalProvider";
 import config from "../../config.json";
 
@@ -10,7 +10,14 @@ const urls = config.urls;
 
 const formStyles = StyleSheet.create({
 	list: {
-		width: "100%"
+		width: "100%",
+		paddingHorizontal: 16,
+		marginTop: screenPadding.paddingTop
+	},
+	listContent: {
+		width: "100%",
+		alignSelf: "center",
+		maxWidth: 600
 	},
 	button: {
 		width: "100%",
@@ -63,41 +70,44 @@ export default function Forms() {
 	let component = <ActivityIndicator size="large" color={colors.primary}/>;
 
 	if(data) {
-		component = <FlatList
-			style={formStyles.list}
-			data={data}
-			keyExtractor={item => item[1] + ": " + item[2]}
-			renderItem={entry => {
-				entry = entry.item;
-				if(typeof entry == "string") {
+		component = (
+			<FlatList
+				style={formStyles.list}
+				contentContainerStyle={formStyles.listContent}
+				data={data}
+				keyExtractor={item => item[1] + ": " + item[2]}
+				renderItem={entry => {
+					entry = entry.item;
+					if(typeof entry == "string") {
+						return (
+							<View style={formStyles.button}>
+								<Text style={formStyles.title}>
+									{entry}
+								</Text>
+							</View>
+						);
+					}
+
+					const trimmed = entry[4].trim();
+
 					return (
 						<View style={formStyles.button}>
-							<Text style={formStyles.title}>
-								{entry}
-							</Text>
+							{trimmed && trimmed.toLowerCase() !== "n/a" && (
+								<Text style={formStyles.text}>
+									Due {entry[4]}
+								</Text>
+							)}
+							<LinkButton title={entry[1]} url={entry[2]}/>
 						</View>
 					);
-				}
-
-				const trimmed = entry[4].trim();
-
-				return (
-					<View style={formStyles.button}>
-						{trimmed && trimmed.toLowerCase() !== "n/a" && (
-							<Text style={formStyles.text}>
-								Due {entry[4]}
-							</Text>
-						)}
-						<LinkButton title={entry[1]} url={entry[2]}/>
-					</View>
-				);
-			}}
-		/>;
+				}}
+			/>
+		);
 	}
 
 	return (
-		<ScreenScrollable>
+		<Screen disablePadding={true}>
 			{component}
-		</ScreenScrollable>
+		</Screen>
 	);
 }

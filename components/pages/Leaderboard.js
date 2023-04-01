@@ -69,23 +69,25 @@ export default function Leaderboard({ navigation }) {
 	}, [userWritable.userInfo.password]);
 
 	if(leaderboardData) {
-		content = <FlatList
-			style={leaderboardStyles.list}
-			contentContainerStyle={leaderboardStyles.listContent}
-			scrollEventThrottle={16}
-			data={leaderboardData.sort((a, b) => {
-				if(a.signedIn !== b.signedIn) return b.signedIn - a.signedIn;
+		content = (
+			<FlatList
+				style={leaderboardStyles.list}
+				contentContainerStyle={leaderboardStyles.listContent}
+				scrollEventThrottle={16}
+				data={leaderboardData.sort((a, b) => {
+					if(a.signedIn !== b.signedIn) return b.signedIn - a.signedIn;
 
-				return a.name.localeCompare(b.name)
-			})}
-			keyExtractor={item => item.id.toString()}
-			renderItem={entry => {
-				entry = entry.item;
-				return (
-					<LeaderboardEntry entry={entry}/>
-				);
-			}}
-		/>;
+					return a.name.localeCompare(b.name)
+				})}
+				keyExtractor={item => item.id.toString()}
+				renderItem={entry => {
+					entry = entry.item;
+					return (
+						<LeaderboardEntry entry={entry}/>
+					);
+				}}
+			/>
+		);
 	}
 
 	return (

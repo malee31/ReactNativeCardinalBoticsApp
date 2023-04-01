@@ -232,7 +232,7 @@ function AdminPasswordNeeded({ setAdminPassword }) {
 	}
 
 	return (
-		<MobileScreen style={{ height: "100%" }} centered={true}>
+		<MobileScreen style={{ height: "100%", alignItems: "center" }}>
 			<LargeLogo/>
 			<TextInput
 				label="Admin Login"

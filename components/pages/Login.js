@@ -102,5 +102,6 @@ export default function Login() {
 					Submit
 				</Button>
 			</View>
-		</Screen>);
+		</Screen>
+	);
 }
