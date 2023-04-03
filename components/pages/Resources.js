@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { ActivityIndicator, FlatList, StyleSheet } from "react-native";
+import { ActivityIndicator, FlatList, StyleSheet, Text } from "react-native";
 import Screen, { screenPadding } from "../parts/StyledParts/ScreenWrappers";
 import LinkButton from "../parts/StyledParts/LinkButton.js";
 import useModal from "../parts/ContextProviders/ModalProvider";
@@ -9,10 +9,15 @@ const colors = config.colors;
 const urls = config.urls;
 
 const resourceStyles = StyleSheet.create({
+	title: {
+		fontSize: 30,
+		textAlign: "center",
+		marginTop: screenPadding.paddingTop,
+		marginBottom: 4
+	},
 	list: {
 		width: "100%",
 		paddingHorizontal: 16,
-		marginTop: screenPadding.paddingTop
 	},
 	listContent: {
 		alignSelf: "center",
@@ -35,28 +40,33 @@ export default function Resources() {
 
 	let component = <ActivityIndicator size="large" color={colors.primary}/>;
 
-	if(data) {
-		component = <FlatList
-			style={resourceStyles.list}
-			contentContainerStyle={resourceStyles.listContent}
-			data={data}
-			keyExtractor={item => item[0] + ": " + item[1]}
-			renderItem={(entry) => {
-				entry = entry.item;
-				return (
-					<LinkButton
-						title={entry[0]}
-						url={entry[1]}
-						icon={entry[2]}
-					/>
-				);
-			}}
-		/>;
+	if(!data) {
+		return (
+			<Screen>
+				{component}
+			</Screen>
+		);
 	}
 
 	return (
-		<Screen>
-			{component}
+		<Screen disablePadding={true}>
+			<Text style={resourceStyles.title}>Resources</Text>
+			<FlatList
+				style={resourceStyles.list}
+				contentContainerStyle={resourceStyles.listContent}
+				data={data}
+				keyExtractor={item => item[0] + ": " + item[1]}
+				renderItem={(entry) => {
+					entry = entry.item;
+					return (
+						<LinkButton
+							title={entry[0]}
+							url={entry[1]}
+							icon={entry[2]}
+						/>
+					);
+				}}
+			/>
 		</Screen>
 	);
 }

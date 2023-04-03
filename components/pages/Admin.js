@@ -1,13 +1,13 @@
-import { StyleSheet, View, Text, Keyboard } from "react-native";
 import React, { useEffect, useRef, useState } from "react";
-import { MobileScreen, MobileScreenScrollable } from "../parts/StyledParts/ScreenWrappers";
+import { StyleSheet, View, Text, Keyboard } from "react-native";
 import { Button, TextInput } from "react-native-paper";
-import config from "../../config.json";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { MobileScreen, MobileScreenScrollable } from "../parts/StyledParts/ScreenWrappers";
+import LargeLogo from "../parts/StyledParts/LargeLogo";
 import useModal from "../parts/ContextProviders/ModalProvider";
 import { addSession, addUser } from "../parts/utils/serverClient";
-import LargeLogo from "../parts/StyledParts/LargeLogo";
 import { parseDatePart, partToDate, splitDateParts } from "../parts/utils/flexibleDateParser";
+import config from "../../config.json";
 
 const colors = config.colors;
 
@@ -50,6 +50,7 @@ export default function Admin() {
 			.then(val => setAdminPassword(val || ""))
 			.catch(err => modal.showMessage(`Unable to load admin password: ${err.message}`));
 	}, []);
+
 	const setAndSaveAdminPassword = newAdminPassword => {
 		// Fire-and-forget
 		AsyncStorage.setItem("admin_password", newAdminPassword)
