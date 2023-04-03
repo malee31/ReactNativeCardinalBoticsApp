@@ -38,7 +38,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptable_icon_foreground.png",
         "backgroundColor": "#7D1120"
-      }
+      },
+      "icon": "./assets/maskable_icon.png"
     },
     "androidStatusBar": {
       "barStyle": "dark-content",
