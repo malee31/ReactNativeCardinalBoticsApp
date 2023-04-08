@@ -39,7 +39,7 @@ Response:
 Errors:
 - 401 `not_authed` when no admin header is provided
 - 401 `invalid_admin_auth` when admin header is invalid
-- 404 `user_not_found` when a user with the same password exists
+- 404 `user_not_found` when no user with the provided auth header exists
 
 (Option) PATCH /user/password - Alternative user edit options (Changing passwords etc) (Auth header)  
 Response:
@@ -55,17 +55,55 @@ Warnings:
 Errors:
 - 401 `not_authed` when no admin header is provided
 - 401 `invalid_admin_auth` when admin header is invalid
-- 404 `user_not_found` when a user with the same password exists
 
-GET /user/sessions - All user sessions (Auth header)
-PUT /user/sessions - For ending a session (Auth header)
+GET /user/sessions - All user sessions (Auth header) (Admin auth header)
+Response:
+- (200) List of sessions in the `sessions` key
+Errors:
+- 401 `not_authed` when no auth header is provided
+- 401 `invalid_admin_auth` when an invalid admin auth header is provided
+- 404 `user_not_found` when no user with a matching auth header is found
+
+GET /users/sessions - All user sessions grouped by user (Admin auth header)
+Response:
+- (200) All sessions from all users in `[user id]: [sessions]` format
+Errors:
+- 401 `not_authed` when no admin auth header is provided
+- 401 `invalid_admin_auth` when an invalid admin auth header is provided
+
+POST /user/sessions - For creating a completely new and arbitrary session (Admin auth header)
+Input: A complete session object under the `session` key and the target user's identifier as `user_id`  
+Response:
+- (200) New session is returned
+Errors:
+- 401 `not_authed` when no auth header is provided
+- 401 `invalid_admin_auth` when an invalid admin auth header is provided
+- 404 `user_not_found` when no user with a matching auth header is found
+- 422 `user_not_specified` when no target user to add the session to is specified
+
 DELETE /user/session/:session-id - For removing a specific session (Admin auth header)
+Response:
+- (204) No content returned. Successfully deleted
+Errors:
+- 401 `not_authed` when no admin auth header is provided
+- 401 `invalid_admin_auth` when an invalid admin auth header is provided
 
 GET /user/session/latest - Latest session (Auth header)
 PATCH /user/session/latest - Switch to log out (Auth header)
 
 POST /user/auth/exchange - Given a password, returns a randomly generated, valid api key that does not expire for the user
+Input: Send password in body in the `password` key  
+Response:
+- (200) API key is provided in the `api_key` field
+Errors:
+- (401) `invalid_password` No user with this password exists
+
 POST /user/auth/revoke - Revokes and regenerates the api key
+Errors:
+- 401 `not_authed` when no auth header is provided
+- 404 `user_not_found` when no user with a matching auth header is found
+Response:
+- (200) Successfully revoked API key. Returns new key under the `new_api_key` key
 
 # Auth notes
 As a side effect of revoke, all auth-related endpoints can fail with `error: "AUTH_REVOKED_BY_USER"`
@@ -84,4 +122,9 @@ After consuming/checking the status of the request, deleting the keys `ok`, `war
 ```
 
 # Considerations
-Since not being able to find the user is also indicates an invalid API key, the code returned could be unauthorized instead
+Since not being able to find the user is also indicates an invalid API key, the code returned could be unauthorized instead.  
+For the admin side of things, an identifier still has to be chosen. It will likely be the SQL row id  
+To differentiate an admin key from a user key, admin keys and user keys will be prefixed differently. Likely `A-` for admins and `U-` for users.  
+Admin API key exchange may be worth adding at a later date to avoid leaking the credentials with physical device access  
+Logging can be added silently to any endpoint, provided it fails silently in most cases.  
+There are no GETs or other methods for `/user/session/:session-id`
