@@ -150,6 +150,14 @@ After consuming/checking the status of the request, deleting the keys `ok`, `war
 }
 ```
 
+# Additional Convenience Routes
+POST /users/status/sync - For syncing data to external sources on-demand  
+Response:
+- (200) Successful sync
+
+Errors:
+- (500) `sync_failed` - Generic failure code. More specific codes added as needed
+
 # Considerations
 Since not being able to find the user is also indicates an invalid API key, the code returned could be unauthorized instead.
 
