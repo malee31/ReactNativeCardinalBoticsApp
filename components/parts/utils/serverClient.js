@@ -24,8 +24,9 @@ export async function verifyPassword(password) {
 		result.messages.push(`Unable to fetch status. Are you connected to the internet?`);
 	}
 
-	// TODO: Confirm that res.ok is false if fetch throws
-	if(res.ok) {
+	if(!res) {
+		// Do nothing if fetch errors. No internet message already added by catch ^ above.
+	} else if(res.ok) {
 		const jsonResponse = await res.json();
 		result.ok = true;
 		result.data.verified = true;
@@ -74,7 +75,9 @@ async function signInOut(password, signInMode) {
 		result.messages.push(`Unable to fetch status. Are you connected to the internet?`);
 	}
 
-	if(res.status === 400) {
+	if(!res) {
+		// Do nothing. No internet message already added by catch ^ above.
+	} else if(res.status === 400) {
 		result.ok = true;
 		result.messages.push(await res.text());
 	} else if(!res.ok) {
