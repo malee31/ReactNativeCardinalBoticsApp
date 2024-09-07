@@ -1,4 +1,4 @@
-import "react-native-gesture-handler";
+import "./gesture-handler";
 import React from "react";
 import { DefaultTheme, Provider as PaperProvider } from "react-native-paper";
 import { StatusBar } from "expo-status-bar";

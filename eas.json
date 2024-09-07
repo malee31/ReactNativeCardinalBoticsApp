@@ -1,22 +1,23 @@
 {
-	"cli": {
-		"version": ">= 0.48.2"
-	},
-	"build": {
-		"development": {
-			"distribution": "internal",
-			"channel": "development",
-			"android": {
-				"buildType": "app-bundle"
-			}
-		},
-		"preview": {
-			"distribution": "internal",
-			"channel": "preview"
-		},
-		"production": {}
-	},
-	"submit": {
-		"production": {}
-	}
+  "cli": {
+    "version": ">= 0.48.2",
+    "appVersionSource": "local"
+  },
+  "build": {
+    "development": {
+      "distribution": "internal",
+      "channel": "development",
+      "android": {
+        "buildType": "app-bundle"
+      }
+    },
+    "preview": {
+      "distribution": "internal",
+      "channel": "preview"
+    },
+    "production": {}
+  },
+  "submit": {
+    "production": {}
+  }
 }
