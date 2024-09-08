@@ -81,6 +81,9 @@
     },
     "runtimeVersion": {
       "policy": "appVersion"
+    },
+    "experiments": {
+      "baseUrl": "/ReactNativeCardinalBoticsApp"
     }
   }
 }
