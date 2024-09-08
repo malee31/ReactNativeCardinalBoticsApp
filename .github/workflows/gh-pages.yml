@@ -35,6 +35,7 @@ jobs:
           npx workbox-cli generateSW workbox-config.js
           cp assets/web-privacy-policy.html web-build/privacy-policy.html
           cp web-build/index.html web-build/404.html
+          touch web-build/.nojekyll
 
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4.6.4
