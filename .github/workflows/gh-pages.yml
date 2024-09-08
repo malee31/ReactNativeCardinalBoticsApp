@@ -19,27 +19,25 @@ jobs:
         uses: actions/setup-node@v3
 
       - name: Install Dependencies
-        run: npm install --legacy-peer-deps --save-dev --include=dev
+        run: npm install --save-dev --include=dev
 
       - name: Setup Expo
-        uses: expo/expo-github-action@v7
+        uses: expo/expo-github-action@v8
         with:
           expo-version: latest
           packager: npm
 
       - name: Build Web App with Expo
-        run: npx expo export:web
+        run: npx expo export -p web --output-dir web-build/
 
       - name: Modify build
         run: |
+          npx workbox-cli generateSW workbox-config.js
           cp assets/web-privacy-policy.html web-build/privacy-policy.html
           cp web-build/index.html web-build/404.html
-          cp assets/pwa-manifest.json web-build/manifest.json
-          cp -r assets/pwa-icons/chrome-icon web-build/pwa/chrome-icon
-          cp -r assets/pwa-icons/adaptable-icon web-build/pwa/adaptable-icon
 
       - name: Deploy to GitHub Pages
-        uses: JamesIves/github-pages-deploy-action@v4.2.5
+        uses: JamesIves/github-pages-deploy-action@v4.6.4
         with:
           branch: gh-pages
           folder: web-build
