@@ -27,14 +27,15 @@
       "androidCollapsedTitle": "collapse"
     },
     "updates": {
-      "fallbackToCacheTimeout": 15000
+      "fallbackToCacheTimeout": 15000,
+      "url": "https://u.expo.dev/9ce752ec-a876-496e-b880-d911e7fd678e"
     },
     "assetBundlePatterns": [
       "**/*"
     ],
     "android": {
       "package": "com.team4159.cardinalboticsapp",
-      "versionCode": 4,
+      "versionCode": 5,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptable_icon_foreground.png",
         "backgroundColor": "#7D1120"
@@ -77,6 +78,9 @@
       "eas": {
         "projectId": "9ce752ec-a876-496e-b880-d911e7fd678e"
       }
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
     }
   }
 }
