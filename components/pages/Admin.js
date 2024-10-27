@@ -13,7 +13,7 @@ const colors = config.colors;
 
 // TODO: As long as the web version has it hard-coded. So will this.
 //       I will personally rewrite the backend to make the validation server-side at a later date if I haven't been beat to it
-const CORRECT_PASSWORD = "Berd";
+const CORRECT_PASSWORD = "A-Berd";
 
 const adminStyles = StyleSheet.create({
 	adminContainer: {

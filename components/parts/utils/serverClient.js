@@ -4,10 +4,11 @@
  */
 import config from "../../../config.json";
 
+const SERVER_URL = config.serverURL;
 const endpoints = config.serverEndpointBaseURLs;
 
 export async function verifyPassword(password) {
-	const url = `${endpoints.getUserData}?password=${encodeURIComponent(password)}`;
+	const url = `${SERVER_URL}${endpoints.getUserData}?password=${encodeURIComponent(password)}`;
 	const result = {
 		ok: false,
 		messages: [],
