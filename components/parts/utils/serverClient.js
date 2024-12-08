@@ -8,7 +8,6 @@ const SERVER_URL = config.serverURL;
 const endpoints = config.serverEndpointBaseURLs;
 
 export async function verifyPassword(password) {
-	const url = `${SERVER_URL}${endpoints.getUserData}?password=${encodeURIComponent(password)}`;
 	const result = {
 		ok: false,
 		messages: [],
@@ -20,30 +19,66 @@ export async function verifyPassword(password) {
 
 	let res;
 	try {
-		res = await fetch(url);
+		res = await fetch(`${SERVER_URL}${endpoints.exchangePassword}`, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify({
+				password: password
+			})
+		});
 	} catch(err) {
 		result.messages.push(`Unable to fetch status. Are you connected to the internet?`);
+		return result;
 	}
 
-	if(!res) {
-		// Do nothing if fetch errors. No internet message already added by catch ^ above.
-	} else if(res.ok) {
-		const jsonResponse = await res.json();
-		result.ok = true;
-		result.data.verified = true;
-		result.data.user = {
-			name: jsonResponse.name,
-			password: password,
-			// Is 0 if signed out. Otherwise, the actual time logged in is fetched or set to the current time if unable to be found
-			signedIn: !jsonResponse.signedIn ? 0 : await getLeaderboard()
-				.then(val => val.find(entry => entry.name.trim() === jsonResponse.name.trim()))
-				.then(additionalUserData => Date.now() - additionalUserData.timeIn)
-				.catch(() => Date.now())
-		};
-	} else if(res.status === 404) {
+	if(res.status === 404) {
 		result.messages.push("Sorry, it looks like you don't exist\nOr that's the wrong password...\nBoth possibilities are equally likely");
-	} else {
+		return result;
+	}
+
+	if(!res.ok) {
 		result.messages.push(`Server behaved unexpectedly and gave this error: [${res.status}] ${res.statusText}`);
+		return result;
+	}
+
+	const exchangeResponse = await res.json();
+	const apiKey = exchangeResponse.api_key;
+	result.ok = true;
+	result.data.verified = true;
+	result.data.user = {
+		name: null,
+		password: apiKey,
+		// Is 0 if signed out. Otherwise, the actual time logged in is fetched or set to the current time if unable to be found
+		signedIn: null
+	};
+
+	let tokenRes;
+	try {
+		tokenRes = await fetch(`${SERVER_URL}${endpoints.getUserStatus}`, {
+			method: "GET",
+			headers: {
+				"Authorization": `Bearer ${apiKey}`
+			}
+		});
+	} catch(err) {
+		result.messages.push(`Unable to fetch status. Are you connected to the internet?`);
+		return result;
+	}
+
+	if(!res.ok) {
+		result.messages.push(`Server behaved unexpectedly during exchange and gave this error: [${res.status}] ${res.statusText}`);
+		return result;
+	}
+
+	const tokenJsonResponse = await tokenRes.json();
+	const user = tokenJsonResponse.user;
+	result.data.user.name = `${user.first_name} ${user.last_name}`;
+	// Is 0 if signed out. Otherwise, the actual time logged in is set
+	result.data.user.signedIn = 0;
+	if(user.session && user.session.endTime) {
+		result.data.user.signedIn = Date.now() - user.session.startTime;
 	}
 
 	return result;
@@ -131,10 +166,11 @@ export function getLeaderboard() {
 }
 
 export function addUser(newUserObject) {
-	return fetch(endpoints.admin.addUser, {
+	return fetch(`${SERVER_URL}${endpoints.admin.addUser}`, {
 		method: "POST",
 		headers: {
-			"Content-Type": "application/json"
+			"Content-Type": "application/json",
+			"Authorization": "Bearer A-Berd"
 		},
 		body: JSON.stringify(newUserObject)
 	})
@@ -142,10 +178,11 @@ export function addUser(newUserObject) {
 }
 
 export function addSession(newSession) {
-	return fetch(endpoints.admin.addSession, {
+	return fetch(`${SERVER_URL}${endpoints.admin.addSession}`, {
 		method: "POST",
 		headers: {
-			"Content-Type": "application/json"
+			"Content-Type": "application/json",
+			"Authorization": "Bearer A-Berd"
 		},
 		body: JSON.stringify(newSession)
 	})
