@@ -37,21 +37,24 @@ function formatTime(totalTime) {
 }
 
 export default function LeaderboardEntry({ entry }) {
+	const name = `${entry.first_name} ${entry.last_name}`;
+	const signedIn = entry.session && !entry.session.endTime;
+
 	return (
 		<View style={leaderboardEntryStyles.member}>
-			<View style={StyleSheet.compose(leaderboardEntryStyles.indicator, {
-				backgroundColor: entry.signedIn ? "green" : colors.darkGray
-			})}/>
+			<View style={[leaderboardEntryStyles.indicator, {
+				backgroundColor: signedIn ? "green" : colors.darkGray
+			}]}/>
 			<View style={leaderboardEntryStyles.entryContent}>
 				<Text
-					style={StyleSheet.compose(leaderboardEntryStyles.memberName, {
-						color: entry.signedIn ? "green" : "black",
-					})}
+					style={[leaderboardEntryStyles.memberName, {
+						color: signedIn ? "green" : "black",
+					}]}
 				>
-					{entry.name}
+					{name}
 				</Text>
 				<Text>
-					Total: {formatTime(entry.totalTime / 1000)}{Boolean(entry.signedIn) && ` (+${formatTime(entry.timeIn / 1000)})`}
+					Total: {formatTime(entry.totalTime / 1000)}{signedIn && ` (+${formatTime(entry.timeIn / 1000)})`}
 				</Text>
 			</View>
 		</View>

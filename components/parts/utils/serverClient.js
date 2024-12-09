@@ -184,24 +184,34 @@ export function signOut(apiKey) {
 }
 
 export function getLeaderboard() {
-	return fetch(endpoints.getData)
+	return fetch(`${SERVER_URL}${endpoints.getData}`)
 		.then(res => res.json())
 		.then(data => {
 			// Sorted by sign in status, total time, then username
-			return data
+			return data.users
 				.sort((a, b) => {
-					if(a.signedIn !== b.signedIn) {
-						return b.signedIn - a.signedIn;
+					// Active users appear first
+					const aActive = a.session && !a.session.endTime;
+					const bActive = a.session && !a.session.endTime;
+					if(aActive !== bActive) {
+						return aActive ? -1 : 1;
 					}
-					if(a.totalTime !== b.totalTime) {
-						return b.totalTime - a.totalTime;
+
+					// Signed in for longer appears first
+					if(aActive && bActive) {
+						return a.session.startTime - b.session.startTime;
 					}
-					if(a.username < b.username) {
+
+					// Sort by name if both are signed out
+					const aName = `${a.first_name} ${a.last_name}`;
+					const bName = `${b.first_name} ${b.last_name}`;
+					if(aName < bName) {
 						return -1;
 					}
-					if(a.username > b.username) {
+					if(aName > bName) {
 						return 1;
 					}
+
 					return 0;
 				});
 		})

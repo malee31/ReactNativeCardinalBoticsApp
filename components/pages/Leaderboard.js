@@ -3,9 +3,9 @@ import { ActivityIndicator, FlatList, StyleSheet, Text, View } from "react-nativ
 import Screen, { screenPadding } from "../parts/StyledParts/ScreenWrappers";
 import LeaderboardEntry from "../parts/StyledParts/LeaderboardEntry";
 import useUserInfo from "../parts/ContextProviders/UserInfoProvider";
-import { updateSelf } from "../parts/utils/serverClientWrapper";
 import { Button } from "react-native-paper";
 import config from "../../config.json";
+import { getLeaderboard } from "../parts/utils/serverClient";
 
 const colors = config.colors;
 
@@ -57,16 +57,16 @@ export default function Leaderboard({ navigation }) {
 		);
 	}
 
-	const update = () => {
-		updateSelf(userWritable).then(setLeaderboardData)
-	};
-
 	useEffect(() => {
+		const update = () => {
+			getLeaderboard().then(setLeaderboardData);
+		};
+
 		update();
 		// TODO: Sync more accurately using websockets
 		const timer = setInterval(update, 30 * 1000); // 30-second interval
 		return () => clearInterval(timer);
-	}, [userWritable.userInfo.password]);
+	}, [userWritable.userInfo.apiKey]);
 
 	if(leaderboardData) {
 		content = (
