@@ -37,8 +37,10 @@ function formatTime(totalTime) {
 }
 
 export default function LeaderboardEntry({ entry }) {
-	const name = `${entry.first_name} ${entry.last_name}`;
-	const signedIn = entry.session && !entry.session.endTime;
+	const name = entry.name;
+	const signedIn = entry.signedIn;
+	const timeIn = signedIn ? (Date.now() - entry.session.startTime) / 1000 : 0;
+	const timeTotal = entry.total_sessions / 1000 + timeIn;
 
 	return (
 		<View style={leaderboardEntryStyles.member}>
@@ -54,7 +56,12 @@ export default function LeaderboardEntry({ entry }) {
 					{name}
 				</Text>
 				<Text>
-					Total: {formatTime(entry.totalTime / 1000)}{signedIn && ` (+${formatTime(entry.timeIn / 1000)})`}
+					{signedIn ? (
+						`[Signed In: ${formatTime(timeIn)}] `
+					) : (
+						"[Signed Out] "
+					)}
+					Total: {formatTime(timeTotal)}
 				</Text>
 			</View>
 		</View>

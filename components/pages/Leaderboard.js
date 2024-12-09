@@ -59,7 +59,15 @@ export default function Leaderboard({ navigation }) {
 
 	useEffect(() => {
 		const update = () => {
-			getLeaderboard().then(setLeaderboardData);
+			getLeaderboard()
+				.then(rawLeaderboard => {
+					setLeaderboardData(rawLeaderboard.map(entry => {
+						entry.name = `${entry.first_name} ${entry.last_name}`;
+						entry.signedIn = entry.session && !entry.session.endTime;
+
+						return entry;
+					}))
+				});
 		};
 
 		update();
