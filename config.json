@@ -11,7 +11,6 @@
 		"getUserStatus": "/user/status",
 		"exchangePassword": "/user/auth/exchange",
 		"signIn": "/user/session/latest",
-		"signOut": "/user/session/latest",
 		"admin": {
 			"addUser": "/user",
 			"addSession": "/user/sessions",

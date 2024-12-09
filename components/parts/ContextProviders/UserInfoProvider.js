@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { getPassword } from "../utils/storageManager";
-import { getLeaderboard, verifyPassword } from "../utils/serverClient";
+import { getApiKey } from "../utils/storageManager";
+import { getLeaderboard, verifyApiKey } from "../utils/serverClient";
 
 /**
  * @typedef UserInfoWritable
@@ -25,7 +25,7 @@ const userInfoContext = createContext({
 		loggedIn: false,
 		signedIn: 0,
 		name: "",
-		password: ""
+		apiKey: ""
 	}
 });
 
@@ -35,7 +35,7 @@ export function UserInfoProvider({ children }) {
 		loggedIn: false,
 		signedIn: 0,
 		name: "",
-		password: ""
+		apiKey: ""
 	});
 
 	/** @type UserInfoWritable */
@@ -50,32 +50,37 @@ export function UserInfoProvider({ children }) {
 	};
 
 	useEffect(() => {
-		getPassword()
-			.then(async storedPassword => {
+		getApiKey()
+			.then(async storedApiKey => {
 				const updatedData = { loaded: true };
-				if(storedPassword) {
-					// Does not load password if unable to verify. Silently drops errors
-					const result = await verifyPassword(storedPassword);
-					if(result.ok && result.data.verified) {
-						updatedData.loggedIn = true;
-						updatedData.name = result.data.user.name;
-						updatedData.password = result.data.user.password;
-						// TODO: Get signed in status and time
-						const val = await getLeaderboard();
-						const user = val.find(entry => entry.name.trim() === updatedData.name.trim());
-						const clockedIn = Date.now() - user.timeIn;
-						if(Boolean(user.signedIn) !== Boolean(userInfo.signedIn)) {
-							// console.log("RESYNC");
-							if(user.signedIn) {
-								updatedData.signedIn = clockedIn;
-							} else {
-								updatedData.signedIn = 0;
-							}
-						} else if(user.signedIn && Math.abs(userInfo.signedIn - clockedIn) > 2000 /* 2 second desync tolerance */) {
-							// console.log(`Resync gap: ${Math.abs(userInfo.signedIn - clockedIn)}`);
-							updatedData.signedIn = clockedIn;
-						}
+				if(!storedApiKey) {
+					contextValue.updateData(updatedData);
+					return;
+				}
+
+				// Does not load password if unable to verify. Silently drops errors
+				const result = await verifyApiKey(storedApiKey);
+				if(!result.ok || !result.data.verified) {
+					contextValue.updateData(updatedData);
+					return;
+				}
+
+				updatedData.loggedIn = true;
+				updatedData.name = result.data.user.name;
+				updatedData.apiKey = result.data.user.apiKey;
+				// TODO: Get signed in status and time
+				const user = result.data.user;
+				const clockedIn = user.signedIn;
+				if(Boolean(user.signedIn) !== Boolean(userInfo.signedIn)) {
+					// console.log("RESYNC");
+					if(user.signedIn) {
+						updatedData.signedIn = clockedIn;
+					} else {
+						updatedData.signedIn = 0;
 					}
+				} else if(user.signedIn && Math.abs(userInfo.signedIn - clockedIn) > 2000 /* 2 second desync tolerance */) {
+					// console.log(`Resync gap: ${Math.abs(userInfo.signedIn - clockedIn)}`);
+					updatedData.signedIn = clockedIn;
 				}
 
 				contextValue.updateData(updatedData);

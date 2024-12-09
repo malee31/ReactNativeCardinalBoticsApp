@@ -18,19 +18,19 @@ export default function Home({ navigation }) {
 	const showLoading = loading || !userWritable.userInfo.loaded;
 
 	useEffect(() => {
-		if(userWritable.userInfo.loaded && !userWritable.userInfo.password) {
+		if(userWritable.userInfo.loaded && !userWritable.userInfo.apiKey) {
 			navigation.navigate("Login");
 		}
 	}, [userWritable.userInfo.loaded]);
 
 	const toggleSignIn = () => {
-		if(!userWritable.userInfo.password) {
+		if(!userWritable.userInfo.apiKey) {
 			navigation.navigate("Login");
 			return;
 		}
 		setLoading(true);
 		if(!userWritable.userInfo.signedIn) {
-			signIn(userWritable.userInfo.password)
+			signIn(userWritable.userInfo.apiKey)
 				.then(result => {
 					if(result.ok) {
 						userWritable.updateData({
@@ -42,7 +42,7 @@ export default function Home({ navigation }) {
 					setLoading(false);
 				});
 		} else {
-			signOut(userWritable.userInfo.password)
+			signOut(userWritable.userInfo.apiKey)
 				.then(result => {
 					if(result.ok) {
 						userWritable.updateData({

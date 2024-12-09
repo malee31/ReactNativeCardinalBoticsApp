@@ -69,9 +69,9 @@ function useDrawerPanhandlers() {
 export default function Screen({ children, disablePadding = false, additionalStyles, ...extraProps }) {
 	let screenStyle = screenWrapperStyles.defaultScreen;
 	if(!disablePadding) {
-		screenStyle = StyleSheet.compose(screenStyle, screenWrapperStyles.defaultScreenPadding);
+		screenStyle = [screenStyle, screenWrapperStyles.defaultScreenPadding];
 	}
-	screenStyle = StyleSheet.compose(screenStyle, additionalStyles);
+	screenStyle = [screenStyle, additionalStyles].flat();
 	const drawerPanhandlers = useDrawerPanhandlers();
 
 	return (
@@ -89,9 +89,9 @@ export default function Screen({ children, disablePadding = false, additionalSty
 export function ScreenScrollable({ children, disablePadding = false, additionalStyles, ...extraProps }) {
 	let screenStyle = screenWrapperStyles.defaultScreen;
 	if(!disablePadding) {
-		screenStyle = StyleSheet.compose(screenStyle, screenWrapperStyles.defaultScreenPadding);
+		screenStyle = [screenStyle, screenWrapperStyles.defaultScreenPadding];
 	}
-	screenStyle = StyleSheet.compose(screenStyle, additionalStyles);
+	screenStyle = [screenStyle, additionalStyles].flat();
 
 	return (
 		<Screen
@@ -138,9 +138,9 @@ export function MobileScreenScrollable({ children, centered = false, disablePadd
 function MobileView({children, style, centered = false, ...extraProps}) {
 	let mobileViewStyles = screenWrapperStyles.mobileScreen;
 	if(centered) {
-		mobileViewStyles = StyleSheet.compose(mobileViewStyles, screenWrapperStyles.mobileCenter);
+		mobileViewStyles = [mobileViewStyles, screenWrapperStyles.mobileCenter];
 	}
-	mobileViewStyles = StyleSheet.compose(mobileViewStyles, style);
+	mobileViewStyles = [mobileViewStyles, style].flat();
 
 	return (
 		<View

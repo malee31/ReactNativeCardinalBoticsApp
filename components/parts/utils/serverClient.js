@@ -7,14 +7,11 @@ import config from "../../../config.json";
 const SERVER_URL = config.serverURL;
 const endpoints = config.serverEndpointBaseURLs;
 
-export async function verifyPassword(password) {
+export async function exchangePassword(password) {
 	const result = {
 		ok: false,
 		messages: [],
-		data: {
-			verified: false,
-			user: null
-		}
+		api_key: null
 	};
 
 	let res;
@@ -44,19 +41,60 @@ export async function verifyPassword(password) {
 	}
 
 	const exchangeResponse = await res.json();
-	const apiKey = exchangeResponse.api_key;
+	result.ok = true;
+	result.api_key = exchangeResponse.api_key;
+	return result;
+}
+
+export async function verifyPassword(password) {
+	const result = {
+		ok: false,
+		messages: [],
+		data: {
+			verified: false,
+			user: null
+		}
+	};
+
+	const apiKeyResult = await exchangePassword(password);
+	if(!apiKeyResult.ok) {
+		result.messages.push(...apiKeyResult.messages);
+		return result;
+	}
+
+	const apiKey = apiKeyResult.api_key;
 	result.ok = true;
 	result.data.verified = true;
 	result.data.user = {
 		name: null,
-		password: apiKey,
+		apiKey: apiKey,
 		// Is 0 if signed out. Otherwise, the actual time logged in is fetched or set to the current time if unable to be found
 		signedIn: null
 	};
 
-	let tokenRes;
+	const userResult = await verifyApiKey(apiKey);
+
+	if(!userResult.ok) {
+		result.messages.push(...userResult.messages);
+		return result;
+	}
+
+	return userResult;
+}
+
+export async function verifyApiKey(apiKey) {
+	const result = {
+		ok: false,
+		messages: [],
+		data: {
+			verified: false,
+			user: null
+		}
+	};
+
+	let res;
 	try {
-		tokenRes = await fetch(`${SERVER_URL}${endpoints.getUserStatus}`, {
+		res = await fetch(`${SERVER_URL}${endpoints.getUserStatus}`, {
 			method: "GET",
 			headers: {
 				"Authorization": `Bearer ${apiKey}`
@@ -72,26 +110,28 @@ export async function verifyPassword(password) {
 		return result;
 	}
 
-	const tokenJsonResponse = await tokenRes.json();
+	const tokenJsonResponse = await res.json();
 	const user = tokenJsonResponse.user;
-	result.data.user.name = `${user.first_name} ${user.last_name}`;
-	// Is 0 if signed out. Otherwise, the actual time logged in is set
-	result.data.user.signedIn = 0;
-	if(user.session && user.session.endTime) {
-		result.data.user.signedIn = Date.now() - user.session.startTime;
-	}
+	result.ok = true;
+	result.data.verified = true;
+	result.data.user = {
+		name: `${user.first_name} ${user.last_name}`,
+		apiKey: apiKey,
+		// Is 0 if signed out. Otherwise, the actual sign in time is set
+		signedIn: (!user.session || user.session.endTime) ? 0 : user.session.startTime
+	};
 
 	return result;
 }
 
 /**
  * Signs a user in or out
- * @param {string} password Password of the user to sign in or out
+ * @param {string} apiKey API key of the user to sign in or out
  * @param {boolean} signInMode If set to false, will sign the user out instead
  * @return {Promise<Object>} Resolves after a response is received from the server and parsed
  */
-async function signInOut(password, signInMode) {
-	const url = signInMode ? endpoints.signIn : endpoints.signOut;
+async function signInOut(apiKey, signInMode) {
+	const url = `${SERVER_URL}${endpoints.signIn}`;
 	const result = {
 		ok: false,
 		messages: [],
@@ -101,40 +141,46 @@ async function signInOut(password, signInMode) {
 	let res;
 	try {
 		res = await fetch(url, {
-			method: "POST",
+			method: "PATCH",
 			headers: {
-				"Content-Type": "application/json"
+				"Content-Type": "application/json",
+				"Authorization": `Bearer ${apiKey}`
 			},
-			body: JSON.stringify({ password: password })
+			body: JSON.stringify({
+				method: signInMode ? "sign_in" : "sign_out"
+			})
 		});
 	} catch(err) {
 		result.messages.push(`Unable to fetch status. Are you connected to the internet?`);
+		return result;
 	}
 
-	if(!res) {
-		// Do nothing. No internet message already added by catch ^ above.
-	} else if(res.status === 400) {
+	if(res.status === 400) {
 		result.ok = true;
 		result.messages.push(await res.text());
-	} else if(!res.ok) {
+		return result;
+	}
+
+	if(!res.ok) {
 		result.messages.push(`Unable to sign ${signIn ? "in" : "out"}: [${res.status}] ${res.statusText}`);
-	} else {
-		const verified = await verifyPassword(password);
-		result.ok = verified.ok && verified.data.verified;
-		if(result.ok) {
-			result.data = verified.data.user;
-		}
+		return result;
+	}
+
+	const verified = await verifyApiKey(apiKey);
+	result.ok = verified.ok && verified.data.verified;
+	if(result.ok) {
+		result.data = verified.data.user;
 	}
 
 	return result;
 }
 
-export function signIn(password) {
-	return signInOut(password, true);
+export function signIn(apiKey) {
+	return signInOut(apiKey, true);
 }
 
-export function signOut(password) {
-	return signInOut(password, false);
+export function signOut(apiKey) {
+	return signInOut(apiKey, false);
 }
 
 export function getLeaderboard() {
@@ -160,7 +206,8 @@ export function getLeaderboard() {
 				});
 		})
 		.catch(err => {
-			console.log(`Failed to update basic data. F. ${JSON.stringify(err)}`);
+			console.log("Failed to fetch all users' basic data:");
+			console.error(err);
 			return [];
 		});
 }

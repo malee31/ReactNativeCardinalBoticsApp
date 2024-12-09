@@ -3,7 +3,7 @@
  * May contain
  */
 import { getLeaderboard, verifyPassword } from "./serverClient";
-import { savePassword } from "./storageManager";
+import { saveApiKey } from "./storageManager";
 
 export async function login(userWritable, password) {
 	const newPassword = password.trim();
@@ -21,33 +21,14 @@ export async function login(userWritable, password) {
 	userWritable.updateData({
 		loggedIn: true,
 		name: result.data.user.name,
-		password: result.data.user.password,
+		apiKey: result.data.user.apiKey,
 		signedIn: result.data.user.signedIn
 	});
 
 	try {
-		await savePassword(newPassword);
+		await saveApiKey(result.data.user.apiKey);
 	} catch(err) {
 		return `Successfully Logged In!\n${err.message}`;
 	}
-	return `Success. You're now logged in as ${result.data.user.name.trim()} using ${result.data.user.password}`;
-}
-
-export async function updateSelf(userWritable) {
-	if(!userWritable.userInfo.password) {
-		return;
-	}
-
-	const leaderboard = await getLeaderboard();
-	const user = leaderboard.find(entry => entry.name.trim() === userWritable.userInfo.name.trim());
-	const clockedIn = Date.now() - user.timeIn;
-	// Resync with server if needed. Has a 2-second margin of error tolerance
-	if(Math.abs(userWritable.userInfo.signedIn - clockedIn) > 2000) {
-		// console.log("Resynchronized clock-in time with server");
-		userWritable.updateData({
-			signedIn: user.signedIn ? clockedIn : 0
-		});
-	}
-
-	return leaderboard;
+	return `Success. You're now logged in as ${result.data.user.name.trim()} using ${result.data.user.apiKey}`;
 }

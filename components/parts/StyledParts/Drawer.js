@@ -95,7 +95,7 @@ function DrawerHeader() {
 
 	useEffect(() => {
 		updateTimeIn();
-		const timeTicker = setInterval(updateTimeIn, 1000);
+		const timeTicker = setInterval(updateTimeIn, 500);
 		return () => clearInterval(timeTicker);
 	}, [userInfo.signedIn]);
 
