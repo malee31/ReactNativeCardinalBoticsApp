@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { ActivityIndicator, FlatList, StyleSheet, Text, View } from "react-native";
 import LinkButton from "../parts/StyledParts/LinkButton.js";
-import Screen, { screenPadding, ScreenScrollable } from "../parts/StyledParts/ScreenWrappers";
+import Screen, { screenPadding } from "../parts/StyledParts/ScreenWrappers";
 import useModal from "../parts/ContextProviders/ModalProvider";
 import config from "../../config.json";
 

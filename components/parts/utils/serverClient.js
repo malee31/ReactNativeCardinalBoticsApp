@@ -3,9 +3,165 @@
  * No additional validation should be done here prior to sending a request to the server (See serverClientWrapper.js)
  */
 import config from "../../../config.json";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const SERVER_URL = config.serverURL;
 const endpoints = config.serverEndpointBaseURLs;
+
+// Fetch and retries whenever fetch() throws an error (No connection or non-JSON response)
+// Has a 100ms wait between attempts
+async function fetchRetry(url, options = {}, retries = 3) {
+	let response = {
+		ok: false,
+		code: "fetch_failed"
+	};
+
+	for(let attempt = 0; attempt < retries; attempt++) {
+		try {
+			const req = await fetch(url, {
+				...options,
+				headers: {
+					"Content-Type": "application/json",
+					...(options?.headers || {})
+				}
+			});
+			response = await req.json();
+			break;
+		} catch(err) {
+			console.error(`Fetch attempt ${attempt + 1}/${retries} failed: ${err}`);
+		}
+
+		// Wait 100ms before retrying
+		await new Promise(resolve => setTimeout(resolve, 100));
+	}
+
+	return response;
+}
+
+class Client {
+	serverUrl = "http://localhost:3000";
+	apiKey = "";
+	adminKey = "";
+	initialized = false;
+
+	constructor(_serverURL) {
+		if(_serverURL) {
+			this.serverURL = _serverURL;
+		}
+	}
+
+	// May run multiple times if called repeatedly before the first call is done loading from storage
+	async initialize() {
+		if(this.initialized) return;
+
+		const savedApiKey = await AsyncStorage.getItem("api_key");
+		const savedAdminKey = await AsyncStorage.getItem("admin_key");
+
+		if(await this.validate(savedApiKey)) {
+			this.apiKey = savedApiKey;
+		} else if(savedApiKey) {
+			await AsyncStorage.removeItem("api_key");
+		}
+
+		if(await this.validate(savedAdminKey)) {
+			this.adminKey = savedAdminKey;
+		} else if(savedAdminKey) {
+			await AsyncStorage.removeItem("admin_key");
+		}
+
+		this.initialized = true;
+	}
+
+	generateHeaders(opts = {}) {
+		const options = {
+			auth: true,
+			admin: false,
+			apiKey: this.apiKey,
+			adminKey: this.adminKey,
+			...opts
+		};
+
+		const headers = {
+			"Content-Type": "application/json"
+		};
+
+		if(!options.auth) {
+			return headers;
+		}
+
+		if(!options.admin) {
+			headers["Authorization"] = `Bearer ${options.adminKey}`;
+			return headers;
+		}
+
+		headers["Authorization"] = `Bearer ${options.apiKey}`;
+		return headers;
+	}
+
+	async validate(credential) {
+		if(typeof credential !== "string") return false;
+		if(!credential.startsWith("U-") && !credential.startsWith("A-")) return false;
+
+		if(credential.startsWith("A-")) {
+			// Attempt to delete a non-existent user to test admin keys
+			const response = await this.request("DELETE", "/user", {
+				admin: true,
+				adminKey: credential,
+				body: JSON.stringify({
+					password: "nonexistent-password-that-should-never-exist-9999"
+				})
+			});
+
+			return response.code === "user_already_deleted";
+		}
+
+		// Attempt to fetch user status to test user keys
+		const response = await this.request("GET", endpoints.getUserData, {
+			apiKey: credential
+		});
+
+		return response.ok;
+	}
+
+	// Call to attempt a login with an admin or user password.
+	// Returns true and stores the resulting API key on success
+	async login(password) {
+		// Admin password exception
+		if(password.startsWith("A-") && await this.validate(password)) {
+			this.adminKey = password;
+			await AsyncStorage.setItem("admin_key", password);
+			return true;
+		}
+
+		const res = await client.request("POST", "/user/auth/exchange", {
+			auth: false,
+			body: JSON.stringify({
+				password: password
+			})
+		});
+		const apiKey = res.api_key;
+
+		if(await this.validate(apiKey)) {
+			this.apiKey = apiKey;
+			await AsyncStorage.setItem("api_key", apiKey);
+			return true;
+		}
+
+		return false;
+	}
+
+	async request(method, endpoint, opts = {}) {
+		const url = `${this.serverURL}${endpoint}`;
+		const options = {
+			method: method,
+			headers: this.generateHeaders(opts)
+		};
+
+		return await fetchRetry(url, options);
+	}
+}
+
+export const client = new Client("https://slack.team4159.org");
 
 export async function exchangePassword(password) {
 	const result = {
@@ -16,11 +172,8 @@ export async function exchangePassword(password) {
 
 	let res;
 	try {
-		res = await fetch(`${SERVER_URL}${endpoints.exchangePassword}`, {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json"
-			},
+		res = await client.request("POST", "/user/auth/exchange", {
+			auth: false,
 			body: JSON.stringify({
 				password: password
 			})

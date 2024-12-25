@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { getApiKey } from "../utils/storageManager";
-import { getLeaderboard, verifyApiKey } from "../utils/serverClient";
+import { client, getLeaderboard, verifyApiKey } from "../utils/serverClient";
 
 /**
  * @typedef UserInfoWritable
@@ -50,26 +50,22 @@ export function UserInfoProvider({ children }) {
 	};
 
 	useEffect(() => {
-		getApiKey()
-			.then(async storedApiKey => {
+		client.initialize()
+			.then(async () => {
 				const updatedData = { loaded: true };
-				if(!storedApiKey) {
+				if(!client.apiKey) {
 					contextValue.updateData(updatedData);
 					return;
 				}
 
-				// Does not load password if unable to verify. Silently drops errors
-				const result = await verifyApiKey(storedApiKey);
-				if(!result.ok || !result.data.verified) {
-					contextValue.updateData(updatedData);
-					return;
-				}
+				const user = await client.request("GET", "/user/status");
 
+				// Update the following: loggedIn, name, apiKey (deprecated)
 				updatedData.loggedIn = true;
-				updatedData.name = result.data.user.name;
-				updatedData.apiKey = result.data.user.apiKey;
-				// TODO: Get signed in status and time
-				const user = result.data.user;
+				updatedData.name = `${user.first_name} ${user.last_name}`;
+				updatedData.apiKey = client.apiKey;  // TODO: Remove after transitioning all fetch() to client.request()
+
+				// Gets signed in status and time
 				const clockedIn = user.signedIn;
 				if(Boolean(user.signedIn) !== Boolean(userInfo.signedIn)) {
 					// console.log("RESYNC");
@@ -84,6 +80,9 @@ export function UserInfoProvider({ children }) {
 				}
 
 				contextValue.updateData(updatedData);
+			})
+			.catch(err => {
+				console.error("FATAL: Failed to initialize the client", err);
 			});
 	}, []);
 

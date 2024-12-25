@@ -2,7 +2,7 @@
  * Sets of functions that go around server calls to implement additional side effects.
  * May contain
  */
-import { getLeaderboard, verifyPassword } from "./serverClient";
+import { verifyPassword } from "./serverClient";
 import { saveApiKey } from "./storageManager";
 
 export async function login(userWritable, password) {
