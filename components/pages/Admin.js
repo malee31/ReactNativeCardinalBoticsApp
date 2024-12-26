@@ -5,7 +5,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { MobileScreen, MobileScreenScrollable } from "../parts/StyledParts/ScreenWrappers";
 import LargeLogo from "../parts/StyledParts/LargeLogo";
 import useModal from "../parts/ContextProviders/ModalProvider";
-import { addSession, addUser } from "../parts/utils/serverClient";
+import { addSession, addUser, client } from "../parts/utils/serverClient";
 import { parseDatePart, partToDate, splitDateParts } from "../parts/utils/flexibleDateParser";
 import config from "../../config.json";
 
@@ -43,38 +43,31 @@ const adminStyles = StyleSheet.create({
 
 export default function Admin() {
 	const modal = useModal();
-	const [adminPassword, setAdminPassword] = useState("");
+	const [authorized, setAuthorized] = useState(false);
 
+	// Load admin password from storage and validate it
 	useEffect(() => {
-		AsyncStorage.getItem("admin_password")
-			.then(val => setAdminPassword(val || ""))
-			.catch(err => modal.showMessage(`Unable to load admin password: ${err.message}`));
+		AsyncStorage.getItem("admin_key")
+			.then(val => client.validate(val || ""))
+			.then(valid => setAuthorized(valid))
+			.catch(err => modal.showMessage(`Unable to validate existing admin password: ${err.message}`));
 	}, []);
-
-	const setAndSaveAdminPassword = newAdminPassword => {
-		// Fire-and-forget
-		AsyncStorage.setItem("admin_password", newAdminPassword)
-			.catch(err => modal.showMessage(`Unable to save admin password: ${err.message}`));
-		setAdminPassword(newAdminPassword);
-	}
-
-	if(adminPassword !== CORRECT_PASSWORD) {
-		return (
-			<AdminPasswordNeeded setAdminPassword={setAndSaveAdminPassword}/>
-		);
-	}
 
 
 	const onExitAdmin = () => {
-		setAdminPassword("");
-		AsyncStorage.removeItem("admin_password")
+		AsyncStorage.removeItem("admin_key")
 			.catch(err => modal.showMessage(err));
 	};
+
+	if(!authorized) {
+		return (
+			<AdminPasswordNeeded setAuthorized={setAuthorized}/>
+		);
+	}
 
 	return (
 		<MobileScreenScrollable centered={true}>
 			<View style={adminStyles.adminContainer}>
-
 				<RegisterUserSection/>
 
 				<InsertHoursSection/>
@@ -219,19 +212,29 @@ function InsertHoursSection() {
 	);
 }
 
-function AdminPasswordNeeded({ setAdminPassword }) {
+function AdminPasswordNeeded({ setAuthorized }) {
 	const [adminInput, setAdminInput] = useState("");
 	const [error, setError] = useState("");
+
 	const confirmAdminPassword = () => {
 		Keyboard.dismiss();
-		if(adminInput === CORRECT_PASSWORD) {
-			setAdminPassword(adminInput);
-			setError("");
+		if(!adminInput.startsWith("A-")) {
+			setError("Invalid Admin Password Format (Must start with 'A-')")
 			return;
 		}
 
-		setError("Incorrect Password");
-	}
+		client.login(adminInput)
+			.then(valid => {
+				if(!valid) {
+					setError("Incorrect Password");
+					return;
+				}
+
+				setError("");
+				setAuthorized(true);
+			});
+	};
+
 
 	return (
 		<MobileScreen style={{ height: "100%", alignItems: "center" }}>

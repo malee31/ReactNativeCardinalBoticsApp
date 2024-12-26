@@ -89,7 +89,7 @@ class Client {
 			return headers;
 		}
 
-		if(!options.admin) {
+		if(options.admin) {
 			headers["Authorization"] = `Bearer ${options.adminKey}`;
 			return headers;
 		}
@@ -112,7 +112,7 @@ class Client {
 				})
 			});
 
-			return response.code === "user_already_deleted";
+			return response.warning === "already_deleted";
 		}
 
 		// Attempt to fetch user status to test user keys
@@ -127,7 +127,10 @@ class Client {
 	// Returns true and stores the resulting API key on success
 	async login(password) {
 		// Admin password exception
-		if(password.startsWith("A-") && await this.validate(password)) {
+		if(password.startsWith("A-")) {
+			const adminValid = await this.validate(password);
+			if(!adminValid) return false;
+
 			this.adminKey = password;
 			await AsyncStorage.setItem("admin_key", password);
 			return true;
@@ -153,6 +156,7 @@ class Client {
 	async request(method, endpoint, opts = {}) {
 		const url = `${this.serverURL}${endpoint}`;
 		const options = {
+			...opts,
 			method: method,
 			headers: this.generateHeaders(opts)
 		};
