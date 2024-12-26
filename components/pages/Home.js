@@ -30,7 +30,7 @@ export default function Home({ navigation }) {
 		}
 		setLoading(true);
 		if(!userWritable.userInfo.signedIn) {
-			signIn(userWritable.userInfo.apiKey)
+			signIn()
 				.then(result => {
 					if(result.ok) {
 						userWritable.updateData({
@@ -42,7 +42,7 @@ export default function Home({ navigation }) {
 					setLoading(false);
 				});
 		} else {
-			signOut(userWritable.userInfo.apiKey)
+			signOut()
 				.then(result => {
 					if(result.ok) {
 						userWritable.updateData({

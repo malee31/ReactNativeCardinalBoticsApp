@@ -120,7 +120,8 @@ class Client {
 			apiKey: credential
 		});
 
-		return response.ok;
+		// User is authorized if it has both an 'ok' response and a user id
+		return response.ok && response.id;
 	}
 
 	// Call to attempt a login with an admin or user password.
@@ -229,7 +230,7 @@ export async function verifyPassword(password) {
 		signedIn: null
 	};
 
-	const userResult = await verifyApiKey(apiKey);
+	const userResult = await getStatus();
 
 	if(!userResult.ok) {
 		result.messages.push(...userResult.messages);
@@ -239,7 +240,7 @@ export async function verifyPassword(password) {
 	return userResult;
 }
 
-export async function verifyApiKey(apiKey) {
+export async function getStatus() {
 	const result = {
 		ok: false,
 		messages: [],
@@ -251,12 +252,7 @@ export async function verifyApiKey(apiKey) {
 
 	let res;
 	try {
-		res = await fetch(`${SERVER_URL}${endpoints.getUserStatus}`, {
-			method: "GET",
-			headers: {
-				"Authorization": `Bearer ${apiKey}`
-			}
-		});
+		res = await client.request("GET", endpoints.getUserStatus);
 	} catch(err) {
 		result.messages.push(`Unable to fetch status. Are you connected to the internet?`);
 		return result;
@@ -267,13 +263,12 @@ export async function verifyApiKey(apiKey) {
 		return result;
 	}
 
-	const tokenJsonResponse = await res.json();
-	const user = tokenJsonResponse.user;
+	const user = res.user;
 	result.ok = true;
 	result.data.verified = true;
 	result.data.user = {
 		name: `${user.first_name} ${user.last_name}`,
-		apiKey: apiKey,
+		apiKey: client.apiKey,
 		// Is 0 if signed out. Otherwise, the actual sign in time is set
 		signedIn: (!user.session || user.session.endTime) ? 0 : user.session.startTime
 	};
@@ -283,12 +278,10 @@ export async function verifyApiKey(apiKey) {
 
 /**
  * Signs a user in or out
- * @param {string} apiKey API key of the user to sign in or out
  * @param {boolean} signInMode If set to false, will sign the user out instead
  * @return {Promise<Object>} Resolves after a response is received from the server and parsed
  */
-async function signInOut(apiKey, signInMode) {
-	const url = `${SERVER_URL}${endpoints.signIn}`;
+async function signInOut(signInMode) {
 	const result = {
 		ok: false,
 		messages: [],
@@ -297,12 +290,7 @@ async function signInOut(apiKey, signInMode) {
 
 	let res;
 	try {
-		res = await fetch(url, {
-			method: "PATCH",
-			headers: {
-				"Content-Type": "application/json",
-				"Authorization": `Bearer ${apiKey}`
-			},
+		res = await client.request("PATCH", endpoints.signIn, {
 			body: JSON.stringify({
 				method: signInMode ? "sign_in" : "sign_out"
 			})
@@ -323,7 +311,7 @@ async function signInOut(apiKey, signInMode) {
 		return result;
 	}
 
-	const verified = await verifyApiKey(apiKey);
+	const verified = await getStatus();
 	result.ok = verified.ok && verified.data.verified;
 	if(result.ok) {
 		result.data = verified.data.user;
@@ -332,12 +320,12 @@ async function signInOut(apiKey, signInMode) {
 	return result;
 }
 
-export function signIn(apiKey) {
-	return signInOut(apiKey, true);
+export function signIn() {
+	return signInOut(true);
 }
 
-export function signOut(apiKey) {
-	return signInOut(apiKey, false);
+export function signOut() {
+	return signInOut(false);
 }
 
 export function getLeaderboard() {

@@ -1,6 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { getApiKey } from "../utils/storageManager";
-import { client, getLeaderboard, verifyApiKey } from "../utils/serverClient";
+import { client } from "../utils/serverClient";
 
 /**
  * @typedef UserInfoWritable
@@ -58,7 +57,7 @@ export function UserInfoProvider({ children }) {
 					return;
 				}
 
-				const user = await client.request("GET", "/user/status");
+				const { user } = await client.request("GET", "/user/status");
 
 				// Update the following: loggedIn, name, apiKey (deprecated)
 				updatedData.loggedIn = true;
@@ -66,15 +65,15 @@ export function UserInfoProvider({ children }) {
 				updatedData.apiKey = client.apiKey;  // TODO: Remove after transitioning all fetch() to client.request()
 
 				// Gets signed in status and time
-				const clockedIn = user.signedIn;
-				if(Boolean(user.signedIn) !== Boolean(userInfo.signedIn)) {
+				const clockedIn = (user.session && !user.session.endTime) ? user.session.startTime : 0;
+				if(Boolean(userInfo.signedIn) !== Boolean(clockedIn)) {
 					// console.log("RESYNC");
-					if(user.signedIn) {
+					if(clockedIn) {
 						updatedData.signedIn = clockedIn;
 					} else {
 						updatedData.signedIn = 0;
 					}
-				} else if(user.signedIn && Math.abs(userInfo.signedIn - clockedIn) > 2000 /* 2 second desync tolerance */) {
+				} else if(clockedIn && Math.abs(userInfo.signedIn - clockedIn) > 2000 /* 2 second desync tolerance */) {
 					// console.log(`Resync gap: ${Math.abs(userInfo.signedIn - clockedIn)}`);
 					updatedData.signedIn = clockedIn;
 				}

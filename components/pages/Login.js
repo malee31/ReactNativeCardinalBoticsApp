@@ -8,6 +8,7 @@ import useModal from "../parts/ContextProviders/ModalProvider";
 import { login } from "../parts/utils/serverClientWrapper";
 import config from "../../config.json";
 import { useNavigation } from "@react-navigation/native";
+import { client, getStatus } from "../parts/utils/serverClient";
 
 const colors = config.colors;
 
@@ -66,13 +67,39 @@ export default function Login() {
 	const handleLogin = () => {
 		modal.showMessage("Verifying that you exist...");
 		Keyboard.dismiss();
-		login(userWritable, passwordInput)
-			.then(message => {
-				modal.showMessage(message);
+
+		// Prevents client from doing things that the server can handle, but should not be allowed for the site
+		if(!passwordInput) {
+			modal.showMessage("Password cannot be empty");
+			return;
+		} else if(userWritable.userInfo.signedIn) {
+			modal.showMessage("Cannot switch users while signed in");
+			return;
+		}
+
+		client.login(passwordInput)
+			.then(async (valid) => {
+				if(!valid) {
+					modal.showMessage("Incorrect password");
+					return;
+				}
+
+				const result = await getStatus();
+				if(!result.ok || !result.data.verified) {
+					throw new Error(result.messages.join("\n"));
+				}
+
+				userWritable.updateData({
+					loggedIn: true,
+					name: result.data.user.name,
+					apiKey: result.data.user.apiKey,
+					signedIn: result.data.user.signedIn
+				});
+				modal.showMessage(`Successfully Logged In as ${result.data.user.name}`);
+
 				// noinspection JSCheckFunctionSignatures
 				navigation.navigate("Home");
 			})
-			.catch(err => modal.showMessage(err.message));
 	}
 
 	return (
