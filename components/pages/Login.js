@@ -5,10 +5,10 @@ import Screen from "../parts/StyledParts/ScreenWrappers";
 import LargeLogo from "../parts/StyledParts/LargeLogo";
 import useUserInfo from "../parts/ContextProviders/UserInfoProvider";
 import useModal from "../parts/ContextProviders/ModalProvider";
-import { login } from "../parts/utils/serverClientWrapper";
 import config from "../../config.json";
 import { useNavigation } from "@react-navigation/native";
-import { client, getStatus } from "../parts/utils/serverClient";
+import client from "../parts/utils/serverClient";
+import { getStatus } from "../parts/utils/serverClientWrapper";
 
 const colors = config.colors;
 
@@ -92,7 +92,6 @@ export default function Login() {
 				userWritable.updateData({
 					loggedIn: true,
 					name: result.data.user.name,
-					apiKey: result.data.user.apiKey,
 					signedIn: result.data.user.signedIn
 				});
 				modal.showMessage(`Successfully Logged In as ${result.data.user.name}`);

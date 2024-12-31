@@ -5,7 +5,7 @@ import LeaderboardEntry from "../parts/StyledParts/LeaderboardEntry";
 import useUserInfo from "../parts/ContextProviders/UserInfoProvider";
 import { Button } from "react-native-paper";
 import config from "../../config.json";
-import { getLeaderboard } from "../parts/utils/serverClient";
+import { getLeaderboard } from "../parts/utils/serverClientWrapper";
 
 const colors = config.colors;
 

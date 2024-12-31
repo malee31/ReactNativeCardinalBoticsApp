@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { client } from "../utils/serverClient";
+import client from "../utils/serverClient";
 
 /**
  * @typedef UserInfoWritable
@@ -24,7 +24,6 @@ const userInfoContext = createContext({
 		loggedIn: false,
 		signedIn: 0,
 		name: "",
-		apiKey: ""
 	}
 });
 
@@ -34,7 +33,6 @@ export function UserInfoProvider({ children }) {
 		loggedIn: false,
 		signedIn: 0,
 		name: "",
-		apiKey: ""
 	});
 
 	/** @type UserInfoWritable */

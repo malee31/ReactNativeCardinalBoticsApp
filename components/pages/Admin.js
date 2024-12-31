@@ -5,15 +5,12 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { MobileScreen, MobileScreenScrollable } from "../parts/StyledParts/ScreenWrappers";
 import LargeLogo from "../parts/StyledParts/LargeLogo";
 import useModal from "../parts/ContextProviders/ModalProvider";
-import { addSession, addUser, client } from "../parts/utils/serverClient";
+import client from "../parts/utils/serverClient";
 import { parseDatePart, partToDate, splitDateParts } from "../parts/utils/flexibleDateParser";
 import config from "../../config.json";
 
 const colors = config.colors;
-
-// TODO: As long as the web version has it hard-coded. So will this.
-//       I will personally rewrite the backend to make the validation server-side at a later date if I haven't been beat to it
-const CORRECT_PASSWORD = "A-Berd";
+const endpoints = config.serverEndpointBaseURLs;
 
 const adminStyles = StyleSheet.create({
 	adminContainer: {
@@ -101,8 +98,11 @@ function RegisterUserSection() {
 
 	const onUserAdd = () => {
 		if(newUser.password && newUser.firstName && newUser.lastName) {
-			addUser(newUser)
-				.then(modal.showMessage)
+			client.request("POST", endpoints.admin.addUser, {
+				admin: true,
+				body: JSON.stringify(newUser)
+			})
+				.then(user => modal.showMessage(`Created "${user.first_name} ${user.last_name}" [User ID #${user.id}]`))
 				.catch(err => modal.showMessage(err));
 			setNewUser(defaultUser);
 		} else {
@@ -170,12 +170,15 @@ function InsertHoursSection() {
 
 	const onSessionAdd = () => {
 		if(amend.password && amend.startTime && amend.endTime) {
-			addSession({
-				password: amend.password,
-				startTime: Number(amend.startTime),
-				endTime: Number(amend.endTime)
+			client.request("POST", endpoints.admin.addSession, {
+				admin: true,
+				body: JSON.stringify({
+					password: amend.password,
+					startTime: Number(amend.startTime),
+					endTime: Number(amend.endTime)
+				})
 			})
-				.then(modal.showMessage)
+				.then(session => modal.showMessage(`Added: ${JSON.stringify(session)}`))
 				.catch(err => modal.showMessage(err));
 			setAmend(defaultAmend);
 		} else {

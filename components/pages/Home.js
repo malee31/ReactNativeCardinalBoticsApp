@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { View } from "react-native";
 import { ActivityIndicator, Button } from "react-native-paper";
-import { signIn, signOut } from "../parts/utils/serverClient";
+import { signIn, signOut } from "../parts/utils/serverClientWrapper";
 import useUserInfo from "../parts/ContextProviders/UserInfoProvider";
 import useModal from "../parts/ContextProviders/ModalProvider";
 import Screen from "../parts/StyledParts/ScreenWrappers";
