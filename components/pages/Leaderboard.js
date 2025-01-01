@@ -57,6 +57,7 @@ export default function Leaderboard({ navigation }) {
 		);
 	}
 
+	// TODO: Automatically resync current user's status on refresh and sign in/out
 	useEffect(() => {
 		const update = () => {
 			getLeaderboard()
@@ -74,7 +75,7 @@ export default function Leaderboard({ navigation }) {
 		// TODO: Sync more accurately using websockets
 		const timer = setInterval(update, 30 * 1000); // 30-second interval
 		return () => clearInterval(timer);
-	}, [userWritable.userInfo.apiKey]);
+	}, [userWritable.userInfo.signedIn]);
 
 	if(leaderboardData) {
 		content = (

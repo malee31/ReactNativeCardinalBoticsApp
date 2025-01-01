@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, StyleSheet, Keyboard } from "react-native";
+import { Keyboard, StyleSheet, View } from "react-native";
 import { Button, TextInput } from "react-native-paper";
 import Screen from "../parts/StyledParts/ScreenWrappers";
 import LargeLogo from "../parts/StyledParts/LargeLogo";

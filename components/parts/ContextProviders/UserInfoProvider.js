@@ -56,11 +56,8 @@ export function UserInfoProvider({ children }) {
 				}
 
 				const { user } = await client.request("GET", "/user/status");
-
-				// Update the following: loggedIn, name, apiKey (deprecated)
 				updatedData.loggedIn = true;
 				updatedData.name = `${user.first_name} ${user.last_name}`;
-				updatedData.apiKey = client.apiKey;  // TODO: Remove after transitioning all fetch() to client.request()
 
 				// Gets signed in status and time
 				const clockedIn = (user.session && !user.session.endTime) ? user.session.startTime : 0;

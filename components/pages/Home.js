@@ -18,16 +18,17 @@ export default function Home({ navigation }) {
 	const showLoading = loading || !userWritable.userInfo.loaded;
 
 	useEffect(() => {
-		if(userWritable.userInfo.loaded && !userWritable.userInfo.apiKey) {
+		if(userWritable.userInfo.loaded && !userWritable.userInfo.loggedIn) {
 			navigation.navigate("Login");
 		}
 	}, [userWritable.userInfo.loaded]);
 
 	const toggleSignIn = () => {
-		if(!userWritable.userInfo.apiKey) {
+		if(!userWritable.userInfo.loggedIn) {
 			navigation.navigate("Login");
 			return;
 		}
+
 		setLoading(true);
 		if(!userWritable.userInfo.signedIn) {
 			signIn()

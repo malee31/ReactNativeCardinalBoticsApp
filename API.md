@@ -21,7 +21,7 @@ GET /user - Public user data (Auth header)
 Response:
 - (200) User object is returned. Not in a `user` key
 
-Errors: 
+Errors:
 - 404 `user_not_found` when the user with the corresponding auth header does not exist
 
 POST /user - Add user (Admin auth header)  

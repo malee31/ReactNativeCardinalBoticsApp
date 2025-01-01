@@ -1,5 +1,5 @@
 import React from "react";
-import { PanResponder, Platform, StyleSheet, ScrollView, View } from "react-native";
+import { PanResponder, Platform, ScrollView, StyleSheet, View } from "react-native";
 import MenuButton from "./MenuButton";
 import config from "../../../config.json";
 import { useNavigation } from "@react-navigation/native";
@@ -135,7 +135,7 @@ export function MobileScreenScrollable({ children, centered = false, disablePadd
 	);
 }
 
-function MobileView({children, style, centered = false, ...extraProps}) {
+function MobileView({ children, style, centered = false, ...extraProps }) {
 	let mobileViewStyles = screenWrapperStyles.mobileScreen;
 	if(centered) {
 		mobileViewStyles = [mobileViewStyles, screenWrapperStyles.mobileCenter];

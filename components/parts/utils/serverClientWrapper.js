@@ -94,9 +94,14 @@ export function signOut() {
 }
 
 export function getLeaderboard() {
-	return fetch(`${SERVER_URL}${endpoints.getData}`)
-		.then(res => res.json())
+	return client.request("GET", endpoints.getData, { auth: false })
 		.then(data => {
+			if(!data.ok) {
+				console.log("Failed to fetch all users' basic data:");
+				console.error(err);
+				return [];
+			}
+
 			// Sorted by sign in status, total time, then username
 			return data.users
 				.sort((a, b) => {
@@ -124,10 +129,5 @@ export function getLeaderboard() {
 
 					return 0;
 				});
-		})
-		.catch(err => {
-			console.log("Failed to fetch all users' basic data:");
-			console.error(err);
-			return [];
 		});
 }
