@@ -11,29 +11,26 @@ import client from "../utils/serverClient";
  * @typedef UserInfo
  * @property {boolean} loaded Initially false until the first time user info is both read from storage and fetched from the server
  * @property {boolean} loggedIn Initially false until either the user logs in or their login information is fetched from storage
+ * @property {boolean} admin Set to true if valid admin credentials are active
  * @property {number} signedIn Set to 0 when not signedIn. Stores the time that the user signed in at if currently signed in
  * @property {string} name The user's name
  * @property {string} password The user's password for API calls. Stored in plain-text
  */
 
-// Note: Default value is never used
+const defaultUserInfo = {
+	loaded: false,
+	loggedIn: false,
+	admin: false,
+	signedIn: 0,
+	name: "",
+};
 const userInfoContext = createContext({
 	updateData: () => {},
-	userInfo: {
-		loaded: false,
-		loggedIn: false,
-		signedIn: 0,
-		name: "",
-	}
+	userInfo: defaultUserInfo
 });
 
 export function UserInfoProvider({ children }) {
-	const [userInfo, setUserInfo] = useState({
-		loaded: false,
-		loggedIn: false,
-		signedIn: 0,
-		name: "",
-	});
+	const [userInfo, setUserInfo] = useState(defaultUserInfo);
 
 	/** @type UserInfoWritable */
 	const contextValue = {
@@ -49,14 +46,18 @@ export function UserInfoProvider({ children }) {
 	useEffect(() => {
 		client.initialize()
 			.then(async () => {
-				const updatedData = { loaded: true };
-				if(!client.apiKey) {
+				const updatedData = {
+					loaded: true,
+					loggedIn: Boolean(client.apiKey),
+					admin: Boolean(client.adminKey)
+				};
+
+				if(!updatedData.loggedIn) {
 					contextValue.updateData(updatedData);
 					return;
 				}
 
 				const { user } = await client.request("GET", "/user/status");
-				updatedData.loggedIn = true;
 				updatedData.name = `${user.first_name} ${user.last_name}`;
 
 				// Gets signed in status and time

@@ -5,8 +5,9 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { MobileScreen, MobileScreenScrollable } from "../parts/StyledParts/ScreenWrappers";
 import LargeLogo from "../parts/StyledParts/LargeLogo";
 import useModal from "../parts/ContextProviders/ModalProvider";
-import client from "../parts/utils/serverClient";
+import useUserInfo from "../parts/ContextProviders/UserInfoProvider";
 import { parseDatePart, partToDate, splitDateParts } from "../parts/utils/flexibleDateParser";
+import client from "../parts/utils/serverClient";
 import config from "../../config.json";
 
 const colors = config.colors;
@@ -32,24 +33,15 @@ const adminStyles = StyleSheet.create({
 	},
 	adminInput: {
 		width: "100%",
-		color: "#7D1120",
+		color: colors.primary,
 		backgroundColor: colors.lighterGray,
 		marginBottom: 8
 	}
 });
 
 export default function Admin() {
+	const { admin: authorized } = useUserInfo();
 	const modal = useModal();
-	const [authorized, setAuthorized] = useState(false);
-
-	// Load admin password from storage and validate it
-	useEffect(() => {
-		AsyncStorage.getItem("admin_key")
-			.then(val => client.validate(val || ""))
-			.then(valid => setAuthorized(valid))
-			.catch(err => modal.showMessage(`Unable to validate existing admin password: ${err.message}`));
-	}, []);
-
 
 	const onExitAdmin = () => {
 		AsyncStorage.removeItem("admin_key")
@@ -58,7 +50,7 @@ export default function Admin() {
 
 	if(!authorized) {
 		return (
-			<AdminPasswordNeeded setAuthorized={setAuthorized}/>
+			<AdminPasswordNeeded/>
 		);
 	}
 
@@ -215,7 +207,8 @@ function InsertHoursSection() {
 	);
 }
 
-function AdminPasswordNeeded({ setAuthorized }) {
+function AdminPasswordNeeded() {
+	const userWritable = useUserInfo(false);
 	const [adminInput, setAdminInput] = useState("");
 	const [error, setError] = useState("");
 
@@ -234,7 +227,7 @@ function AdminPasswordNeeded({ setAuthorized }) {
 				}
 
 				setError("");
-				setAuthorized(true);
+				userWritable.updateData({ admin: true });
 			});
 	};
 

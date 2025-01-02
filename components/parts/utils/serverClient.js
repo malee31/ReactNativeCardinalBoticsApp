@@ -6,6 +6,10 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import config from "../../../config.json";
 
 const endpoints = config.serverEndpointBaseURLs;
+const STORAGE_KEYS = {
+	api_key: "api_key",
+	admin: "admin_key",
+}
 
 // Fetch and retries whenever fetch() throws an error (No connection or non-JSON response)
 // Has a 100ms wait between attempts
@@ -55,19 +59,19 @@ class Client {
 	async initialize() {
 		if(this.initialized) return;
 
-		const savedApiKey = await AsyncStorage.getItem("api_key");
-		const savedAdminKey = await AsyncStorage.getItem("admin_key");
+		const savedApiKey = await AsyncStorage.getItem(STORAGE_KEYS.api_key);
+		const savedAdminKey = await AsyncStorage.getItem(STORAGE_KEYS.admin);
 
 		if(await this.validate(savedApiKey)) {
 			this.apiKey = savedApiKey;
 		} else if(savedApiKey) {
-			await AsyncStorage.removeItem("api_key");
+			await AsyncStorage.removeItem(STORAGE_KEYS.api_key);
 		}
 
 		if(await this.validate(savedAdminKey)) {
 			this.adminKey = savedAdminKey;
 		} else if(savedAdminKey) {
-			await AsyncStorage.removeItem("admin_key");
+			await AsyncStorage.removeItem(STORAGE_KEYS.admin);
 		}
 
 		this.initialized = true;
@@ -135,7 +139,7 @@ class Client {
 			if(!adminValid) return false;
 
 			this.adminKey = password;
-			await AsyncStorage.setItem("admin_key", password);
+			await AsyncStorage.setItem(STORAGE_KEYS.admin, password);
 			return true;
 		}
 
@@ -149,7 +153,7 @@ class Client {
 
 		if(await this.validate(apiKey)) {
 			this.apiKey = apiKey;
-			await AsyncStorage.setItem("api_key", apiKey);
+			await AsyncStorage.setItem(STORAGE_KEYS.api_key, apiKey);
 			return true;
 		}
 
