@@ -16,7 +16,8 @@ const STORAGE_KEYS = {
 async function _fetchRetry(url, options = {}, retries = 3) {
 	let response = {
 		ok: false,
-		code: "fetch_failed"
+		status: -1,
+		error: "fetch_failed"
 	};
 
 	for(let attempt = 0; attempt < retries; attempt++) {

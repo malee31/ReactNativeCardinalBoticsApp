@@ -4,7 +4,6 @@
 import client from "./serverClient";
 import config from "../../../config.json";
 
-const SERVER_URL = config.serverURL;
 const endpoints = config.serverEndpointBaseURLs;
 
 export async function getStatus() {
@@ -17,16 +16,10 @@ export async function getStatus() {
 		}
 	};
 
-	let res;
-	try {
-		res = await client.request("GET", endpoints.getUserStatus);
-	} catch(err) {
-		result.messages.push(`Unable to fetch status. Are you connected to the internet?`);
-		return result;
-	}
+	const res = await client.request("GET", endpoints.getUserStatus);
 
 	if(!res.ok) {
-		result.messages.push(`Server behaved unexpectedly during exchange and gave this error: [${res.status}] ${res.statusText}`);
+		result.messages.push(`Server behaved unexpectedly during exchange and gave this error: [${res.status}] ${res.error}`);
 		return result;
 	}
 
@@ -61,18 +54,7 @@ async function signInOut(signInMode) {
 	});
 
 	if(!res.ok) {
-		result.messages.push(`Unable to fetch status. Are you connected to the internet?`);
-		return result;
-	}
-
-	if(res.status === 400) {
-		result.ok = true;
-		result.messages.push(await res.text());
-		return result;
-	}
-
-	if(!res.ok) {
-		result.messages.push(`Unable to sign ${signIn ? "in" : "out"}: [${res.status}] ${res.statusText}`);
+		result.messages.push(`Unable to get status of sign in/out: [${res.status}] ${res.error}`);
 		return result;
 	}
 
